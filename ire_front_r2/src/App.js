@@ -1,14 +1,24 @@
-import './App.css';
-import Navbar from './components/Navbar';
-import Sidevar from './components/Sidebar'
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+ 
+import Sidevar from './components/Sidebar/Sidebar'
+import './mainStyles.css'
+import Home from './pages/Home'
+import Sales from './pages/Sales'
+import Clients from './pages/Clients'
+
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 function App() {
   return (
-    <Router>
-        <Navbar/>
-        <Sidevar/>
-        <h1>Hello World!</h1>
+    <Router> 
+        <div className="flex">
+          <Sidevar/>
+          <Routes>
+            <Route path="/" exact = {true} Component={Home}/> 
+            <Route path="/sales" exact = {true} Component={Sales}/> 
+            <Route path="/clients" exact = {true} Component={Clients}/> 
+          </Routes>
+          
+        </div>
     </Router>
   );
 }

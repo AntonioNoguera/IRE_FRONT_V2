@@ -1,0 +1,38 @@
+.sidebar {
+    padding:0;
+    margin: 0; 
+    height: 100vh;
+    border-right: 1px solid gray;
+}
+
+.sidebar ul {
+    list-style: none;  
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column;
+    height: 100%;
+   
+}
+
+.sidebar ul li {  
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.sidebar ul li a {  
+    padding: 10px 20px;
+    text-decoration: none; 
+    background-color: aqua;
+    display: flex;
+    align-items: center; 
+    flex-grow: 1; 
+}
+
+.sidebar ul li img { 
+    padding: 0px 10px;
+    width: 30px;
+    height: 30px;
+ }
