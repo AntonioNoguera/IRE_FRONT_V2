@@ -1,6 +1,6 @@
-import {Link} from 'react-router-dom'
 import styles from "./sidebar.module.css";
 import SideBarAtom from "./SidebarAtom"
+import '../../mainStyles.css'
 
 
 const sideBarFormat = [
@@ -13,6 +13,16 @@ const sideBarFormat = [
         to : "/sales",
         name : "Ventas",
         icon : "bolsa-frutas.png"
+    },
+    {
+        to : "/clients",
+        name : "Clientes",
+        icon : "recetas.png"
+    },
+    {
+        to : "/clients",
+        name : "Clientes",
+        icon : "recetas.png"
     },
     {
         to : "/clients",
@@ -34,8 +44,6 @@ const Sidebar = () => {
                 )
                 }
             </ul>
-
-            
         </div>
     )
 }
