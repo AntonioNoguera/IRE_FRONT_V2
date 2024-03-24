@@ -2,36 +2,34 @@ import styles from "./sidebar.module.css";
 import SideBarAtom from "./SidebarAtom"
 import '../../mainStyles.css'
 
-
 const sideBarFormat = [
     {
         to : "/",
-        name : "Inicio",
+        name : "Requisición",
         icon : "documento.png"
     },
     {
-        to : "/sales",
-        name : "Ventas",
+        to : "/platillos",
+        name : "Platillos",
+        icon : "cuenco-arroz.png"
+    },
+    {
+        to : "/recetas",
+        name : "Recetas",
+        icon : "recetas.png"
+    },
+    {
+        to : "/ingredientes",
+        name : "Ingredientes",
         icon : "bolsa-frutas.png"
     },
     {
-        to : "/clients",
-        name : "Clientes",
-        icon : "recetas.png"
-    },
-    {
-        to : "/clients",
-        name : "Clientes",
-        icon : "recetas.png"
-    },
-    {
-        to : "/clients",
-        name : "Clientes",
-        icon : "recetas.png"
+        to : "/grupos",
+        name : "Grupos",
+        icon : "grupo.png"
     },
     
 ]
-
 
 const Sidebar = () => {
     return (
@@ -40,7 +38,6 @@ const Sidebar = () => {
                 {sideBarFormat.map( (item,index) => (
                         <SideBarAtom to={item.to} icon= {item.icon}> {item.name} </SideBarAtom>
                     )
-
                 )
                 }
             </ul>
