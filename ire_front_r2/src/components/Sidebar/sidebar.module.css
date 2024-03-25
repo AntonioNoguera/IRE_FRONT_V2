@@ -43,9 +43,13 @@
     filter: invert(0%)
 }
 
+.sidebar ul li a:active {
+    background-color: #D9D9D9;
+    filter: invert(0%)
+}
+
 .sidebar ul li img { 
     width: 55px;
     margin-inline-end: 10px;
     height: auto;
-   
 }

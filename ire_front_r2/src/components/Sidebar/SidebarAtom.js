@@ -8,7 +8,7 @@ const SidebarAtom = ({children,to,icon})=> {
                 {children}
             </Link>
         </li>
-    ) 
+    )
 }
 
 export default SidebarAtom;

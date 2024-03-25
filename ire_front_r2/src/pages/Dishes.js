@@ -1,7 +1,8 @@
 const Dishes =()=> {
-    return (<div>
-        Platillo
-    </div>)
+    return (
+        <p>  Working on the dishes lol</p>
+
+    )
 }
 
 export default Dishes;
