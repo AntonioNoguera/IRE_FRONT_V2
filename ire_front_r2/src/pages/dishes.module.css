@@ -3,7 +3,7 @@
 }
 
 .leftMenu{
-    background-color: red; 
+    background-color: var(--color-greend-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,8 +12,22 @@
 }
 
 
-.linkFormat{
-    background-color: blue;  
+.linkFormat{  
     text-decoration: none;
-    padding: 20px 2px;
+    width: 100%;
+    padding: 20px 15px;
+    font-weight: 450;
+    
+    font-size: 20px;
+    color: var(--color-primario);
+    background-color: none;
+    align-items: center;
+    text-align: center;
+    
+    transition: background-color .2s , color .2s;
+}
+
+.linkFormat:hover{ 
+    color: white;
+    background-color: #1D7093;
 }
