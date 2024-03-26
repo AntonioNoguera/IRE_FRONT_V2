@@ -8,7 +8,7 @@ const Sidebar = ({routePages}) => {
         <div className={styles.sidebar}> 
             <ul>
                 {routePages.map( (page,index) => (
-                        <SideBarAtom key = {index} to={page.path} icon= {page.icon}> 
+                        <SideBarAtom key = {index} to = {page.path}  icon= {page.icon}> 
                             {page.name} 
                         </SideBarAtom>
                     )

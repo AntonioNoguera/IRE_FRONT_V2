@@ -1,0 +1,19 @@
+.mainContainer{
+    display: flex;
+}
+
+.leftMenu{
+    background-color: red; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+
+.linkFormat{
+    background-color: blue;  
+    text-decoration: none;
+    padding: 20px 2px;
+}
