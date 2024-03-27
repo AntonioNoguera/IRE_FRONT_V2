@@ -6,12 +6,15 @@ const Dishes = () => {
         <div className={styles.mainContainer}>
             
             <nav className={styles.leftMenu}>
-                <Link className={styles.linkFormat} to="requisicion">Detalle Requisición</Link>
+                <Link className={styles.linkFormat} to="requisicion">Listado de Requisiciones</Link>
                 <Link className={styles.linkFormat} to="recetas">Detalle Recetas</Link>
                 <Link className={styles.linkFormat} to="ingredientes">Detalle Ingredientes</Link>
             </nav> 
             {/* Outlet renderizará el componente correspondiente a la sub-ruta activa */}
-            <Outlet className={styles.outlet} />
+            <div className={styles.outlet} >
+                <Outlet/>
+            </div>
+            
         </div>
 
     )

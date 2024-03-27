@@ -23,7 +23,7 @@ const mainRoutes = [
 		children: [
 		  {
 			path: "requisicion",
-			name: "Detalle Platillo",
+			name: "Listado de Requisiciones",
 			page: Requisition
 		  },
 		  {

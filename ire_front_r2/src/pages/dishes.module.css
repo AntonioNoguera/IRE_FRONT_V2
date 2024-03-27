@@ -1,21 +1,26 @@
 .mainContainer{
     display: flex;
+    height: 100vh; /* Hace que el contenedor principal ocupe toda la altura de la ventana */
+    width: 100%; 
+}
+
+.contentDisplay{
+    width: 100%;
 }
 
 .leftMenu{
     background-color: var(--color-greend-secondary);
     display: flex;
+    flex-shrink: 0; 
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    
+    flex-direction: column; 
 }
 
-
 .linkFormat{  
-    text-decoration: none;
     width: 100%;
-    padding: 20px 15px;
+    text-decoration: none;  
+    padding: 20px 20px;
     font-weight: 450;
     
     font-size: 20px;
@@ -23,6 +28,13 @@
     background-color: none;
     align-items: center;
     text-align: center;
+
+    box-sizing: border-box;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
     
     transition: background-color .2s , color .2s;
 }
@@ -30,4 +42,11 @@
 .linkFormat:hover{ 
     color: white;
     background-color: #1D7093;
+}
+
+
+.outlet{
+    background-color: white;
+    flex-grow: 1;
+    overflow: auto;
 }
