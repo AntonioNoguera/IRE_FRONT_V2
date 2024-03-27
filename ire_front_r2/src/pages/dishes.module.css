@@ -1,6 +1,6 @@
 .mainContainer{
     display: flex;
-    height: 100vh; /* Hace que el contenedor principal ocupe toda la altura de la ventana */
+    height: 100vh;
     width: 100%; 
 }
 
@@ -9,8 +9,10 @@
 }
 
 .leftMenu{
-    background-color: var(--color-greend-secondary);
+    background-color: var(--ire-lightGreen);
     display: flex;
+    width: 16%;
+    min-width: 150px;
     flex-shrink: 0; 
     align-items: center;
     justify-content: center;
@@ -24,7 +26,7 @@
     font-weight: 450;
     
     font-size: 20px;
-    color: var(--color-primario);
+    color: var(--ire-darkGray);
     background-color: none;
     align-items: center;
     text-align: center;
@@ -40,13 +42,13 @@
 }
 
 .linkFormat:hover{ 
-    color: white;
-    background-color: #1D7093;
+    color: var(--ire-white);
+    background-color: var(--ire-seaBlue);
 }
 
 
 .outlet{
-    background-color: white;
+    background-color: var(--ire-white);
     flex-grow: 1;
     overflow: auto;
 }

@@ -19,7 +19,7 @@ const mainRoutes = [
 		name: "Platillos",
 		icon: "cuenco-arroz.png",
 		page: Dishes,
-		defaultPath: "/platillos/requisicion", // Añade esto
+		defaultPath: "/platillos/requisicion",
 		children: [
 		  {
 			path: "requisicion",

@@ -6,7 +6,7 @@
 
 .sidebar { 
     height: 100vh;
-    background-color: var(--color-primario);
+    background-color: var(--ire-darkGray);
 }
 
 .sidebar ul {
@@ -26,12 +26,15 @@
 
 .sidebar ul li a { 
     text-decoration: none;
-    color: black; 
+    
     display: flex;
     padding: 3.1vh 20px;
     flex-grow: 1;
     align-items: center;
-    font-weight: 500; 
+
+    color: var(--ire-black); 
+    font-weight: var(--ire-Bold); 
+    
     font-size: 24px;   
     filter: invert(100%);
     transition: background-color .3s, filter .3s;
