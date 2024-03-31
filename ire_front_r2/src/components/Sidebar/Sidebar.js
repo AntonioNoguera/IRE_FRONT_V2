@@ -1,16 +1,40 @@
-import styles from "./sidebar.module.css";
-import SideBarAtom from "./SidebarAtom"
+import styles from "./sidebar.module.css"; 
 import '../../mainStyles.css'
+
+import { NavLink , useLocation } from 'react-router-dom';
+
+
+const SidebarAtom = ({ children, to, icon }) => {
+    const location = useLocation();
+
+    var firstRoute = location.pathname.split("/")
+    var firstPart = firstRoute[1]
+
+    console.log(firstPart)
+
+    const isActive = (to.slice(1) === firstPart)
+    return (
+        <li>
+            <NavLink  to = {to} className = { isActive ? styles.activeState : styles.defaultState } >
+
+                <img src={`${process.env.PUBLIC_URL}/icons/${icon}`} />
+                {children}
+                
+            </NavLink>
+        </li>
+    )
+}
 
 const Sidebar = ({routePages}) => { 
 
     return (
-        <div className={styles.sidebar}> 
+        <div className = { styles.sidebar }> 
             <ul>
-                {routePages.map( (page,index) => (
-                        <SideBarAtom key = {index} to = {page.path}  icon= {page.icon}> 
-                            {page.name} 
-                        </SideBarAtom>
+                { 
+                routePages.map( (page,index) => (
+                    <SidebarAtom key = {index} to = {page.path}  icon= {page.icon}> 
+                        { page.name } 
+                    </SidebarAtom>
                     )
                 )
                 }

@@ -8,7 +8,7 @@ const RenderRoutes = ({ routes }) => {
         if (route.children) {
             return (
                 <Route key={index} path={route.path} element={<route.page />}>
-                    {/* Si la ruta tiene un componente para index, úsalo. De lo contrario, redirige. */}
+                    
                     {route.indexComponent ? (
                         <Route index element={<route.indexComponent />} />
                     ) : (
@@ -16,7 +16,7 @@ const RenderRoutes = ({ routes }) => {
                     )}
 
                     {route.children.map((childRoute, childIndex) => (
-                        <Route key={childIndex} path={childRoute.path} element={<childRoute.page />} />
+                        <Route key = {childIndex} path = {childRoute.path} element = {<childRoute.page />} />
                     ))}
                 </Route>
             );
@@ -34,7 +34,7 @@ const MadeRouter = ({ routes }) => {
 
                 <Routes>
                     {RenderRoutes({ routes })}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path = "*" element = {<Navigate to="/" replace />} />
                 </Routes>
             </div>
         </Router>

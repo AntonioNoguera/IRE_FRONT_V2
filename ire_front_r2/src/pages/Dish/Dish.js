@@ -1,7 +1,10 @@
 import { Link, Outlet } from 'react-router-dom';
 import styles from './dishes.module.css'
-import '../mainStyles.css'
-const Dishes = () => {
+
+import MainContainer from '../../components/Layouts/MainContainer';
+
+import '../../mainStyles.css'
+const Dish = () => {
     return (
         <div className={styles.mainContainer}>
             
@@ -10,14 +13,14 @@ const Dishes = () => {
                 <Link className={styles.linkFormat} to="recetas">Detalle Recetas</Link>
                 <Link className={styles.linkFormat} to="ingredientes">Detalle Ingredientes</Link>
             </nav> 
-            {/* Outlet renderizará el componente correspondiente a la sub-ruta activa */}
-            <div className={styles.outlet} >
+
+            <MainContainer >
                 <Outlet/>
-            </div>
+            </MainContainer>
             
         </div>
 
     )
 }
 
-export default Dishes;
+export default Dish;

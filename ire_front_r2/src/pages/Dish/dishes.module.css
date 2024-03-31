@@ -49,6 +49,7 @@
 
 .outlet{
     background-color: var(--ire-white);
+    display: 'flex';
+    flex-direction: 'column';
     flex-grow: 1;
-    overflow: auto;
 }
