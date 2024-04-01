@@ -1,4 +1,3 @@
-import '../../../mainStyles.css';
 
 const componentStyles = {
     paddingTop: '15px',

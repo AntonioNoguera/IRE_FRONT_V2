@@ -9,6 +9,10 @@ const SidebarAtom = ({ children, to, icon }) => {
 
     var firstRoute = location.pathname.split("/")
     var firstPart = firstRoute[1] 
+
+    if(firstRoute.length === 2){
+        firstPart = firstRoute[0]
+    } 
     
     const isActive = (to.slice(1) === firstPart)
     return (
