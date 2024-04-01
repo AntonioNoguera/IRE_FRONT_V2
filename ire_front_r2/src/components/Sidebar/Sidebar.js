@@ -34,7 +34,7 @@ const Sidebar = ({routePages}) => {
             <ul>
                 { 
                 routePages.map( (page,index) => (
-                    <SidebarAtom key = {index} to = {page.path}  icon= {page.icon}> 
+                    <SidebarAtom key={index} to={page.path} icon={page.icon}> 
                         { page.name } 
                     </SidebarAtom>
                     )

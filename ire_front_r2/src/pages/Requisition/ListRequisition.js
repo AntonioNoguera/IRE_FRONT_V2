@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Title from "../../components/Layouts/Title";
 import ComponentHolder from "../../components/Layouts/ComponentHolder";
+import HorizontalSpray from "../../components/Layouts/HorizontalSpray";
 
 const dataMock = [
     {
@@ -28,12 +29,8 @@ const ListRequisition = () => {
         <>
             <Title> Listado de Requisición </Title>
             
-            {
-                dataMock.map( (item, index) => (
-                    <ComponentHolder>
-                        <p>test</p>
-                    </ComponentHolder>
-                ))
+            { 
+                <HorizontalSpray itemsToSpray={dataMock}/>
             }
             
         </>
