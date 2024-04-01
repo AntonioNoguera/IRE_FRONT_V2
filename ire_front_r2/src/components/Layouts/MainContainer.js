@@ -1,12 +1,12 @@
 const componentStyles = {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: '1'
-
+    flexGrow: '1',
+    backgroundColor : 'lightGray' 
 }
 
 const MainContainer = ({children}) => {
-    return(
+    return( 
         <div style = {componentStyles}>
             { children }
         </div>

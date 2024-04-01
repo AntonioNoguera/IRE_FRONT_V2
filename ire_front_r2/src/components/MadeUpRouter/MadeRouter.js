@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 const RenderRoutes = ({ routes }) => {
     return routes.map((route, index) => {
-        if (route.children) {
+        if (route.subPaths) {
             return (
                 <Route key={index} path={route.path} element={<route.page />}>
                     
@@ -15,7 +15,7 @@ const RenderRoutes = ({ routes }) => {
                         <Route index element={<Navigate to={route.defaultPath} replace />} />
                     )}
 
-                    {route.children.map((childRoute, childIndex) => (
+                    {route.subPaths.map((childRoute, childIndex) => (
                         <Route key = {childIndex} path = {childRoute.path} element = {<childRoute.page />} />
                     ))}
                 </Route>

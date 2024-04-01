@@ -12,49 +12,125 @@ const RouterPath = [
         path: "/",
         name: "Requisición",
         icon: "documento.png",
-        page: Requisition
+        page: Requisition,
+        defaultPath: "/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Requisiciones",
+                page: ListRequisition
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Requisiciones",
+                page: NewRequisition
+            },
+            {
+                path: "actualizar",
+                name: "Actualizar Platillo",
+                page: UpdateRequisition
+            },
+        ]
     },
+
     {
         path: "/platillos",
         name: "Platillos",
         icon: "cuenco-arroz.png",
         page: Dish,
-        defaultPath: "/platillos/requisicion",
-        children: [
+        defaultPath: "/platillos/listado",
+        subPaths: [
             {
-                path: "requisicion",
-                name: "Listado de Requisiciones",
+                path: "listado",
+                name: "Listado de Platillos",
                 page: ListDish
             },
             {
-                path: "recetas",
-                name: "Detalle Platillo",
+                path: "nuevo",
+                name: "Nuevo Platillo",
                 page: NewDish
             },
             {
-                path: "ingredientes",
-                name: "Detalle Platillo",
+                path: "actualizar",
+                name: "Actualizar Platillo",
                 page: UpdateDish
             },
         ]
     },
+
     {
         path: "/recetas",
         name: "Recetas",
         icon: "recetas.png",
-        page: Recipe
+        page: Recipe,
+        defaultPath: "/recetas/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Receta",
+                page: ListRecipe
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Receta",
+                page: NewRecipe
+            },
+            {
+                path: "actualizar",
+                name: "Actualizar Receta",
+                page: UpdateRecipe
+            },
+        ]
     },
+
     {
         path: "/ingredientes",
         name: "Ingredientes",
         icon: "bolsa-frutas.png",
-        page: Ingredient
+        page: Ingredient,
+        defaultPath: "/ingredientes/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Ingredientes",
+                page: ListIngredient
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Ingredientes",
+                page: NewIngredient
+            },
+            {
+                path: "actualizar",
+                name: "Actualizar Ingredientes",
+                page: UpdateIngredient
+            },
+        ]
     },
+
     {
         path: "/grupos",
         name: "Grupos",
         icon: "grupo.png",
-        page: Group
+        page: Group,
+        defaultPath: "/grupos/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Grupos",
+                page: ListGroup
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Grupos",
+                page: NewGroup
+            },
+            {
+                path: "actualizar",
+                name: "Actualizar Grupos",
+                page: UpdateGroup
+            },
+        ]
     },
 
 ]

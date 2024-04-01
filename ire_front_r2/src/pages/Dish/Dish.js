@@ -1,26 +1,27 @@
-import { Link, Outlet } from 'react-router-dom';
-import styles from './dishes.module.css'
+import { Outlet } from 'react-router-dom'; 
 
 import MainContainer from '../../components/Layouts/MainContainer';
 
-import '../../mainStyles.css'
-const Dish = () => {
-    return (
-        <div className={styles.mainContainer}>
-            
-            <nav className={styles.leftMenu}>
-                <Link className={styles.linkFormat} to="requisicion">Listado de Requisiciones</Link>
-                <Link className={styles.linkFormat} to="recetas">Detalle Recetas</Link>
-                <Link className={styles.linkFormat} to="ingredientes">Detalle Ingredientes</Link>
-            </nav> 
+import RouterPath from '../../RouterPaths';
+import SubSideBar from '../../components/Sidebar/SubSideBar';
 
-            <MainContainer >
+import '../../mainStyles.css'
+import PageHolder from '../../components/Layouts/PageHolder';
+
+const Dish = () => {
+    //Research in order to delete the hardcode reference
+    const paths = RouterPath.find(it => it.name === "Platillos");
+
+    return (
+        <PageHolder>
+            <SubSideBar content = {paths} />
+
+            <MainContainer>
                 <Outlet/>
             </MainContainer>
             
-        </div>
-
+        </PageHolder>
     )
 }
 
-export default Dish;
+export default Dish; 

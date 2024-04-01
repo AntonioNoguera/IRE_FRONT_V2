@@ -1,0 +1,48 @@
+.leftMenu a {
+    width: 100%;
+    text-decoration: none;  
+    padding: 20px 20px;
+    font-weight: 450;
+    
+    font-size: 20px; 
+    background-color: none;
+    align-items: center;
+    text-align: center;
+
+    box-sizing: border-box;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    
+    transition: background-color .2s , color .2s;
+}
+
+
+.defaulState{   
+    color: var(--ire-darkGray);
+    background-color: none;
+     
+}
+
+.defaulState:hover{ 
+    color: var(--ire-white);
+    background-color: var(--ire-seaBlue);
+}
+
+.leftMenu{
+    background-color: var(--ire-lightGreen);
+    display: flex;
+    width: 16%;
+    min-width: 150px;
+    flex-shrink: 0; 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+}
+
+.test {
+    color: var(--ire-white);
+    background-color: var(--ire-seaBlue);
+}

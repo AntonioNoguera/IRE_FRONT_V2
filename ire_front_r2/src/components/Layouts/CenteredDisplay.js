@@ -1,5 +1,5 @@
 const componentStyles = {
-    backgroundColor : 'red',
+    backgroundColor : 'light-gray',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
