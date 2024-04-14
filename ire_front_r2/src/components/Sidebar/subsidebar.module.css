@@ -23,12 +23,10 @@
 .defaulState{   
     color: var(--ire-darkGray);
     background-color: none;
-     
 }
 
-.defaulState:hover{ 
-    color: var(--ire-white);
-    background-color: var(--ire-seaBlue);
+.defaulState:hover{  
+    background-color: var(--ire-lightSkyBlue);
 }
 
 .leftMenu{
