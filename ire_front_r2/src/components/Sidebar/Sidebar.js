@@ -10,14 +10,9 @@ const SidebarAtom = ({ children, to, icon }) => {
     var firstRoute = location.pathname.split("/")
     var firstPart = firstRoute[1] 
 
-<<<<<<< Updated upstream
     if(firstRoute.length === 2){
         firstPart = firstRoute[0]
     } 
-=======
-    console.log(firstPart)
-    console.log(firstRoute)
->>>>>>> Stashed changes
     
     const isActive = (to.slice(1) === firstPart)
     return (

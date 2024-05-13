@@ -1,18 +1,17 @@
-const componentStyles = {
-    backgroundColor : 'light-gray',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexGrow: '1',
-}
-
-const CenteredDisplay = ({children}) => {
-    return(
-        <div style = {componentStyles} >
-            { children }
+const CenteredDisplay = ({ children, width = '80%' }) => {
+    const componentStyles = {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: width
+    };
+    
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center' ,alignItems: 'center'}}>
+            <div style={componentStyles}>
+                {children}
+            </div>
         </div>
-    )
+    );
 }
 
 export default CenteredDisplay;
-

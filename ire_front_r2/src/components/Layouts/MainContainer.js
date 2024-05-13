@@ -1,8 +1,7 @@
 const componentStyles = {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: '1',
-    backgroundColor : 'lightGray' 
+    flexGrow: '1', 
 }
 
 const MainContainer = ({children}) => {

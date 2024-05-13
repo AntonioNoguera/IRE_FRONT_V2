@@ -1,6 +1,6 @@
 
 const componentStyles = {
-    paddingTop: '15px',
+    paddingTop: '15px', 
     textAlign: 'center',
 
     fontWeight: '500',
