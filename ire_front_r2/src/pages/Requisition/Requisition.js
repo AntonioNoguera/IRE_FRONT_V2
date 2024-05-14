@@ -19,6 +19,8 @@ const Requisition = () => {
 
             <MainContainer>
                 <Outlet/>
+                
+            <div id="modal-root"></div>
             </MainContainer>
             
         </PageHolder> 

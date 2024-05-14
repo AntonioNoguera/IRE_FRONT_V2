@@ -29,7 +29,8 @@
 
     --ire-Bold: 500;
     --ire-SemiBold: 450;
-    --ire-Normal: 200;
+    --ire-Regular: 380;
+    --ire-Light: 200;
 }
 
 body{
