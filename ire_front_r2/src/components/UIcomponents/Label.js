@@ -2,7 +2,7 @@ import './../../mainStyles.css';
 
 const componentStyles = {
     color: 'var(--ire-black)',
-    marginTop: '25px',
+    marginTop: '5vh',
     fontSize : '20px',
     paddingLeft : '20px',
     fontWeight : 'var(--ire-Bold)',

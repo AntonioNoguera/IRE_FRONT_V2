@@ -11,22 +11,21 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 const NewGroup = () => {
     return( 
-        <>
-            <Title> Agregar Grupo </Title>
-            
+        <> 
              <CenteredDisplay>  
+             <Title> Agregar Grupo </Title>
                     <Label>Nombre del Grupo:</Label>
                     <EditText>Ingresa el nombre del grupo</EditText>
 
                     <Label>Descripción del Grupo:</Label>
                     <BigTextArea>Ingresa una clara descripción acerca del grupo</BigTextArea>
 
-                    <CenteredDisplay>
+                    <CenteredDisplay width="50%">
                         <Label>Color del grupo:</Label>
                         <DropDownSelection>Seleccione el color de la etiqueta</DropDownSelection>
                     </CenteredDisplay>
 
-                    <Button> Agregar</Button>  
+                    <Button>Agregar</Button>  
                     
              </CenteredDisplay> 
         </>
