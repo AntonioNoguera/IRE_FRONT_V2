@@ -1,5 +1,7 @@
 import './../../mainStyles.css'; 
 
+import './editText.module.css';  
+
 const componentStyles = { 
     textAlign: 'center',
     fontWeight: '450',
