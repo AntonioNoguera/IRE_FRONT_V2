@@ -13,7 +13,7 @@ const componentStyles = {
     boxShadow: '0px 10px 10px 0px var(--ire-lightGray) ',  
     resize:  'none',
     appearance: 'none', 
-    backgroundImage: `url('${process.env.PUBLIC_URL}/arrow_dropdown.svg')`,
+    backgroundImage: `url('${process.env.PUBLIC_URL}/svgs/arrow_dropdown.svg')`,
     backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right 10px center', // Usa backticks y comillas simples correctamente
 

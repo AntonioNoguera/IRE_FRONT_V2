@@ -6,21 +6,28 @@ import HorizontalSpray from "../../components/Layouts/HorizontalSpray";
 const dataMock = [
     {
         id : '0',
-        name : 'test',
-        content : 'body'
+        stringDay : 'test',
+        date : "string",
+        state : true,
+        dishes : [
+            {
+                id : '0',
+                dish : 'LoremIpsum',
+                dishGroup : '2',
+                services : '200',
+                elements : [
+                    {
+                        id : '0',
+                        name : 'Carne',
+                        amount : '12. 00',
+                        unit : 'kg',
+                        time : '17:00'
+                    }, 
+                ]
+            },
+        ],
     },
     
-    {
-        id : '1',
-        name : 'test1',
-        content : 'body1'
-    },
-
-    {
-        id : '2',
-        name : 'test2',
-        content : 'body2'
-    },
 ]
 
 const ListRequisition = () => {
