@@ -26,5 +26,12 @@ button {
 }
 
 .cancelStyle {
-    /* Define tus estilos para cancelar aquí */
+    color: var(--ire-white);
+    background-color: var(--ire-redButton);
+    width: 100%;
+}
+
+.cancelStyle:hover {
+    color: var(--ire-redButton);
+    background-color: var(--ire-redButtonHover);
 }

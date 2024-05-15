@@ -61,7 +61,7 @@ const NewRequisition = () => {
                 </HorizontalDisplay>
 
 				<HorizontalDisplay>
-                	<Button>Agregar</Button>  
+                	<Button type='cancelStyle'>Cancelar</Button>  
 					<WhiteDummySpacer/>
                 	<Button>Agregar</Button>  
 				</HorizontalDisplay>

@@ -7,12 +7,12 @@ import EditText from "../../components/UIcomponents/EditText";
 import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
-
+import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
 const NewGroup = () => {
     return( 
         <> 
-             <CenteredDisplay>  
+            <CenteredDisplay>  
              <Title> Agregar Grupo </Title>
                     <Label>Nombre del Grupo:</Label>
                     <EditText>Ingresa el nombre del grupo</EditText>

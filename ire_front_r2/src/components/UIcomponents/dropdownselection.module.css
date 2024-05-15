@@ -1,7 +1,4 @@
-/* dropdownselection.module.css */
-.selectPlaceholder {
-    color: red; /* Color cuando no hay una opción válida seleccionada */
-}
+
 
 .selectStyle {
     /* Estilos existentes */
@@ -19,11 +16,16 @@
     appearance: none;
     background-repeat: no-repeat;
     background-position: right 10px center;
-    color: gray; /* Color inicial para todos los estados */
+    color: black; /* Color inicial para todos los estados */
 }
 
 .selectStyle:invalid {
     color: var(--ire-grayPlaceholders); /* Mantiene el color gris si el select es inválido */
+}
+
+.selectStyle option:disabled {
+    color:var(--ire-white); ;
+    background-color: lightgray;/* Mantiene el color gris si el select es inválido */
 }
 
 .selectStyle:valid {
