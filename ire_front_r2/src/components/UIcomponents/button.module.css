@@ -1,16 +1,6 @@
 /* ButtonStyles.css */
 
-button {
-    font-size: 24px;
-    padding: 6px 20px;
-    color:cyan;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0px 10px 10px 0px var(--ire-lightGray);
-    margin-top: 40px;
-    cursor: pointer;
-    font-weight: 500;
-
+button { 
     transition: color 0.2s , background-color 0.2s;
 }
 

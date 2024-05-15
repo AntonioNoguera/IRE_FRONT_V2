@@ -1,0 +1,21 @@
+.button { 
+    background-color:  rgba(255, 255, 255, 0.0);;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    transition: background-color 0.3s ease;
+}
+ 
+.svgIcon {
+    fill: white; /* Define el color de llenado del SVG */
+    width: 50px; /* Ajusta el tamaño según sea necesario */
+    height: 50px;
+    transition: fill 0.3s ease;
+}
+
+.svgIcon:hover {
+    fill: darkgray;
+}

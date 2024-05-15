@@ -10,29 +10,33 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import './../../mainStyles.css'; 
+import "./group.modules/groupHolder.css"
+import SvgButton from "../../components/UIcomponents/SvgButton";
+
 const dataMock = [
     {
         "description": "string",
-        "hexColor": "string",
+        "hexColor": "#F7B334",
         "id": 0,
         "itemCount" : 12,
-        "name": "string"
+        "name": "Frutas"
     },
     {
         "description": "string",
-        "hexColor": "string",
+        "hexColor": "#1D7093",
         "id": 1,
         
         "itemCount" : 12,
-        "name": "string"
+        "name": "verduras"
     },
     {
         "description": "string",
-        "hexColor": "string",
+        "hexColor": "#931D1D",
         "id": 2,
         
         "itemCount" : 12,
-        "name": "string"
+        "name": "Carne"
     },
     {
         "description": "string",
@@ -40,33 +44,40 @@ const dataMock = [
         "id": 3,
         
         "itemCount" : 12,
-        "name": "string"
+        "name": "Lacteo"
     },
     {
         "description": "string",
-        "hexColor": "string",
+        "hexColor": "#009FE3",
         "id": 4,
         
         "itemCount" : 12,
-        "name": "string"
+        "name": "Embutido"
     },
 ]
 
 const GroupHolder = ({hexColor, description, name,id,itemCount}) => {
     return (
-        <div style={{ backgroundColor: hexColor, width: '100%', display: 'flex', justifyContent : 'space-beetwen'}}>
+        <div className = 'mainHolderStyle' style={{ backgroundColor: hexColor, display: 'flex'}}>
             <HorizontalDisplay> 
-                    <p>{name} </p>
-                <CenteredDisplay width="30%">
-                    <div>Elementos en el grupo:</div>
-                    <div>{itemCount}</div>
+                <CenteredDisplay width="100%">
+                    <p className = 'groupName'> {name} </p>
                 </CenteredDisplay> 
+                <CenteredDisplay width="80%">
+                    <p className='itemCountTitle'>Elementos en el grupo:</p>
+                    <p className='itemCountHolder'>{itemCount}</p >
+                </CenteredDisplay> 
+                
+                <SvgButton type = 'editCookie' />
+                
+                <WhiteDummySpacer/>
+                <SvgButton type = 'trashCan' />
+ 
+                
             </HorizontalDisplay>
-    
         </div>
     )
 }
-
 
 const ListGroup = () => {
     return (
@@ -74,7 +85,7 @@ const ListGroup = () => {
             <WhiteDummySpacer />
             <Title>Grupos</Title>
             
-
+            
             { 
                 dataMock.map((group,index) => (
                     <GroupHolder
