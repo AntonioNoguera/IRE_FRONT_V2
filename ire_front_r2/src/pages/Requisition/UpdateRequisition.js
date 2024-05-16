@@ -24,15 +24,11 @@ const UpdateRequisition = () => {
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
     
-
     return (<div>
         <button onClick={openModal}>Open Modal</button>
 
         <Modal isOpen={isModalOpen} onClose={closeModal}> 
-        <motion.div
-            initial = {{x:200, opacity:0}}
-            animate={{ x: 0, opacity : 1 }} 
-            transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+        <>
 
             <CenteredDisplay width="100%">  
             <Title> Añadir Elemento al Platillo</Title> 
@@ -67,7 +63,6 @@ const UpdateRequisition = () => {
 
                     <WhiteDummySpacer/>
                     
-                    
                     <CenteredDisplay width="100%">
                         <Label>Cantidad del Platillo:</Label>
                         <HorizontalDisplay>
@@ -75,9 +70,6 @@ const UpdateRequisition = () => {
                             <Label marginTop = '5px'>Lorem</Label>
                         </HorizontalDisplay>
                     </CenteredDisplay>
-                        
-                    
-                    
                 </HorizontalDisplay>
 
                 {/** Botones de Confirmación */}
@@ -88,7 +80,7 @@ const UpdateRequisition = () => {
 				</HorizontalDisplay>
                 
             </CenteredDisplay> 
-        </motion.div>
+        </>
         </Modal>
       </div>)
 }

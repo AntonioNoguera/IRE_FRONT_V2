@@ -10,9 +10,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<motion.div
-			initial={{ opacity: 0, scale: 0.5 }}
-			animate={{ opacity: 1, scale: 1 }}
-			transition={{ duration: 0.5 }} >
+            initial={{  filter: 'brightness(50%)'}}
+            animate={{  filter: 'brightness(100%)'}}
+            transition={{ duration: .5,delay:1}}
+        >
 			<MadeRouter routes={RouterPaths} />
 		</motion.div>
 	</React.StrictMode>

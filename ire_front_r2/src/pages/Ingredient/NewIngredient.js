@@ -8,16 +8,13 @@ import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
-import { motion } from 'framer-motion';
+import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
 const NewIngredients = () => {
     return (
-        <motion.div
-                initial = {{x:200, opacity:0}}
-                animate={{ x: 0, opacity : 1 }} 
-                transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+        <MotionImplementation verticalCentered='enabled'>
 
             <CenteredDisplay>  
             <Title> Agregar Ingrediente </Title>
@@ -48,7 +45,7 @@ const NewIngredients = () => {
                 <Button>Agregar</Button>  
                 
             </CenteredDisplay> 
-        </motion.div>
+        </MotionImplementation>
     )
 }
 

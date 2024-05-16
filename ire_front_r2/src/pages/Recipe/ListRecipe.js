@@ -12,10 +12,13 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+
 import './../../mainStyles.css';  
 import './recipe.modules/recipeHolder.css';  
 
 import { motion } from 'framer-motion';
+
 
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
@@ -178,7 +181,7 @@ const RecipeGroups = ({name, items,index,backgrounColors}) => {
 
 const ListRecipe = () => {
     return (
-        <motion.div
+        <MotionImplementation
                 initial = {{x:200, opacity:0}}
                 animate={{ x: 0, opacity : 1 }} 
                 transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
@@ -198,7 +201,7 @@ const ListRecipe = () => {
                 ))
             }
 
-        </motion.div>
+        </MotionImplementation>
     )
 }
 

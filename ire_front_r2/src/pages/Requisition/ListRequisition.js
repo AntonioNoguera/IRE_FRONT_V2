@@ -3,6 +3,9 @@ import Title from "../../components/Layouts/Title";
 import ComponentHolder from "../../components/Layouts/ComponentHolder";
 import HorizontalSpray from "../../components/Layouts/HorizontalSpray";
 
+
+import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+
 import { motion } from 'framer-motion';
 
 const dataMock = [
@@ -35,10 +38,7 @@ const dataMock = [
 const ListRequisition = () => {
 
     return (
-        <motion.div
-                initial = {{x:200, opacity:0}}
-                animate={{ x: 0, opacity : 1 }} 
-                transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+        <MotionImplementation>
 
             <Title> Listado de Requisición </Title>
             
@@ -46,7 +46,7 @@ const ListRequisition = () => {
                 <HorizontalSpray itemsToSpray={dataMock}/>
             }
             
-        </motion.div>
+        </MotionImplementation>
     )
 }
 

@@ -9,14 +9,13 @@ import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+
 import { motion } from 'framer-motion';
 
 const NewRecipe = () => {
     return (
-        <motion.div
-                initial = {{x:200, opacity:0}}
-                animate={{ x: 0, opacity : 1 }} 
-                transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+        <MotionImplementation verticalCentered="enabled" >
 
             <CenteredDisplay>  
             <Title> Agregar Receta </Title>
@@ -57,7 +56,7 @@ const NewRecipe = () => {
                 <Button>Agregar</Button>  
                 
             </CenteredDisplay> 
-        </motion.div>
+        </MotionImplementation>
     )
 }
 
