@@ -6,13 +6,17 @@ import EditText from "../../components/UIcomponents/EditText";
 
 import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
-import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
+import DropDownSelection from "../../components/UIcomponents/DropDownSelection"; 
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+
+import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+
 const NewDish = () => {
     return (
-        <> 
+        <MotionImplementation verticalCentered = 'enabled'>
+
             <CenteredDisplay>  
             <Title> Agregar Ingrediente </Title>
 
@@ -50,7 +54,7 @@ const NewDish = () => {
                 <Button>Agregar</Button>  
                 
             </CenteredDisplay> 
-        </>
+        </MotionImplementation>
 
     )
 }

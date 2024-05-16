@@ -1,9 +1,9 @@
+
 .leftMenu a {
-    width: 100%;
+    width: 100%; 
     text-decoration: none;  
     padding: 20px 20px;
-    font-weight: 450;
-    
+    font-weight: 450; 
     font-size: 20px; 
     background-color: none;
     align-items: center;
@@ -32,13 +32,17 @@
 .leftMenu{
     background-color: var(--ire-lightGreen);
     display: flex;
-    width: 16%;
-    min-width: 150px;
+    width: 207px;
     flex-shrink: 0; 
     align-items: center;
     justify-content: center;
     flex-direction: column; 
+    
+    margin-left: 260px;
+    position: fixed;
+    height: 100vh;
 }
+ 
 
 .test {
     color: var(--ire-white);

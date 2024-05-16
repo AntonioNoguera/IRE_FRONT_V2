@@ -8,7 +8,7 @@ const nextArrow = "M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0
 
 const stdViewBox = "0 0 24 24";
 
-const SvgButton = ({ SvgUrl, onClick, type = 'trashCan' }) => {
+const SvgButton = ({ SvgUrl, onClick, type = 'trashCan', size ="50px" ,styleName = 'light' }) => {
 
 	var finalPath = "";
 	var viewBox = stdViewBox;
@@ -35,8 +35,8 @@ const SvgButton = ({ SvgUrl, onClick, type = 'trashCan' }) => {
 
 	return (
 		<button className={styles.button} onClick={onClick}>
-			<svg viewBox = {viewBox} className={styles.svgIcon} path={SvgUrl}>
-				<path d={finalPath} />
+			<svg viewBox = {viewBox} className= {styles[styleName]} style = {{width : size , height : size}}path={SvgUrl}>
+				<path d = {finalPath} />
 			</svg>
 		</button>
 	);

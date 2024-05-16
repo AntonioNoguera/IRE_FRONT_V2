@@ -14,14 +14,17 @@ const Group = () => {
     const paths = RouterPath.find(it => it.name === "Grupos");
 
     return (
-        <PageHolder>
-            <SubSideBar content = {paths} />
+        <>
+        <SubSideBar content = {paths} />
+            <PageHolder>
+                
 
-            <MainContainer>
-                <Outlet/>
-            </MainContainer>
-            
-        </PageHolder>
+                <MainContainer>
+                    <Outlet/>
+                </MainContainer>
+                
+            </PageHolder>
+        </>
     )
 }
 

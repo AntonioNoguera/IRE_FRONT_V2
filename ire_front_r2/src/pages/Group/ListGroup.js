@@ -10,6 +10,8 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import { motion } from 'framer-motion';
+
 import './../../mainStyles.css'; 
 import "./group.modules/groupHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
@@ -81,7 +83,10 @@ const GroupHolder = ({hexColor, description, name,id,itemCount}) => {
 
 const ListGroup = () => {
     return (
-        <>
+        <motion.div
+                initial = {{x:200, opacity:0}}
+                animate={{ x: 0, opacity : 1 }} 
+                transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
             <WhiteDummySpacer />
             <Title>Grupos</Title>
             
@@ -100,7 +105,7 @@ const ListGroup = () => {
                 ))
             }
 
-        </>
+        </motion.div>
     )
 }
 

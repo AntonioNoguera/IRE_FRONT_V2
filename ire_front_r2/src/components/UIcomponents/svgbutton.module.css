@@ -8,14 +8,23 @@
     justify-content: center; 
     transition: background-color 0.3s ease;
 }
- 
-.svgIcon {
-    fill: white; /* Define el color de llenado del SVG */
-    width: 50px; /* Ajusta el tamaño según sea necesario */
-    height: 50px;
-    transition: fill 0.3s ease;
+
+svg {
+    transition: fill 0.2s ease;
+} 
+
+.light { 
+    fill: white;
 }
 
-.svgIcon:hover {
-    fill: darkgray;
+.light:hover {
+    fill: darkgray ;
+}
+
+.dark { 
+    fill: black ;
+}
+
+.dark:hover {
+    fill: darkgray ;
 }

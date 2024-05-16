@@ -1,6 +1,7 @@
 const componentStyles = {
-    display: 'flex',
+    display: 'flex',  
     height: '100vh',
+    marginLeft : '467px',
     width: '100%',
 }
 

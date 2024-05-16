@@ -1,11 +1,13 @@
 //Paths in all the app
-import { Requisition, Dish, Recipe, Ingredient, Group } from './pages';
+import { Requisition, Dish, Recipe, Ingredient, Group, SideDish } from './pages';
 
 import { ListRequisition, NewRequisition, UpdateRequisition } from './pages';
 import { ListDish, NewDish, UpdateDish } from './pages';
 import { ListIngredient, NewIngredient, UpdateIngredient } from './pages';
 import { ListRecipe, NewRecipe, UpdateRecipe } from './pages';
 import { ListGroup, NewGroup, UpdateGroup } from './pages';
+
+import { ListSideDish, NewSideDish, UpdateSideDish } from './pages';
 
 const RouterPath = [
     {
@@ -129,6 +131,30 @@ const RouterPath = [
                 path: "actualizar",
                 name: "Actualizar Grupos",
                 page: UpdateGroup
+            },
+        ]
+    },
+    {
+        path: "/companions",
+        name: "Acompañantes",
+        icon: "bandeja.png",
+        page: SideDish,
+        defaultPath: "/companions/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Platillos",
+                page: ListSideDish
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Platillo",
+                page: NewSideDish
+            },
+            {
+                path: "actualizar",
+                name: "Actualizar Platillo",
+                page: UpdateSideDish
             },
         ]
     },

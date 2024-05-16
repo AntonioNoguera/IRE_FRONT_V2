@@ -6,6 +6,7 @@ const componentStyles = {
 
 const MainContainer = ({children}) => {
     return( 
+        
         <div style = {componentStyles}>
             { children }
         </div>

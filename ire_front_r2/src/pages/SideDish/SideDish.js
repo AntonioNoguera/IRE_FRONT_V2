@@ -4,20 +4,20 @@ import MainContainer from '../../components/Layouts/MainContainer';
 
 import RouterPath from '../../RouterPaths';
 import SubSideBar from '../../components/Sidebar/SubSideBar';
+import PageHolder from '../../components/Layouts/PageHolder';
+
 
 import '../../mainStyles.css'
-import PageHolder from '../../components/Layouts/PageHolder'; 
 
-const Dish = () => {
+const SideDish = () => {
     //Research in order to delete the hardcode reference
-    const paths = RouterPath.find(it => it.name === "Platillos");
+    const paths = RouterPath.find(it => it.name === "Acompañantes");
 
     return (
         <>
         <SubSideBar content = {paths} />
             <PageHolder>
                 
-
                 <MainContainer>
                     <Outlet/>
                 </MainContainer>
@@ -27,4 +27,4 @@ const Dish = () => {
     )
 }
 
-export default Dish; 
+export default SideDish; 

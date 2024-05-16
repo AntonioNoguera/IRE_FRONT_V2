@@ -7,6 +7,7 @@
     --ire-black: #000;
 
     --ire-darkGray: #303231;
+    --ire-darkBrown : #786C55;
     --ire-lightGray: #D9D9D9;
     --ire-lightGreen: #7CA88B;
     --ire-skyBlue:#009FE3;
@@ -56,3 +57,8 @@ body{
 .contentContainer{
     width: 100%;
 }
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }

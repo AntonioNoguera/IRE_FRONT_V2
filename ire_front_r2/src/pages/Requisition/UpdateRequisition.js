@@ -16,6 +16,8 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import { motion } from 'framer-motion';
+
 const UpdateRequisition = () => {
     const [isModalOpen, setModalOpen] = useState(false);
 
@@ -26,8 +28,12 @@ const UpdateRequisition = () => {
     return (<div>
         <button onClick={openModal}>Open Modal</button>
 
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <> 
+        <Modal isOpen={isModalOpen} onClose={closeModal}> 
+        <motion.div
+            initial = {{x:200, opacity:0}}
+            animate={{ x: 0, opacity : 1 }} 
+            transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+
             <CenteredDisplay width="100%">  
             <Title> Añadir Elemento al Platillo</Title> 
 
@@ -82,7 +88,7 @@ const UpdateRequisition = () => {
 				</HorizontalDisplay>
                 
             </CenteredDisplay> 
-        </>
+        </motion.div>
         </Modal>
       </div>)
 }

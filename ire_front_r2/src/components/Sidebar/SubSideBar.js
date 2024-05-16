@@ -19,7 +19,6 @@ const SubSidebarItem = ({path, children}) => {
 }
 
 const SubSideBar = ({content}) => {
-    
 
     return(
         <nav className={styles.leftMenu}>

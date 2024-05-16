@@ -14,14 +14,16 @@ const Recipe = () => {
     const paths = RouterPath.find(it => it.name === "Recetas");
 
     return (
-        <PageHolder>
-            <SubSideBar content = {paths} />
-
-            <MainContainer>
-                <Outlet/>
-            </MainContainer>
-            
-        </PageHolder>
+        <>
+        <SubSideBar content = {paths} />
+            <PageHolder>
+                
+                <MainContainer>
+                    <Outlet/>
+                </MainContainer>
+                
+            </PageHolder>
+        </>
     )
 }
 

@@ -14,6 +14,8 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
+import { motion } from 'framer-motion';
+
 const NewRequisition = () => {
 
     const [isModalOpen, setModalOpen] = useState(false);

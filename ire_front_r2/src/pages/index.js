@@ -34,3 +34,10 @@ export { default as Group } from './Group/Group';
 export { default as NewGroup } from './Group/NewGroup';
 export { default as ListGroup } from './Group/ListGroup';
 export { default as UpdateGroup } from './Group/UpdateGroup';
+
+//Side Exports
+export { default as SideDish } from './SideDish/SideDish';
+
+export { default as NewSideDish } from './SideDish/NewSideDish';
+export { default as ListSideDish } from './SideDish/ListSideDish';
+export { default as UpdateSideDish } from './SideDish/UpdateSideDish';

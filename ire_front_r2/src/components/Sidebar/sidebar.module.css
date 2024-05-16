@@ -5,6 +5,7 @@
 }
 
 .sidebar { 
+    position: fixed;
     height: 100vh;
     background-color: var(--ire-darkGray);
 }

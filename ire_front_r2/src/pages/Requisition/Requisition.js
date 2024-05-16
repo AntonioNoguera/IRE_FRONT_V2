@@ -14,16 +14,16 @@ const Requisition = () => {
     const paths = RouterPath.find(it => it.name === "Requisición");
 
     return (
-        <PageHolder>
-            <SubSideBar content = {paths} />
-
-            <MainContainer>
-                <Outlet/>
+        <>
+        <SubSideBar content = {paths} />
+            <PageHolder>
                 
-            <div id="modal-root"></div>
-            </MainContainer>
-            
-        </PageHolder> 
+                <MainContainer>
+                    <Outlet/>
+                </MainContainer>
+                
+            </PageHolder>
+        </>
     )
 }
 
