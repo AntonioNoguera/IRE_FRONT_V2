@@ -21,18 +21,17 @@ const NewSideDish = () => {
     return (
             <MotionImplementation verticalCentered='enabled'>
                 <CenteredDisplay>
-                <Title> Nuevo Acompañamiento </Title> 
+                <Title> Nuevo Complemento </Title> 
 
-                <Label>Selecciona el Platillo:</Label> 
-                <EditText>Selecciona el platillo del ingrediente</EditText>
+                <Label>Nombre del Complemento:</Label> 
+                <EditText>Ingresa el nombre del complemento</EditText>
 
-                <Label>Selecciona el Platillo:</Label> 
-                <EditText>Selecciona el platillo del ingrediente</EditText>
+                <Label>Descripción de Complemento:</Label> 
+                <BigTextArea>Ingresa un texto descriptivo de tu complemento</BigTextArea>
 
-                <Label>Selecciona el Platillo:</Label> 
-                <DropDownSelection>Selecciona el platillo del ingrediente</DropDownSelection>
+                <Label>Tipo de Complemento:</Label> 
+                <DropDownSelection>Selecciona el tipo del complemento</DropDownSelection>
 
- 
                 <Button>Agregar</Button>  
                 </CenteredDisplay>
             </MotionImplementation> 

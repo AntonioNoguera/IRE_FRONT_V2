@@ -1,0 +1,74 @@
+.dayHolder {
+    padding : 10px 20px;
+    border-radius: 20px;
+    margin-block: 20px;  
+}
+
+.dishHolder{
+    color:white;
+    border-radius: 20px;
+    margin-block:20px;
+    margin-inline: 10%;
+    padding : 10px 20px;
+    background-color: #1D7093;
+    box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
+}
+
+.itemHolder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: #FFF;
+    color:black;
+    border-radius: 5px; 
+    padding: 5px 10px;
+    margin-block:10px;
+}
+
+.atomToolbar{
+    display: flex;
+    flex-direction: row;
+}
+
+.itemInfo { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row; 
+    width: 60%;
+}
+
+.headerHolder {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-inline: 10%;  
+}
+
+.DayStrongValue{
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.DayLigthValue{
+    margin-inline-start: 10px;
+    font-size: 40px;
+    font-weight: 350;
+}
+
+.ItemStrongValue{
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.ItemLigthValue{
+    margin-inline-start: 10px;
+    font-size: 25px;
+    font-weight: 350;
+}
+
+hr{
+    border: .5px solid white;
+    margin-block: 4px;
+}

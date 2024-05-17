@@ -1,11 +1,12 @@
-.complementHolder {
-    background-color: red;
+.complementHolder { 
+
     padding: 10px;
     min-width: 25%;
     
     flex-grow: 0 !important;
 
     border-radius: 20px; 
+    margin-bottom: 50px;
 
     box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
 }

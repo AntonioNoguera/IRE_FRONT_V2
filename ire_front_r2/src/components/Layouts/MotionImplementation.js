@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const MotionImplementation = ({children, verticalCentered = 'any' }) => {
 
     const centeringDisplay = verticalCentered !== 'any' ? {
-        height: '100vh',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center', // Asumiendo que también quieres centrar el contenido
         alignItems: 'center'

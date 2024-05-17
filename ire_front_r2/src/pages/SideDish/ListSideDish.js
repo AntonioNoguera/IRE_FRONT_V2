@@ -12,6 +12,7 @@ import HorizontalSpray from "../../components/Layouts/HorizontalSpray";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import SvgButton from "../../components/UIcomponents/SvgButton";
 import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
 const mockData = {
     "complements": [
@@ -97,10 +98,12 @@ const ComplementItem = ({complementName}) => {
     )
 }
 
-const TopComplementHolder = ({ name, items, classValue =  'complementHolder'}) => {
+const backgroundItemColors = ['#009FE3', '#1D7093']
+
+const TopComplementHolder = ({ name, items, classValue =  'complementHolder',backgroundItem = '#B89554'}) => {
     if (name !== "types") {
         return (
-            <div className = {classValue}>
+            <div className = {classValue} style={{backgroundColor : backgroundItem}}>
                 <CenteredDisplay width="100%">
                     <p className = 'complementTitle'> {name} </p>
                 </CenteredDisplay> 
@@ -119,32 +122,33 @@ const TopComplementHolder = ({ name, items, classValue =  'complementHolder'}) =
 
 
 const ListSideDish = () => {
+    var iterator = 0;
 
     return (
-        <>
-            <MotionImplementation
-                initial = {{x:200, opacity:0}}
-                animate={{ x: 0, opacity : 1 }} 
-                transition={{ type: 'linear', stiffness: 200, duration : 0.42}} >
+        <MotionImplementation>  
+            <WhiteDummySpacer/>
+            <Title> Listado dse Acompañamientos </Title> 
+            <TopComplementHolder 
+                classValue = "typesHolder" 
+                key={"Tipos de Platillo"} 
+                name={"Tipos de Platillo"} 
+                items={mockData.types} 
+                /> 
 
-                    <Title> Listado de Acompañamientos </Title> 
-                    <TopComplementHolder 
-                        classValue = "typesHolder" 
-                        key={"Tipos de Platillo"} 
-                        name={"Tipos de Platillo"} 
-                        items={mockData.types} 
-                        /> 
-
-                    <HorizontalDisplay  >
-                        {
-                            Object.entries(mockData).map(([key, value]) => (
-                                <TopComplementHolder key={key} name={key} items={value} />
-                            ))
-                        }
-                    </HorizontalDisplay>
-
-                </MotionImplementation>
-        </>
+            <HorizontalDisplay  >
+                {
+                    Object.entries(mockData).map(([key, value],index) => (
+                        <TopComplementHolder 
+                            key={key} 
+                            name={key} 
+                            items={value} 
+                            backgroundItem = {backgroundItemColors[index%2]}
+                            />
+                    ))
+                }
+            </HorizontalDisplay>
+ 
+        </MotionImplementation>
     )
 }
 
