@@ -221,7 +221,7 @@ const RequisitionHolder = ({stringDay='huh', state, services, dishes}) => {
 const ListRequisition = () => {
      
      return(
-        <>
+        <MotionImplementation>
         <WhiteDummySpacer/>
         <WhiteDummySpacer/>
         <Title>Requisición Semanal</Title>
@@ -238,7 +238,7 @@ const ListRequisition = () => {
                     />
             ))
         }
-        </>
+        </MotionImplementation>
     )
 }
 

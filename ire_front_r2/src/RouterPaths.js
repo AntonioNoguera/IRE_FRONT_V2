@@ -135,20 +135,20 @@ const RouterPath = [
         ]
     },
     {
-        path: "/companions",
-        name: "Acompañantes",
+        path: "/complementos",
+        name: "Complementos",
         icon: "bandeja.png",
         page: SideDish,
-        defaultPath: "/companions/listado",
+        defaultPath: "/complementos/listado",
         subPaths: [
             {
                 path: "listado",
-                name: "Listado de Platillos",
+                name: "Listado de Complementos",
                 page: ListSideDish
             },
             {
                 path: "nuevo",
-                name: "Nuevo Platillo",
+                name: "Nuevo Complemento",
                 page: NewSideDish
             },
             {

@@ -11,7 +11,7 @@ import '../../mainStyles.css'
 
 const SideDish = () => {
     //Research in order to delete the hardcode reference
-    const paths = RouterPath.find(it => it.name === "Acompañantes");
+    const paths = RouterPath.find(it => it.name === "Complementos");
 
     return (
         <>
