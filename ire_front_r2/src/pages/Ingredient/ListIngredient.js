@@ -20,6 +20,8 @@ import './../../mainStyles.css';
 import "./ingredient.modules/ingredientHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
+import DeleteIngredientModal from "./ingredient.modules/DeleteIngredientModal"
+
 const dataMock = [
     {
         groupName: "EjemploA",
@@ -73,29 +75,31 @@ const colorOption = [
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({id,name,existence,lastTimeUsed,backgroundColor}) => {
+const IngredientItemHolder = ({fullProps,backgroundColor}) => {
+
     return( 
         <div className = 'mainHolderStyle' style={{  display: 'flex', backgroundColor : backgroundColor}}>
         <HorizontalDisplay> 
             <CenteredDisplay width="100%">
-                <p className = 'groupName'> {name} </p>
+                <p className = 'groupName'> {fullProps.name} </p>
             </CenteredDisplay>
 
 
             <CenteredDisplay width="80%">
                 <p className='itemCountTitle'>Fecha de Registro:</p>
-                <p className='itemCountHolder'>{existence}</p >
+                <p className='itemCountHolder'>{fullProps.existence}</p >
             </CenteredDisplay> 
 
             <CenteredDisplay width="80%">
                 <p className='itemCountTitle'>Cantidad Actual:</p>
-                <p className='itemCountHolder'>{lastTimeUsed}</p >
+                <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
             </CenteredDisplay> 
             
             <SvgButton type = 'editCookie' />
             
-            <WhiteDummySpacer/>
-            <SvgButton type = 'trashCan' />
+            <WhiteDummySpacer/> 
+            <SvgButton type='trashCan' fullProps={fullProps} RenderedComponent = {DeleteIngredientModal} />
+
 
             
         </HorizontalDisplay>
@@ -110,19 +114,15 @@ const IngredientGroupHolder = ({name, items,index,backgrounColors}) => {
             {
                 items.map((ingredient, index) => (
                     <IngredientItemHolder
-                        backgroundColor = {backgrounColors[index%2]}
-                        key = {index}
-                        id = {ingredient.id}
-                        name = {ingredient.name}
-                        existence = {ingredient.existence}
-                        lastTimeUsed = {ingredient.last_time_used}
+                        backgroundColor = { backgrounColors[index%2] }
+                        key = { index }
+                        fullProps = { ingredient } 
                     />
                 ))
             }
         </>
     )
 }
-
 
 const ListIngredient = () => {
     return (

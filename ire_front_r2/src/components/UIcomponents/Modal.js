@@ -13,7 +13,6 @@ const Modal = ({ isOpen, children, onClose }) => {
     }
   };
 
-  
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);

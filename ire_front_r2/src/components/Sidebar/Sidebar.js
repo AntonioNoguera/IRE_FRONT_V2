@@ -20,6 +20,7 @@ const SidebarAtom = ({ children, to, icon }) => {
             <NavLink  to = {to} className = { isActive ? styles.activeState : styles.defaultState } >
 
                 <img src={`${process.env.PUBLIC_URL}/icons/${icon}`} />
+                
                 {children}
                 
             </NavLink>

@@ -12,9 +12,9 @@ const mainStyles = {
     fontWeight: '500',
 }
 
-const Button = ({ children, type = 'proceedStyle' }) => {
+const Button = ({ children, type = 'proceedStyle' , onClick}) => {
     return (
-        <button style={mainStyles} className={styles[type]}>
+        <button style={mainStyles} onClick = {onClick} className={styles[type]}>
             {children}
         </button>
     );

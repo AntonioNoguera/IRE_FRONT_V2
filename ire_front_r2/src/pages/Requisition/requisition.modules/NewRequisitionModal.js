@@ -16,6 +16,14 @@ import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 
 import { motion } from 'framer-motion'; 
 
+const onAccept = () => {
+    alert("Le picaste aceptar");
+}
+
+const onDecline = () => {
+    alert("Le picaste declinar");
+}
+
 const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>

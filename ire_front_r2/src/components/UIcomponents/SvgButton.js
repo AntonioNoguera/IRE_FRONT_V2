@@ -15,7 +15,14 @@ const nextArrow = "M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0
 
 const stdViewBox = "0 0 24 24";
 
-const SvgButton = ({ SvgUrl, onClick, type = 'trashCan', size ="50px" ,styleName = 'light', RenderedComponent = NewRequisitionModal }) => {
+const SvgButton = (
+					{ 	
+						type = 'trashCan', size ="50px" ,
+						styleName = 'light', 
+						fullProps,
+						RenderedComponent = NewRequisitionModal
+					}
+				) => {
 
 	var finalPath = "";
 	var viewBox = stdViewBox;
@@ -49,10 +56,12 @@ const SvgButton = ({ SvgUrl, onClick, type = 'trashCan', size ="50px" ,styleName
 		<>
             {/* Investigar como manejar este tipo de implementación, 
 			enviar componente de react como parametros, y callbacks */}
-			<RenderedComponent
-                isModalOpen={isModalOpen}
-                closeModal={closeModal}
-            />
+				<RenderedComponent
+					closeModal={closeModal}
+                    isModalOpen={isModalOpen} 
+                    fullProps={fullProps}
+                />
+            
 
 			<button className={styles.button} onClick={openModal}>
 				<svg viewBox = {viewBox} className= {styles[styleName]} style = {{width : size , height : size}}>
