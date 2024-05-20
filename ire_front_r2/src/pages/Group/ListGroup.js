@@ -18,9 +18,13 @@ import './../../mainStyles.css';
 import "./group.modules/groupHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
+import DeleteGroupModal from "./group.modules/DeleteGroupModal";
+import UpdateGroupModal from "./group.modules/UpdateGroupModal";
+
+
 const dataMock = [
     {
-        "description": "string",
+        "description": "asdfasdf",
         "hexColor": "#F7B334",
         "id": 0,
         "itemCount" : 12,
@@ -60,22 +64,30 @@ const dataMock = [
     },
 ]
 
-const GroupHolder = ({hexColor, description, name,id,itemCount}) => {
+const GroupHolder = ({fullGroupProps}) => {
     return (
-        <div className = 'mainHolderStyle' style={{ backgroundColor: hexColor, display: 'flex'}}>
+        <div className = 'mainHolderStyle' style={{ backgroundColor: fullGroupProps.hexColor, display: 'flex'}}>
             <HorizontalDisplay> 
                 <CenteredDisplay width="100%">
-                    <p className = 'groupName'> {name} </p>
+                    <p className = 'groupName'> {fullGroupProps.name} </p>
                 </CenteredDisplay> 
                 <CenteredDisplay width="80%">
                     <p className='itemCountTitle'>Elementos en el grupo:</p>
-                    <p className='itemCountHolder'>{itemCount}</p >
+                    <p className='itemCountHolder'>{fullGroupProps.itemCount}</p >
                 </CenteredDisplay> 
                 
-                <SvgButton type = 'editCookie' />
+                <SvgButton 
+                    type = 'editCookie'
+                    fullProps = {fullGroupProps} 
+                    RenderedComponent = {UpdateGroupModal}  
+                />
                 
                 <WhiteDummySpacer/>
-                <SvgButton type = 'trashCan' />
+                <SvgButton
+                    type = 'trashCan' 
+                    fullProps = {fullGroupProps} 
+                    RenderedComponent = {DeleteGroupModal}  
+                />
  
                 
             </HorizontalDisplay>
@@ -95,11 +107,7 @@ const ListGroup = () => {
                 dataMock.map((group,index) => (
                     <GroupHolder
                         key = {index}
-                        id = {group.id}
-                        name = {group.name}
-                        description = {group.description}
-                        hexColor = {group.hexColor}
-                        itemCount = {group.itemCount}
+                        fullGroupProps = {group}
                         />
                     
                 ))

@@ -3,7 +3,6 @@ import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de 
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
 import Title from "../../../components/Layouts/Title";
-import SubTitle from "../../../components/Layouts/SubTitle";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
@@ -11,9 +10,9 @@ import EditText from '../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
- 
-const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
+  
 
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
         alert("Le picaste aceptar");
@@ -28,19 +27,34 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
-                <Title> Eliminar Ingrediente </Title> 
+                <Title> Editar Ingrediente </Title>
 
-                <SubTitle textAlignment="center" paddingLeft='0px'>
-                    ¿Estás seguro de que deseas eliminar este Ingrediente? 
-                    <br/>
-                    Esta acción es irreversible y no se puede deshacer. 
-                </SubTitle>
-                
-                <Label textAlignment="Center" >
-                    Ingrediente a Eliminar: {fullProps.name}</Label>
+                <Label>Nombre del Ingrediente:</Label>
+
+                <EditText previousValue = {fullProps.name}>Ingresa el nombre del grupo</EditText>
 
                 <HorizontalDisplay>
-                    <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
+                    <CenteredDisplay width="100%">
+                        <Label> Cantidad del Ingrediente: </Label>
+                        <EditText previousValue = {fullProps.existence}> Valor numérico de Ingrediente</EditText>
+                    </CenteredDisplay>
+
+                    <WhiteDummySpacer/>
+
+                    <CenteredDisplay width="100%">
+                        <Label>Unidad:</Label>
+                        <EditText previousValue = {fullProps.unit} >Unidad del Ingrediente</EditText>
+                    </CenteredDisplay>
+                    
+                </HorizontalDisplay>
+
+                <CenteredDisplay width="50%">
+                    <Label>Grupo:</Label>
+                    <DropDownSelection selectedOption = {fullProps.group_name} optionsAvailable = {fullProps.groupsAvailable}>Selecciona el grupo del ingrediente</DropDownSelection>
+                </CenteredDisplay>
+ 
+                <HorizontalDisplay>
+                    <Button type='cancelStyle' onClick = {onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
                     <Button onClick={onAccept}>Agregar</Button>
                 </HorizontalDisplay>
@@ -49,4 +63,4 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     );
 };
 
-export default DeleteIngredientModal;
+export default UpdateSideDish;

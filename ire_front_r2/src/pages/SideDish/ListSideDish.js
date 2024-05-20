@@ -2,9 +2,7 @@ import { Component } from "react";
 
 import "./sidedish.module/complementHolder.css";
 
-import CenteredDisplay from "./../../components/Layouts/CenteredDisplay";
-
-import { motion } from 'framer-motion';
+import CenteredDisplay from "./../../components/Layouts/CenteredDisplay"; 
 
 import Title from "../../components/Layouts/Title";
 import ComponentHolder from "../../components/Layouts/ComponentHolder";
@@ -13,6 +11,9 @@ import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import SvgButton from "../../components/UIcomponents/SvgButton";
 import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
+
+import UpdateSideDishModal from "./sidedish.module/UpdateSideDishModal";
+import DeleteSideDishModal from "./sidedish.module/DeleteSideDishModal";
 
 const mockData = {
     "complements": [
@@ -63,17 +64,20 @@ const mockData = {
         },
         {
             "id": 0,
+            "description": "OnlyItem With description",
             "name": "string"
         },
         {
             "id": 0,
             "name": "string"
         },
-        
     ]
 }
 
-const ComplementItem = ({complementName}) => {
+const ComplementItem = ({fullSideDish, typeOfComplement}) => {
+ 
+    fullSideDish.typeOption = typeOfComplement;
+
     return (
         <HorizontalDisplay 
             justifyDirection="start" 
@@ -81,18 +85,24 @@ const ComplementItem = ({complementName}) => {
             classNameSend="complementItemHolder">
 
             <p className="complementNameHolder" >
-                {complementName}
+                {fullSideDish.name}
             </p>
 
             <SvgButton 
                 size='30px' 
                 styleName = 'dark' 
-                type ='editCookie'/>
+                type ='editCookie'
+                fullProps = {fullSideDish}
+                RenderedComponent = {UpdateSideDishModal}
+                />
 
             <SvgButton 
                 size='30px' 
                 styleName = 'dark' 
-                type ='trashCan'/>
+                type ='trashCan'
+                fullProps = {fullSideDish}
+                RenderedComponent = {DeleteSideDishModal}
+                />
 
         </HorizontalDisplay>
     )
@@ -110,8 +120,9 @@ const TopComplementHolder = ({ name, items, classValue =  'complementHolder',bac
                 {
                     items.map((item, index) => (
                         <ComplementItem 
+                            typeOfComplement = {name}
                             key = {item.id} 
-                            complementName={item.name} /> 
+                            fullSideDish = {item} /> 
                     ))
                 }
             </div>

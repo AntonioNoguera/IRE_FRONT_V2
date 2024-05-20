@@ -11,9 +11,8 @@ import EditText from '../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
- 
-const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
 
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
         alert("Le picaste aceptar");
@@ -28,16 +27,11 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
-                <Title> Eliminar Ingrediente </Title> 
+                <Title> Eliminar Complemento </Title> 
 
-                <SubTitle textAlignment="center" paddingLeft='0px'>
-                    ¿Estás seguro de que deseas eliminar este Ingrediente? 
-                    <br/>
-                    Esta acción es irreversible y no se puede deshacer. 
-                </SubTitle>
+                <SubTitle textAlignment="center" paddingLeft='0px'>¿Estás seguro de que deseas eliminar este complemento? <br/> Esta acción es irreversible y no se puede deshacer.</SubTitle>
                 
-                <Label textAlignment="Center" >
-                    Ingrediente a Eliminar: {fullProps.name}</Label>
+                <Label textAlignment="Center" >Complemento a eliminar: {fullProps.name}</Label>
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
@@ -49,4 +43,4 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     );
 };
 
-export default DeleteIngredientModal;
+export default UpdateSideDish;

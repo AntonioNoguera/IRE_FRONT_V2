@@ -20,7 +20,8 @@ import './../../mainStyles.css';
 import "./ingredient.modules/ingredientHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
-import DeleteIngredientModal from "./ingredient.modules/DeleteIngredientModal"
+import DeleteIngredientModal from "./ingredient.modules/DeleteIngredientModal";
+import UpdateIngredientModal from "./ingredient.modules/UpdateIngredientModal";
 
 const dataMock = [
     {
@@ -49,7 +50,7 @@ const dataMock = [
         groupName: "Ejemplo",
         items:[
             {
-                "existence": 0,
+                "existence": 12,
                 "group_id": 0,
                 "group_name": "string",
                 "id": 0,
@@ -75,7 +76,14 @@ const colorOption = [
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({fullProps,backgroundColor}) => {
+const groupsCasted = [];
+
+const IngredientItemHolder = ({fullProps, backgroundColor}) => {
+
+    fullProps.complementsAvailable = groupsCasted;
+    fullProps.groupsAvailable = groupsCasted; 
+    fullProps.proteinsAvailable = groupsCasted;
+    fullProps.sauceAvailable = groupsCasted;
 
     return( 
         <div className = 'mainHolderStyle' style={{  display: 'flex', backgroundColor : backgroundColor}}>
@@ -95,10 +103,18 @@ const IngredientItemHolder = ({fullProps,backgroundColor}) => {
                 <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
             </CenteredDisplay> 
             
-            <SvgButton type = 'editCookie' />
+            <SvgButton 
+                type = 'editCookie'  
+                fullProps = {fullProps} 
+                RenderedComponent = {UpdateIngredientModal} 
+                />
             
             <WhiteDummySpacer/> 
-            <SvgButton type='trashCan' fullProps={fullProps} RenderedComponent = {DeleteIngredientModal} />
+            <SvgButton 
+                type = 'trashCan' 
+                fullProps = {fullProps} 
+                RenderedComponent = {DeleteIngredientModal} 
+            />
 
 
             
@@ -135,15 +151,21 @@ const ListIngredient = () => {
             <Title>Ingredientes</Title>
             
             { 
-                dataMock.map((groupIngredient, index) => (
-                    <IngredientGroupHolder 
-                        backgrounColors = {colorOption[index%2]} 
-                        key = {index}
-                        name = {groupIngredient.groupName}
-                        items = {groupIngredient.items}    
-                    />
+                dataMock.map((groupIngredient, index) => {
+                    if(!groupsCasted.includes(groupIngredient.groupName)){
+                        groupsCasted.push(groupIngredient.groupName);
+                    }
                     
-                ))
+
+                    return (
+                        <IngredientGroupHolder 
+                            backgrounColors={colorOption[index % 2]} 
+                            key={index}
+                            name={groupIngredient.groupName}
+                            items={groupIngredient.items}
+                        />
+                    );
+                })
             }
 
         </MotionImplementation>

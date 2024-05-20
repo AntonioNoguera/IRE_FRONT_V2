@@ -12,7 +12,7 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
-const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
+const DeleteGroupModal = ({ isModalOpen, closeModal, fullProps }) => {
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
@@ -28,16 +28,15 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
-                <Title> Eliminar Ingrediente </Title> 
+                <Title> Eliminar Grupo </Title> 
 
                 <SubTitle textAlignment="center" paddingLeft='0px'>
-                    ¿Estás seguro de que deseas eliminar este Ingrediente? 
-                    <br/>
-                    Esta acción es irreversible y no se puede deshacer. 
+                    ¿Estás seguro de que deseas eliminar este Grupo? 
+                    <br/> 
+                    Esta acción es irreversible y no se puede deshacer.
                 </SubTitle>
                 
-                <Label textAlignment="Center" >
-                    Ingrediente a Eliminar: {fullProps.name}</Label>
+                <Label textAlignment="Center" >Grupo a Eliminar: {fullProps.name}</Label>
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
@@ -49,4 +48,4 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     );
 };
 
-export default DeleteIngredientModal;
+export default DeleteGroupModal;

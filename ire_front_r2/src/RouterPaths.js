@@ -82,6 +82,11 @@ const RouterPath = [
                 name: "Actualizar Receta",
                 page: UpdateRecipe
             },
+            {
+                path: "detalle/:id",
+                name: "",
+                page: ListRecipe
+            },
         ]
     },
 

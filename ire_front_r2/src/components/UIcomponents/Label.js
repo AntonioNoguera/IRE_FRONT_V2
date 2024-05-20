@@ -1,6 +1,11 @@
 import './../../mainStyles.css'; 
 
-const Label = ({children, marginTop= '4vh', color = 'var(--ire-black)' , fontWeight  = 'var(--ire-Bold)'} )=> {
+const Label = ({children, 
+                marginTop= '4vh', 
+                color = 'var(--ire-black)' , 
+                fontWeight  = 'var(--ire-Bold)',
+                textAlignment = 'center'
+            }) => {
     const componentStyles = {
         color: color,
         marginTop: marginTop,
@@ -8,7 +13,7 @@ const Label = ({children, marginTop= '4vh', color = 'var(--ire-black)' , fontWei
         paddingLeft : '20px',
         fontWeight : fontWeight,
         opacity: '80%',
-        textAlign : 'start'
+        textAlign : textAlignment
     }
 
     return (

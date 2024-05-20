@@ -19,27 +19,62 @@ import './../../mainStyles.css';
 import "./dish.modules/dishHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
+import UpdateDishModal from "./dish.modules/UpdateDishModal";
+import DeleteDishModal from "./dish.modules/DeleteDishModal";
+
 const dataMock = [
     {
         groupName: "Desayuno",
         items:[
             {
-                "existence": 0,
-                "group_id": 0,
-                "group_name": "string",
-                "id": 0,
-                "last_time_used": "string",
-                "name": "Tacos de Buche al pastor sabroso",
-                "unit": "string"
+                "id": 2,
+                "name": "Pozole Verde",
+                "assamble": true,
+                "temperature": "Frío",
+                "last_made": "2024-04-24T01:42:25.740694206",
+                "services": 0,
+                "rating": 0,
+                "complement": {
+                  "id": 4,
+                  "name": "Tostadas"
+                },
+                "sauce": {
+                  "id": 1,
+                  "name": "Salsa Roja"
+                },
+                "protein": {
+                  "id": 3,
+                  "name": "Pollo Deshebrado"
+                },
+                "type": {
+                  "id": 5,
+                  "name": "Desayuno"
+                }
               },
               {
-                "existence": 0,
-                "group_id": 0,
-                "group_name": "string",
-                "id": 0,
-                "last_time_used": "string",
-                "name": "pepino",
-                "unit": "string"
+                "id": 2,
+                "name": "Pozole Amarillo",
+                "assamble": true,
+                "temperature": "Frío",
+                "last_made": "2024-04-24T01:42:25.740694206",
+                "services": 0,
+                "rating": 0,
+                "complement": {
+                  "id": 4,
+                  "name": "Tostadas"
+                },
+                "sauce": {
+                  "id": 1,
+                  "name": "Salsa Roja"
+                },
+                "protein": {
+                  "id": 3,
+                  "name": "Pollo Deshebrado"
+                },
+                "type": {
+                  "id": 5,
+                  "name": "name in order"
+                }
               },
         ]
     },{
@@ -65,35 +100,106 @@ const dataMock = [
               },
         ]
     },
-]
+] 
 
 const colorOption = [
     ['#009FE3', '#1D7093'] , 
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({id,name,existence,lastTimeUsed,backgroundColor}) => {
+const mockDatagroup = {
+    "complements": [
+        {
+            "id": 0,
+            "name": "string"
+        }
+    ],
+    "proteins": [
+        {
+            "id": 0,
+            "name": "string"
+        }
+    ],
+    "sauces": [
+        {
+            "id": 0,
+            "name": "string"
+        },
+        {
+            "id": 0,
+            "name": "string"
+        },
+        {
+            "id": 0,
+            "name": "string"
+        },{
+            "id": 0,
+            "name": "string"
+        }, 
+    ],
+    "types": [
+        {
+            "id": 0,
+            "name": "aasdf"
+        },
+        {
+            "id": 0,
+            "name": "asdfasfasdfasdf"
+        },
+        {
+            "id": 0,
+            "name": "string"
+        },
+        {
+            "id": 0,
+            "name": "f232323"
+        },
+        {
+            "id": 0,
+            "description": "OnlyItem With description",
+            "name": "name in order"
+        },
+        {
+            "id": 0,
+            "name": "stringsasdaaaa"
+        },
+    ]
+}
+
+const IngredientItemHolder = ({backgroundColor,fullProps}) => {
+
+    fullProps.complementInfo = mockDatagroup
+
     return( 
             <div className = 'mainHolderStyle' style={{  display: 'flex', backgroundColor : backgroundColor}}>
             <HorizontalDisplay> 
                 <CenteredDisplay width="100%">
-                    <p className = 'groupName'> {name} </p>
+                    <p className = 'groupName'> {fullProps.name} </p>
                 </CenteredDisplay>
 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                     <p className='itemCountTitle'>Tipo:</p>
-                    <p className='itemCountHolder'>{existence}</p >
+                    <p className='itemCountHolder'>{fullProps.existence}</p >
                 </div> 
 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                     <p className='itemCountTitle'> Fecha de Creación:</p>
-                    <p className='itemCountHolder'>{lastTimeUsed}</p >
+                    <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
                 </div> 
                 
-                <SvgButton type = 'editCookie' />
+                <SvgButton 
+                    type = 'editCookie'
+                    fullProps = {fullProps}
+                    RenderedComponent = {UpdateDishModal}
+                    />
                 
                 <WhiteDummySpacer/>
-                <SvgButton type = 'trashCan' />
+
+                <SvgButton 
+                    type = 'trashCan'
+                    fullProps = {fullProps}
+                    RenderedComponent = {DeleteDishModal}
+                    />
 
             </HorizontalDisplay>
             </div> 
@@ -108,11 +214,8 @@ const IngredientGroupHolder = ({name, items,index,backgrounColors}) => {
                 items.map((ingredient, index) => (
                     <IngredientItemHolder
                         backgroundColor = {backgrounColors[index%2]}
-                        key = {index}
-                        id = {ingredient.id}
-                        name = {ingredient.name}
-                        existence = {ingredient.existence}
-                        lastTimeUsed = {ingredient.last_time_used}
+                        key = {index} 
+                        fullProps = { ingredient } 
                     />
                 ))
             }

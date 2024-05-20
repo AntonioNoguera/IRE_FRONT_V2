@@ -11,6 +11,14 @@ import { motion } from 'framer-motion';
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
+import UpgradeIngredientModal from "./requisition.modules/AtomIngredientModals/UpdateIngredientModal";
+import DeleteDishFromRecipeModal from "../Recipe/recipe.modules/DishItemModules/DeleteDishFromRecipeModal";
+
+ 
+import NewDishForRequisitionModal from './requisition.modules/NewDishForRequisitionModal';
+import DeleteDishForRequisition from './requisition.modules/DeleteDishForRequisition';
+import UpdateDayForRequisition from './requisition.modules/UpdateDayForRequisition'; 
+
 const dataMock = [
     {
         id : '0',
@@ -117,55 +125,77 @@ const dataMock = [
     },
 ]
 
-const RequisitionAtom = ({name,amount,unit,time}) => {
+const RequisitionAtom = ({fullAtomProps}) => {
     return (
         <div className='itemHolder'> 
             <div className="itemInfo">
-                {name}
+                {fullAtomProps.name}
                 <span> / </span>
-                {amount} {unit}
+                {fullAtomProps.amount} {fullAtomProps.unit}
                 <span> / </span>
-                <span> {time} </span> 
+                <span> {fullAtomProps.time} </span> 
             </div>
             
             <div className='atomToolbar'>
-                <SvgButton type = 'editCookie' styleName="dark" size = '30px'/>
+                <SvgButton 
+                    type = 'editCookie' 
+                    styleName="dark" 
+                    size = '30px'
+                    fullProps = {fullAtomProps}
+                    RenderedComponent={UpgradeIngredientModal}  />
+
                 <WhiteDummySpacer/>
-                <SvgButton type = 'trashCan' styleName="dark"  size = '30px'/>
+                
+                <SvgButton 
+                    type = 'trashCan' 
+                    styleName="dark"  
+                    size = '30px'
+                    fullProps = {fullAtomProps}
+                    RenderedComponent={DeleteDishFromRecipeModal}
+                    />
             </div>
             
         </div>
     )
 }
 
-const RequisitionItem = ({name, type, services,elements}) => {
+const RequisitionItem = ({fullProps}) => {
     return (
         <div  className="dishHolder">
             <HorizontalDisplay justifyDirection="space-between" >
                 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' }}>
-                    <p className='itemCountHolder'>Platillo: {name}</p >
+                    <p className='itemCountHolder'>Platillo: {fullProps.name}</p >
                 </div> 
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center'}}>
                     {/** Dish toolbar */}
-                    <SvgButton type="addSign" size="30" />
+                    <SvgButton 
+                        type="addSign" 
+                        size="30" 
+                        RenderedComponent={NewDishForRequisitionModal}/>
+
                     <WhiteDummySpacer/>
-                    <SvgButton type="editCookie" size="30"/>
+
+                    <SvgButton 
+                        type="editCookie" 
+                        size="30"
+                        RenderedComponent={UpdateDayForRequisition}/>
+
                     <WhiteDummySpacer/>
-                    <SvgButton type="trashCan" size="30"/>
+                    <SvgButton 
+                        type="trashCan" 
+                        size="30" 
+                        RenderedComponent={DeleteDishForRequisition}/>
                 </div>   
            
             </HorizontalDisplay>
             
             <hr/>
             {
-                elements.map((element,index)=>(
-                    <RequisitionAtom 
-                        name = { element.name }
-                        amount = { element.amount }
-                        unit = { element.unit }
-                        time = { element.time }
+                fullProps.elements.map((element,index)=>(
+                    <RequisitionAtom  
+                        fullAtomProps = {element}
                     />
                 ))
             } 
@@ -174,12 +204,12 @@ const RequisitionItem = ({name, type, services,elements}) => {
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="ItemStrongValue">Turno:</p> 
-                    <p className="ItemLigthValue">{type}</p>
+                    <p className="ItemLigthValue">{fullProps.type}</p>
                 </div>  
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="ItemStrongValue">Servicios:</p> 
-                    <p className="ItemLigthValue">{services}</p>
+                    <p className="ItemLigthValue">{fullProps.services}</p>
                 </div> 
   
            
@@ -205,12 +235,11 @@ const RequisitionHolder = ({stringDay='huh', state, services, dishes}) => {
             </div>
 
             {
-                dishes.map((dish)=>(
+                dishes.map((dish,index)=>(
                     <RequisitionItem 
-                        name = {dish.dish}
-                        elements = {dish.elements}
-                        services = {dish.services}
-                        type = {dish.type}
+                        key={index}
+
+                        fullProps = {dish}
                     />
                 ))
             }

@@ -1,17 +1,16 @@
+const SubTitle = ({children, textAlignment = 'center', paddingLeft = '50px'})=> {
 
-const componentStyles = { 
-    textAlign: 'start',
-
-    marginInline: '10%',
-    paddingLeft :'50px',
-    fontWeight: '450',
-
-    fontSize: '30px',
-    marginTop: '40px',
-    marginBottom : '10px' 
-}
-
-const SubTitle = ({children})=> {
+    const componentStyles = { 
+        textAlign: textAlignment,
+    
+        marginInline: '10%',
+        paddingLeft :paddingLeft,
+        fontWeight: '450',
+    
+        fontSize: '30px',
+        marginTop: '40px',
+        marginBottom : '10px' 
+    }
     return (
         <div style = {componentStyles} >
             { children }

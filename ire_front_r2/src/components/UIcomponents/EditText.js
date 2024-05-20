@@ -2,6 +2,8 @@ import './../../mainStyles.css';
 
 import './editText.module.css';  
 
+import React, { useState } from 'react';
+
 const componentStyles = { 
     textAlign: 'center',
     fontWeight: '450',
@@ -15,10 +17,23 @@ const componentStyles = {
     width: '100%',
 }
 
-const EditText = ({children})=> {
+const EditText = ({ children, previousValue = '' }) => {
+    const [value, setValue] = useState(previousValue);
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
     return (
-        <input type="text" placeholder = {children} style = {componentStyles} /> 
-    )
-}
+        <input 
+            type="text" 
+            value={value} 
+            placeholder={children} 
+            onChange={handleChange} 
+            style={componentStyles} 
+        /> 
+    );
+};
 
 export default EditText;
+

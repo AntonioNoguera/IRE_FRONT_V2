@@ -44,7 +44,6 @@
 
     box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
 }
- 
 
 .mainRecipeHolder {
     cursor:pointer;
@@ -55,4 +54,31 @@
 .mainRecipeHolder:hover {
     opacity: .6;
     color : black
+}
+
+.BlueSTD{
+    width: 80%;
+    margin-block: 5px;
+    border-radius: 20px;
+    padding-inline: 35px;
+    padding-block: 5px; 
+    margin-inline: 10%;
+    color: white;
+    background-color: #1D7093;
+    
+}
+
+.BlueStrong{
+    width: 80%;
+    margin-block: 5px;
+    border-radius: 20px;
+    padding-inline: 35px;
+    padding-block: 5px; 
+    margin-inline: 10%;
+    color: white;
+    background-color: #009FE3;
+}
+
+.ingredientItemHolder{
+    font-size: 30px;
 }

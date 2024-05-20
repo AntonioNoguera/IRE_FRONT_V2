@@ -19,6 +19,9 @@ import './recipe.modules/recipeHolder.css';
 
 import { motion } from 'framer-motion';
 
+import DeleteRecipeModal from "./recipe.modules/DeleteRecipeModal";
+import UpdateRecipeModal from "./recipe.modules/UpdateRecipeModal"; 
+
 
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
@@ -77,7 +80,7 @@ const dataMock = [
         items:[
             {
                 id: 0,
-                dish : 'asdf',
+                dish : 'aasdfasdsdf',
                 date : '21/21/21',
                 recipeItems : [
                 {
@@ -130,12 +133,12 @@ const colorOption = [
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({id,name,itemCount,lastTimeUsed,backgroundColor}) => {
+const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => {
     return( 
         <div className = 'mainHolderStyle mainRecipeHolder' style={{  display: 'flex', backgroundColor : backgroundColor}}>
         <HorizontalDisplay> 
             <CenteredDisplay width="100%">
-                <p className = 'groupName'> {name} </p>
+                <p className = 'groupName'> {fullProps.dish} </p>
             </CenteredDisplay>
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
@@ -145,14 +148,19 @@ const IngredientItemHolder = ({id,name,itemCount,lastTimeUsed,backgroundColor}) 
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                 <p className='itemCountTitle'> Fecha de Creación:</p>
-                <p className='itemCountHolder'>{lastTimeUsed}</p >
+                <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
             </div> 
             
-            <SvgButton type = 'editCookie' />
+            <SvgButton 
+                type = 'editCookie'
+                fullProps = { fullProps }
+                RenderedComponent = { UpdateRecipeModal } />
             
             <WhiteDummySpacer/>
-            <SvgButton type = 'trashCan' />
-
+            <SvgButton type = 'trashCan'
+                fullProps = { fullProps }
+                RenderedComponent = { DeleteRecipeModal } />
+            
         </HorizontalDisplay>
         </div>
     )
@@ -167,10 +175,9 @@ const RecipeGroups = ({name, items,index,backgrounColors}) => {
                     <IngredientItemHolder
                         backgroundColor = {backgrounColors[index%2]}
                         key = {index}
-                        id = {index}
-                        name = {recipe.dish} 
                         itemCount = {items.length}
-                        lastTimeUsed = {recipe.last_time_used}
+
+                        fullProps = {recipe}
                     />
                 ))
             }
