@@ -14,6 +14,8 @@ import DropDownSelection from './../../../../components/UIcomponents/DropDownSel
  
 const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps }) => {
 
+    console.log(fullProps)
+
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
         alert("Le picaste aceptar");
@@ -27,17 +29,26 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps }) => {
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <CenteredDisplay width="90%">
-                <Title> Actualizar Ingrediente de Receta </Title> 
+            <CenteredDisplay width="80%">
+                <Title> Modificar el Ingrediente de la Receta </Title> 
 
-                <SubTitle textAlignment="center" paddingLeft='0px'>
-                    ¿Estás seguro de que deseas eliminar esta Receta?  
-                </SubTitle>
-                
-                
-                <Label textAlignment="Center" >
-                    Receta del platillo a Eliminar: {fullProps.dish}</Label>
+                <HorizontalDisplay>
+                    <Label textAlignment="Center" > Nombre del Platillo: <span>{fullProps.dish}</span></Label>
+                    <Label textAlignment="Center" > Nombre del Ingrediente: <span>{fullProps.name}</span></Label>
+                </HorizontalDisplay>
 
+                <Label textAlignment='start'>Cantidad del Ingrediente Necesitada:</Label>
+                <HorizontalDisplay>
+                    <EditText previousValue={fullProps.existence}>Ingresa la cantidad del ingrediente</EditText> 
+                        
+                    <Label marginTop = '0px'>{fullProps.unit}</Label>
+                </HorizontalDisplay>
+                
+
+                <Label textAlignment='start'>Número de Servicios que cubre:</Label>
+                <EditText previousValue = {fullProps.services}>Ingresa el número de servicios</EditText>
+
+                 
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />

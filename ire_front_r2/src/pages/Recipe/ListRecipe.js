@@ -40,6 +40,7 @@ const dataMock = [
                     id: 0,
                     name: "string",
                     unit: "string",
+                    services : 20
                 },
                 {
                     existence: 0,
@@ -133,7 +134,8 @@ const colorOption = [
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => {
+const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => { 
+
     return( 
         <div className = 'mainHolderStyle mainRecipeHolder' style={{  display: 'flex', backgroundColor : backgroundColor}}>
         <HorizontalDisplay> 
@@ -171,15 +173,18 @@ const RecipeGroups = ({name, items,index,backgrounColors}) => {
         <>
             <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
             {
-                items.map((recipe, index) => (
-                    <IngredientItemHolder
-                        backgroundColor = {backgrounColors[index%2]}
-                        key = {index}
-                        itemCount = {items.length}
-
-                        fullProps = {recipe}
-                    />
-                ))
+            items.map((recipe, index) => {
+                    // Asigna el nombre del plato a la receta 
+                    
+                    return (
+                        <IngredientItemHolder
+                            backgroundColor={backgrounColors[index % 2]}
+                            key={index}
+                            itemCount={items.length}
+                            fullProps={recipe}
+                        />
+                    );
+                })
             }
         </>
     )

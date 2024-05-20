@@ -39,8 +39,10 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
                 <Label>Selecciona un ingrediente de la receta a editar:</Label>
                 <WhiteDummySpacer/>
                  {
-                    fullProps.recipeItems.map((dishItem,index) =>(
+                    fullProps.recipeItems.map((dishItem,index) => {
 
+                        dishItem.dish = fullProps.dish;
+                        return(
                         <HorizontalDisplay  
                             classNameSend = {classOptions[index%2]}
                             justifyDirection="start" 
@@ -63,8 +65,8 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
                                     fullProps = {dishItem}
                                     />  
                             
-                        </HorizontalDisplay>
-                    ))
+                        </HorizontalDisplay>)
+                    })
                  }
  
                 <HorizontalDisplay>
