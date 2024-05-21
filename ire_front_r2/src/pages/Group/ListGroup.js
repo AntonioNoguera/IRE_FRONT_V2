@@ -16,7 +16,7 @@ import SvgButton from "../../components/UIcomponents/SvgButton";
 import DeleteGroupModal from "./group.modules/DeleteGroupModal";
 import UpdateGroupModal from "./group.modules/UpdateGroupModal";
 
-const GroupHolder = ({ fullGroupProps,passedHook  }) => {
+const GroupHolder = ({ fullGroupProps, passedHook  }) => {
     return (
         <div className='mainHolderStyle' style={{ backgroundColor: fullGroupProps.color, display: 'flex' }}>
             <HorizontalDisplay> 

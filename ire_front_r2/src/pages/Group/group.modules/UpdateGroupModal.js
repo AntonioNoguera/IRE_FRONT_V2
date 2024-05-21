@@ -35,15 +35,16 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {
                 alert("grupo modificado correctamente"); 
 
                 localStorage.setItem('groups', JSON.stringify(groups));
+                if(passedHook){
+                    passedHook(prev => prev + 1);
+                    
+                    closeModal(); // Cierra el modal después de aceptar
+                }
             }else{
                 alert("grupo no encontrado")
             }
 
-        if(passedHook){
-            passedHook(prev => prev + 1);
-            
-        }
-        closeModal(); // Cierra el modal después de aceptar
+        
     };
 
     const onDecline = () => { 

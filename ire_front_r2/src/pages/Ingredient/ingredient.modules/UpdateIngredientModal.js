@@ -12,11 +12,23 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
   
 
-const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => {
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        alert("Le picaste aceptar");
-        closeModal(); // Cierra el modal después de aceptar
+        const passedValidation = true;
+        const success = true;
+
+        if(passedValidation){
+            if(success){
+                closeModal()
+                passedHook(prev => prev +1)
+                alert("Ingrediente dado de alta!")
+            }else{
+                alert("no ha sido posible dar de alta el ingrediente")
+            }
+        }else{
+            alert("Campos pendientes")
+        } 
     };
 
     const onDecline = () => {
