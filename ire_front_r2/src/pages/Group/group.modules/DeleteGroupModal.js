@@ -12,21 +12,30 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
-const DeleteGroupModal = ({ isModalOpen, closeModal, fullProps }) => {
-
-    // Definición de funciones manejadoras dentro del componente
+const DeleteGroupModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    
     const onAccept = () => {
-        alert("Le picaste aceptar");
-        closeModal(); // Cierra el modal después de aceptar
+        
+        const groups = JSON.parse(localStorage.getItem('groups') || '[]');
+        
+        const filteredGroups = groups.filter(group => group.id !== fullProps.id);
+        
+        localStorage.setItem('groups', JSON.stringify(filteredGroups));
+
+        alert("Grupo eliminado correctamente.");
+        closeModal();
+        
+        if (passedHook) {
+            passedHook(prev => prev + 1);
+        }
     };
 
     const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+        closeModal(); 
     };
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal isOpen = {isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
                 <Title> Eliminar Grupo </Title> 
 

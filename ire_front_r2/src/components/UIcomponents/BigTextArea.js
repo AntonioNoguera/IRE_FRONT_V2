@@ -1,5 +1,5 @@
 import './../../mainStyles.css'; 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const componentStyles = { 
     textAlign: 'center',
@@ -16,8 +16,12 @@ const componentStyles = {
     resize: 'none'
 };
 
-const BigTextArea = ({ children, previousValue = '', onChange, placeholder}) => {
+const BigTextArea = ({previousValue = '', onChange, placeholder}) => {
     const [value, setValue] = useState(previousValue);
+
+    useEffect(() => {
+        setValue(previousValue);  // Asegura que el estado interno se actualice cuando cambie previousValue
+    }, [previousValue]);
 
     const handleChange = (event) => {
         setValue(event.target.value);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './editText.module.css';
 
 const componentStyles = { 
@@ -16,6 +16,10 @@ const componentStyles = {
 
 const EditText = ({ placeholder, previousValue = '', onChange }) => {
     const [inputValue, setInputValue] = useState(previousValue); 
+
+    useEffect(() => {
+        setInputValue(previousValue);  // Asegura que el estado interno se actualice cuando cambie previousValue
+    }, [previousValue]);
 
     const handleChange = (event) => {
         setInputValue(event.target.value);

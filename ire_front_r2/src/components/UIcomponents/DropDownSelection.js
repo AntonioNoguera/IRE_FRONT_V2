@@ -12,6 +12,7 @@ const DropDownSelection = ({ placeHolder, selectedOption = "", optionsAvailable 
     const [selected, setSelected] = useState(selectedOption);
 
     useEffect(() => {
+        console.log("the use effect is being called wtf"  +"opcion seleccoinada :  "+selectedOption)
         setSelected(selectedOption);
     }, [selectedOption]);
 

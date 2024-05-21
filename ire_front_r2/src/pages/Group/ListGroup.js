@@ -16,7 +16,7 @@ import SvgButton from "../../components/UIcomponents/SvgButton";
 import DeleteGroupModal from "./group.modules/DeleteGroupModal";
 import UpdateGroupModal from "./group.modules/UpdateGroupModal";
 
-const GroupHolder = ({ fullGroupProps }) => {
+const GroupHolder = ({ fullGroupProps,passedHook  }) => {
     return (
         <div className='mainHolderStyle' style={{ backgroundColor: fullGroupProps.color, display: 'flex' }}>
             <HorizontalDisplay> 
@@ -29,14 +29,17 @@ const GroupHolder = ({ fullGroupProps }) => {
                 </div> 
                 <SvgButton 
                     type='editCookie'
-                    fullProps={fullGroupProps} 
-                    RenderedComponent={UpdateGroupModal}  
+                    fullProps = {fullGroupProps} 
+                    hook = {passedHook}
+                    RenderedComponent = {UpdateGroupModal}  
                 />
+                
                 <WhiteDummySpacer />
                 <SvgButton
                     type='trashCan' 
-                    fullProps={fullGroupProps} 
-                    RenderedComponent={DeleteGroupModal}  
+                    fullProps = {fullGroupProps}  
+                    hook = {passedHook}
+                    RenderedComponent = {DeleteGroupModal}  
                 />
             </HorizontalDisplay>
         </div>
@@ -46,22 +49,31 @@ const GroupHolder = ({ fullGroupProps }) => {
 const ListGroup = () => {
     const [groups, setGroups] = useState([]);
 
+    //Hook Post Operaciones
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+
     useEffect(() => {
         const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
         setGroups(storedGroups);
         console.log(storedGroups);
-    }, []);
+    }, [updateTrigger]);
 
     return (
         <MotionImplementation>
             <WhiteDummySpacer />
             <Title>Grupos</Title>
-            {groups.map((group, index) => (
-                <GroupHolder
-                    key={index}
-                    fullGroupProps={group}
-                />
-            ))}
+            
+            {groups.length !== 0 ? (
+                groups.map((group, index) => (
+                    <GroupHolder
+                        key={index}
+                        fullGroupProps={group}
+                        passedHook={setUpdateTrigger}
+                    />
+                ))
+            ) : (
+                <p>No hay grupos disponibles.</p>
+            )}
         </MotionImplementation>
     );
 };

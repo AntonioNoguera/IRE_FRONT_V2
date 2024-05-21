@@ -20,6 +20,7 @@ const SvgButton = (
 						type = 'trashCan', size ="50px" ,
 						styleName = 'light', 
 						fullProps,
+						hook,
 						RenderedComponent = NewRequisitionModal
 					}
 				) => {
@@ -60,6 +61,7 @@ const SvgButton = (
 					closeModal={closeModal}
                     isModalOpen={isModalOpen} 
                     fullProps={fullProps}
+					passedHook = {hook}
                 />
             
 

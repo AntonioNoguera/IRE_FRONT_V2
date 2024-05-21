@@ -8,42 +8,49 @@ import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 import EditText from '../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../components/UIcomponents/BigTextArea';
-import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
+import DropDownSelection from './../../../components/UIcomponents/DropDownSelection'; 
 
-const ColorOption = [
-    { "name": "Rosa", "value": "#FFC0CB" },
-    { "name": "Rosa Claro", "value": "#FFB6C1" },
-    { "name": "Salmón Claro", "value": "#FFA07A" },
-    { "name": "Durazno", "value": "#FFDAB9" },
-    { "name": "Rosa Brumoso", "value": "#FFE4E1" },
-    { "name": "Lavanda Claro", "value": "#FFF0F5" },
-    { "name": "Turquesa Pálido", "value": "#AFEEEE" },
-    { "name": "Azul Polvo", "value": "#B0E0E6" },
-    { "name": "Verde Pálido", "value": "#98FB98" },
-    { "name": "Verde Claro", "value": "#90EE90" },
-    { "name": "Amarillo Claro", "value": "#FAFAD2" },
-    { "name": "Azul Claro", "value": "#ADD8E6" },
-    { "name": "Cardo", "value": "#D8BFD8" },
-    { "name": "Lavanda", "value": "#E6E6FA" },
-    { "name": "Ciruela", "value": "#DDA0DD" }
-];
+import ColorOptions from './../../../../src/GlobalValues';
 
-const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {  
+
     const [groupName, setGroupName] = useState(fullProps.name);
     const [groupDescription, setGroupDescription] = useState(fullProps.description);
     const [groupColor, setGroupColor] = useState(fullProps.color);
 
     const onAccept = () => {
-        alert("Le picaste aceptar");
+        
+            const groupsStr = localStorage.getItem('groups');
+            const groups = groupsStr ? JSON.parse(groupsStr) : [];
+ 
+            const groupIndex = groups.findIndex(g => g.id === fullProps.id);
+            if (groupIndex !== -1) {
+                groups[groupIndex] = {
+                    ...groups[groupIndex],
+                    name: groupName,
+                    description: groupDescription,
+                    color: groupColor
+                };
+
+                alert("grupo modificado correctamente"); 
+
+                localStorage.setItem('groups', JSON.stringify(groups));
+            }else{
+                alert("grupo no encontrado")
+            }
+
+        if(passedHook){
+            passedHook(prev => prev + 1);
+            
+        }
         closeModal(); // Cierra el modal después de aceptar
     };
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+    const onDecline = () => { 
+        closeModal(); 
     };
 
-    return (
+    return ( 
         <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
                 <Title> Editar Grupo </Title> 
@@ -62,8 +69,8 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
 
                 <Label>Color del Grupo:</Label> 
                 <DropDownSelection  
-                    selectedOption={ColorOption.find(it => it.value === groupColor)?.value || ""} 
-                    optionsAvailable={ColorOption}
+                    selectedOption = {ColorOptions.find(it => it.value === groupColor)?.value || ""} 
+                    optionsAvailable = {ColorOptions}
                     placeHolder='Selecciona el color para el grupo'
                     onChange={e => setGroupColor(e.target.value)}
                 />
