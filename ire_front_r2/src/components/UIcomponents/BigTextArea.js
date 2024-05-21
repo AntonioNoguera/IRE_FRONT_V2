@@ -16,21 +16,24 @@ const componentStyles = {
     resize: 'none'
 };
 
-const EditText = ({ children, previousValue = '' }) => {
+const BigTextArea = ({ children, previousValue = '', onChange, placeholder}) => {
     const [value, setValue] = useState(previousValue);
 
     const handleChange = (event) => {
         setValue(event.target.value);
+        if (onChange) {
+            onChange(event);
+        }
     };
 
     return (
         <textarea 
             value={value}
-            placeholder={children}
+            placeholder={placeholder}
             style={componentStyles}
             onChange={handleChange}
         />
     );
 }
 
-export default EditText;
+export default BigTextArea;

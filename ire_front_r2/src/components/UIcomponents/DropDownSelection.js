@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../../mainStyles.css'; 
-import styles from './dropdownselection.module.css';  // Asegúrate de que el path es correcto
+import styles from './dropdownselection.module.css';
 
 const componentStyles = {  
     backgroundImage: `url('${process.env.PUBLIC_URL}/svgs/arrow_dropdown.svg')`,
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'right 10px center', // Usa backticks y comillas simples correctamente
+    backgroundPosition: 'right 10px center',
 };
 
-const DropDownSelection = ({ children, selectedOption = "", optionsAvailable = [] }) => {
-    console.log(selectedOption)
-
+const DropDownSelection = ({ placeHolder, selectedOption = "", optionsAvailable = [], onChange }) => {
     const [selected, setSelected] = useState(selectedOption);
+
+    useEffect(() => {
+        setSelected(selectedOption);
+    }, [selectedOption]);
 
     const handleChange = (event) => {
         setSelected(event.target.value);
+        onChange(event);
     };
 
     return (  
@@ -25,12 +28,10 @@ const DropDownSelection = ({ children, selectedOption = "", optionsAvailable = [
             value={selected} 
             onChange={handleChange}
         >
-            <option value="" disabled  selected className={styles.selectPlaceholder}>
-                {children}
-            </option> 
+            <option value="" disabled>{placeHolder}</option> 
             {optionsAvailable.map((option, index) => (
-                <option key={index} value={option}>
-                    {option}
+                <option key={index} value={option.value}>
+                    {option.name}
                 </option>
             ))}
         </select> 

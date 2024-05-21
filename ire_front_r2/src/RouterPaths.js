@@ -1,13 +1,15 @@
 //Paths in all the app
 import { Requisition, Dish, Recipe, Ingredient, Group, SideDish } from './pages';
 
-import { ListRequisition, NewRequisition, UpdateRequisition } from './pages';
-import { ListDish, NewDish, UpdateDish } from './pages';
-import { ListIngredient, NewIngredient, UpdateIngredient } from './pages';
-import { ListRecipe, NewRecipe, UpdateRecipe } from './pages';
-import { ListGroup, NewGroup, UpdateGroup } from './pages';
+import { ListRequisition } from './pages';
+import { ListDish, NewDish } from './pages';
+import { ListIngredient, NewIngredient } from './pages';
+import { ListRecipe, NewRecipe } from './pages';
+import { ListGroup, NewGroup } from './pages';
 
-import { ListSideDish, NewSideDish, UpdateSideDish } from './pages';
+import { ListSideDish, NewSideDish } from './pages';
+
+
 
 const RouterPath = [
     {
@@ -21,17 +23,7 @@ const RouterPath = [
                 path: "listado",
                 name: "Listado de Requisiciones",
                 page: ListRequisition
-            },
-            {
-                path: "nuevo",
-                name: "Nuevo Requisiciones",
-                page: NewRequisition
-            },
-            {
-                path: "actualizar",
-                name: "Actualizar Platillo",
-                page: UpdateRequisition
-            },
+            } 
         ]
     },
 
@@ -52,11 +44,6 @@ const RouterPath = [
                 name: "Nuevo Platillo",
                 page: NewDish
             },
-            {
-                path: "actualizar",
-                name: "Actualizar Platillo",
-                page: UpdateDish
-            },
         ]
     },
 
@@ -76,17 +63,7 @@ const RouterPath = [
                 path: "nuevo",
                 name: "Nuevo Receta",
                 page: NewRecipe
-            },
-            {
-                path: "actualizar",
-                name: "Actualizar Receta",
-                page: UpdateRecipe
-            },
-            {
-                path: "detalle/:id",
-                name: "",
-                page: ListRecipe
-            },
+            }, 
         ]
     },
 
@@ -106,11 +83,6 @@ const RouterPath = [
                 path: "nuevo",
                 name: "Nuevo Ingredientes",
                 page: NewIngredient
-            },
-            {
-                path: "actualizar",
-                name: "Actualizar Ingredientes",
-                page: UpdateIngredient
             },
         ]
     },
@@ -132,11 +104,6 @@ const RouterPath = [
                 name: "Nuevo Grupos",
                 page: NewGroup
             },
-            {
-                path: "actualizar",
-                name: "Actualizar Grupos",
-                page: UpdateGroup
-            },
         ]
     },
     {
@@ -155,11 +122,6 @@ const RouterPath = [
                 path: "nuevo",
                 name: "Nuevo Complemento",
                 page: NewSideDish
-            },
-            {
-                path: "actualizar",
-                name: "Actualizar Platillo",
-                page: UpdateSideDish
             },
         ]
     },
