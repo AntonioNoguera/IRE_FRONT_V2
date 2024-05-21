@@ -29,3 +29,7 @@
     font-weight: 450 !important;
     text-align: center;
 }
+
+.itemInfoHolder{
+    margin-inline:30px;
+}

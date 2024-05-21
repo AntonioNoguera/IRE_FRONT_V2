@@ -71,10 +71,10 @@ const GroupHolder = ({fullGroupProps}) => {
                 <CenteredDisplay width="100%">
                     <p className = 'groupName'> {fullGroupProps.name} </p>
                 </CenteredDisplay> 
-                <CenteredDisplay width="80%">
+                <div style={{marginInline:'50px'}}>
                     <p className='itemCountTitle'>Elementos en el grupo:</p>
                     <p className='itemCountHolder'>{fullGroupProps.itemCount}</p >
-                </CenteredDisplay> 
+                </div> 
                 
                 <SvgButton 
                     type = 'editCookie'

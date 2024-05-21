@@ -47,11 +47,6 @@ const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
                 </HorizontalDisplay> 
 
                 <HorizontalDisplay>
-                    <CenteredDisplay width="100%">
-                        <Label>Selecciona el turno:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
-                    </CenteredDisplay>
-
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">

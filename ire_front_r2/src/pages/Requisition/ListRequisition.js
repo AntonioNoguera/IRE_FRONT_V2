@@ -5,6 +5,7 @@ import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 
 import "./requisition.modules/requisitionHolder.css"
 
+
 import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
 
 import { motion } from 'framer-motion';
@@ -165,7 +166,11 @@ const RequisitionItem = ({fullProps}) => {
             <HorizontalDisplay justifyDirection="space-between" >
                 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' }}>
-                    <p className='itemCountHolder'>Platillo: {fullProps.name}</p >
+                <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
+                    <p className="ItemStrongValue">Platillo:</p> 
+                    <p className="ItemLigthValue">{fullProps.dish}</p>
+                </div>  
+
                 </div> 
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center'}}>
@@ -173,6 +178,7 @@ const RequisitionItem = ({fullProps}) => {
                     <SvgButton 
                         type="addSign" 
                         size="30" 
+                        fullProps = {fullProps}
                         RenderedComponent={NewDishForRequisitionModal}/>
 
                     <WhiteDummySpacer/>
@@ -180,12 +186,14 @@ const RequisitionItem = ({fullProps}) => {
                     <SvgButton 
                         type="editCookie" 
                         size="30"
+                        fullProps = {fullProps}
                         RenderedComponent={UpdateDayForRequisition}/>
 
                     <WhiteDummySpacer/>
                     <SvgButton 
                         type="trashCan" 
                         size="30" 
+                        fullProps = {fullProps}
                         RenderedComponent={DeleteDishForRequisition}/>
                 </div>   
            
@@ -193,17 +201,20 @@ const RequisitionItem = ({fullProps}) => {
             
             <hr/>
             {
-                fullProps.elements.map((element,index)=>(
+                fullProps.elements.map((element,index)=>{
+                    element.dishFather = fullProps;
+                    
+                    return(
                     <RequisitionAtom  
                         fullAtomProps = {element}
-                    />
-                ))
+                    />)
+                })
             } 
             
             <hr/>
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
-                    <p className="ItemStrongValue">Turno:</p> 
+                    <p className="ItemStrongValue">Tipos:</p> 
                     <p className="ItemLigthValue">{fullProps.type}</p>
                 </div>  
 
@@ -218,30 +229,34 @@ const RequisitionItem = ({fullProps}) => {
     )
 }
 
-const RequisitionHolder = ({stringDay='huh', state, services, dishes}) => {
+const RequisitionHolder = ({fullFatherProps}) => {
     return ( 
-        <div style={{background : 'red'}}  className = 'dayHolder'>  
+        <div   className = 'dayHolder'>  
             <div className="headerHolder">
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="DayStrongValue">Dia:</p> 
-                    <p className="DayLigthValue">{stringDay}</p>
+                    <p className="DayLigthValue">{fullFatherProps.stringDay}</p>
                 </div> 
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="DayStrongValue">Estado:</p> 
-                    <p className="DayLigthValue">{stringDay}</p>
+                    <p className="DayLigthValue">{fullFatherProps.stringDay}</p>
                 </div>  
            
             </div>
 
             {
-                dishes.map((dish,index)=>(
-                    <RequisitionItem 
+                fullFatherProps.dishes.map((dish,index)=>{
+                    dish.fatherProps = fullFatherProps
+                    return(
+                        <RequisitionItem 
                         key={index}
 
                         fullProps = {dish}
                     />
-                ))
+                    )
+                }
+                )
             }
         </div>
     )
@@ -260,13 +275,34 @@ const ListRequisition = () => {
 
                     <RequisitionHolder
                         key = { index }
-                        state = { requisition.state }
-                        stringDay = { requisition.stringDay }
-                        dishes = { requisition.dishes }
-                        type = { requisition.type }
+                        fullFatherProps = {requisition}
                     />
             ))
         }
+
+        <div className='bottomNavigation'>
+            <div className="bottomButton">
+            <svg viewBox="0 0 24 24" className="rotate">
+                <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
+            </svg>
+            <WhiteDummySpacer/>
+                Semana Anterior
+            </div>
+            <div className="bottomButton">
+                Nuevo Día de Semana
+            <WhiteDummySpacer/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+            </div>
+            <div className="bottomButton">
+
+            Semana Posterior
+            <WhiteDummySpacer/>
+            <svg viewBox="0 0 24 24">
+                <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
+            </svg>
+                
+            </div>
+        </div>
         </MotionImplementation>
     )
 }

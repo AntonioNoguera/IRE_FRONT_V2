@@ -24,40 +24,36 @@ const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const UpdateDayForRequisition = ({ isModalOpen, closeModal }) => {
+const UpdateDayForRequisition = ({ isModalOpen, closeModal ,fullProps}) => {
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
             <CenteredDisplay width="100%">  
-            <Title> Modificar Dia de la requisición </Title> 
+            <Title> Modificar día de la requisición </Title> 
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
                         <Label>Tipo de platillo:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
+                        <DropDownSelection selectedOption = {fullProps.type} optionsAvailable={[fullProps.type]}>Valor numérico de Ingrediente</DropDownSelection>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">
                         <Label>Platillo:</Label>
-                        <DropDownSelection>Unidad del Ingrediente</DropDownSelection>
+                        <DropDownSelection selectedOption = {fullProps.dish} optionsAvailable={[fullProps.dish]}>Unidad del Ingrediente</DropDownSelection>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay> 
 
                 <HorizontalDisplay>
-                    <CenteredDisplay width="100%">
-                        <Label>Selecciona el turno:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
-                    </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
-                    <CenteredDisplay width="100%">
+                    <CenteredDisplay width="80%">
                         <Label>Número de Servicios:</Label>
-                        <EditText>Unidad del Ingrediente</EditText>
+                        <EditText previousValue= {fullProps.services}>Unidad del Ingrediente</EditText>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay>

@@ -72,3 +72,53 @@ hr{
     border: .5px solid white;
     margin-block: 4px;
 }
+
+.bottomNavigation {
+    position:absolute;
+    bottom:0;
+    padding-block: 10px;
+    right:3px;
+    left:467px;
+    display:flex;
+    flex-direction:row;
+    border-top-left-radius: 20px;
+    
+    border-top-right-radius: 20px;
+    background-color:rgba(255, 255, 255, 0.356);
+    justify-content:space-around;
+}
+
+.bottomButton {
+    background-color: #F7B334;
+    padding : 10px 30px;
+    font-size: 20px;
+    color:white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 20px;
+    transition : background-color .2s, color .2s;
+}
+
+.rotate {
+    
+  transform: rotate(180deg);
+}
+
+
+.bottomButton:hover {
+     
+    cursor: pointer;
+    background-color: #f9cf81; 
+    color:#b68b3c; 
+}
+
+.bottomButton:hover svg {
+    fill: #584219; /* Cambiar el fill del SVG cuando se hace hover sobre el botón */
+}
+
+svg{
+    width: 25px; 
+    fill:white;
+    height: 25px;
+}

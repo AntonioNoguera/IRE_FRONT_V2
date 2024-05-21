@@ -25,40 +25,36 @@ const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const NewDishForRequisitionModal = ({ isModalOpen, closeModal }) => {
+const NewDishForRequisitionModal = ({ isModalOpen, closeModal, fullProps }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
-            <CenteredDisplay width="100%">  
-            <Title> Añadir platillo a la requisición </Title> 
+            <CenteredDisplay width="90%">  
+            <Title> Añadir Ingrediente a la Requisición </Title> 
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
-                        <Label>Tipo de platillo:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
+                        <Label>Grupo del Ingrediente:</Label>
+                        <DropDownSelection>Selecciona el grupo de tu ingrediente</DropDownSelection>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">
-                        <Label>Platillo:</Label>
-                        <DropDownSelection>Unidad del Ingrediente</DropDownSelection>
+                        <Label>Ingrediente:</Label>
+                        <DropDownSelection>Ingrediente a añadir </DropDownSelection>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay> 
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
-                        <Label>Selecciona el turno:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
+                        <Label>Cantidad del ingrediente para <span>{fullProps.services}</span> servicios:</Label>
+                        <EditText>Valor numérico de la cantidad del ingrediente</EditText>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
-
-                    <CenteredDisplay width="100%">
-                        <Label>Número de Servicios:</Label>
-                        <EditText>Unidad del Ingrediente</EditText>
-                    </CenteredDisplay>
+                        <Label marginTop='50px'>asdf</Label>  
                     
                 </HorizontalDisplay>
 

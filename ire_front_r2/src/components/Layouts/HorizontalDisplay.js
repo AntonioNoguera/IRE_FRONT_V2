@@ -2,8 +2,7 @@ const HorizontalDisplay = ({ children, width = '100%', height = 'auto', justifyD
     const componentStyles = {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: justifyDirection,
-        alignItems : 'center', // Solo se necesita una vez y correctamente configurado
+        justifyContent: justifyDirection, 
         flexGrow: flexGrowEnabled,
         height: height,
     };

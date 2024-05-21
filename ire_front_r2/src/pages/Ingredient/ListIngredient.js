@@ -93,16 +93,16 @@ const IngredientItemHolder = ({fullProps, backgroundColor}) => {
             </CenteredDisplay>
 
 
-            <CenteredDisplay width="80%">
+            <div className="itemInfoHolder">
                 <p className='itemCountTitle'>Fecha de Registro:</p>
                 <p className='itemCountHolder'>{fullProps.existence}</p >
-            </CenteredDisplay> 
+            </div> 
 
-            <CenteredDisplay width="80%">
+            <div className="itemInfoHolder">
                 <p className='itemCountTitle'>Cantidad Actual:</p>
                 <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
-            </CenteredDisplay> 
-            
+            </div> 
+            <WhiteDummySpacer/> 
             <SvgButton 
                 type = 'editCookie'  
                 fullProps = {fullProps} 

@@ -139,13 +139,14 @@ const ListSideDish = () => {
         <MotionImplementation>  
             <WhiteDummySpacer/>
             <Title> Listado de Complementos </Title> 
+            
             <TopComplementHolder 
                 classValue = "typesHolder" 
                 key={"Tipos de Platillo"} 
                 name={"Tipos de Platillo"} 
                 items={mockData.types} 
                 /> 
-    
+
             <HorizontalDisplay  >
                 {
                     Object.entries(mockData).map(([key, value],index) => (

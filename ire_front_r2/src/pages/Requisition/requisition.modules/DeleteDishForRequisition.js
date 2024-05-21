@@ -15,6 +15,7 @@ import DropDownSelection from "../../../components/UIcomponents/DropDownSelectio
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 
 import { motion } from 'framer-motion'; 
+import SubTitle from '../../../components/Layouts/SubTitle';
 
 const onAccept = () => {
     alert("Le picaste aceptar");
@@ -24,42 +25,32 @@ const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const DeleteDishForRequisition = ({ isModalOpen, closeModal }) => {
+const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps }) => {
+ 
+
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
             <CenteredDisplay width="100%">  
-            <Title> Eliminar Platillo de la Requisición </Title> 
-
+            <Title> Eliminar Platillo de la Requisición </Title>
+            
+            <SubTitle>Estás a punto de eliminar el platillo de la requisición actual esta operación es definitiva e irreversible</SubTitle>
+            <WhiteDummySpacer/> 
                 <HorizontalDisplay>
-                    <CenteredDisplay width="100%">
-                        <Label>Tipo de platillo:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
-                    </CenteredDisplay>
+                    <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
+                        <Label marginTop='0px'>Día: </Label> <WhiteDummySpacer/>  {fullProps.fatherProps.stringDay}  
+                    </div>
 
-                    <WhiteDummySpacer/>
+                    <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
+                        <Label marginTop='0px'>Platilo:</Label> <WhiteDummySpacer/>  {fullProps.dish}  
+                    </div>
 
-                    <CenteredDisplay width="100%">
-                        <Label>Platillo:</Label>
-                        <DropDownSelection>Unidad del Ingrediente</DropDownSelection>
-                    </CenteredDisplay>
-                    
-                </HorizontalDisplay> 
 
-                <HorizontalDisplay>
-                    <CenteredDisplay width="100%">
-                        <Label>Selecciona el turno:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
-                    </CenteredDisplay>
-
-                    <WhiteDummySpacer/>
-
-                    <CenteredDisplay width="100%">
-                        <Label>Número de Servicios:</Label>
-                        <EditText>Unidad del Ingrediente</EditText>
-                    </CenteredDisplay>
-                    
+                    <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
+                        <Label marginTop='0px'>Servicio:</Label>  <WhiteDummySpacer/> {fullProps.services}
+                    </div>
                 </HorizontalDisplay>
+                 
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle'>Cancelar</Button>  
