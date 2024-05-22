@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
@@ -12,15 +12,44 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
   
 
-const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => {
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => { 
+    const storedGroups = JSON.parse(localStorage.getItem('groups')) || []; 
     // Definición de funciones manejadoras dentro del componente
+    
+    console.log(storedGroups)
+    console.log(fullProps.groupId)
+    console.log(storedGroups.find(it => it.id === fullProps.groupId).id || "" )
+     
+    const [ingredientName, setIngredientName] = useState(fullProps.name);
+    const [ingredientAmount, setIngredientAmount] = useState(fullProps.existence);
+    const [ingredientUnit, setIngredientUnit] = useState(fullProps.unit);
+    const [ingredientGroup, setIngredientGroup] = useState(fullProps.groupId);
+
     const onAccept = () => {
         const passedValidation = true;
         const success = true;
 
         if(passedValidation){
             if(success){
-                closeModal()
+                closeModal();
+
+                const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+                const updatedIngredients = existingIngredients.map(ingredient =>
+                    ingredient.id === fullProps.id
+                        ? {
+                            ...ingredient,
+                            name: ingredientName,
+                            existence: ingredientAmount,
+                            unit: ingredientUnit,
+                            groupId: ingredientGroup
+                        }
+                        : ingredient
+                );
+
+                localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
+
+
+
                 passedHook(prev => prev +1)
                 alert("Ingrediente dado de alta!")
             }else{
@@ -43,26 +72,44 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => 
 
                 <Label>Nombre del Ingrediente:</Label>
 
-                <EditText previousValue = {fullProps.name}>Ingresa el nombre del grupo</EditText>
+                <EditText 
+                    previousValue = {fullProps.name}
+                    onChange = {e => setIngredientName(e.target.value)}
+                    placeHolder = "Ingresa el nombre del Ingrediente"/>
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
                         <Label> Cantidad del Ingrediente: </Label>
-                        <EditText previousValue = {fullProps.existence}> Valor numérico de Ingrediente</EditText>
+                        <EditText 
+                            previousValue = {fullProps.existence}
+                            placeholder = "Valor numérico de Ingrediente"
+                            onChange = {e => setIngredientAmount(e.target.value) }/>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">
                         <Label>Unidad:</Label>
-                        <EditText previousValue = {fullProps.unit} >Unidad del Ingrediente</EditText>
+                        <EditText 
+                            previousValue = {fullProps.unit}
+                            placeholder = "Unidad del"
+                            onChange = {e => setIngredientUnit(e.target.value) }
+                            ></EditText>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay>
 
                 <CenteredDisplay width="50%">
                     <Label>Grupo:</Label>
-                    <DropDownSelection selectedOption = {fullProps.group_name} optionsAvailable = {fullProps.groupsAvailable}>Selecciona el grupo del ingrediente</DropDownSelection>
+                    <DropDownSelection  
+                        
+                        selectedOption = {storedGroups.find(it => it.id === fullProps.groupId).id || ""} 
+                            onChange = {  e=> setIngredientGroup((e.target.value))}
+                            placeHolder = "Selecciona el grupo del ingrediente" 
+                            optionsAvailable = {storedGroups.map(group => ({
+                                value: group.id,
+                                name: group.name
+                            }))} />
                 </CenteredDisplay>
  
                 <HorizontalDisplay>

@@ -10,15 +10,14 @@ import MotionImplementation from './../../components/Layouts/MotionImplementatio
 import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
 import ColorOptions from './../../../src/GlobalValues';
 
+
+
 const NewGroup = () => {
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
     const [groupColor, setGroupColor] = useState('');
 
     const handleAddGroup = () => {
-
-        
-        const addedSuccesfully = true;
         const groupData = {
             id: uuidv4(),
             name: groupName,
@@ -32,15 +31,10 @@ const NewGroup = () => {
         
         localStorage.setItem('groups', JSON.stringify(updatedGroups));
         
-        if(addedSuccesfully){
-            setGroupName('')
-            setGroupDescription('')
-            setGroupColor('')
-            alert("Grupo añadido correctamente: ");
-        }else{
-            alert("Nombre de grupo invalido")
-        }
-        
+        setGroupName('')
+        setGroupDescription('')
+        setGroupColor('')
+        alert("Grupo añadido correctamente: ");
     };
 
     return (

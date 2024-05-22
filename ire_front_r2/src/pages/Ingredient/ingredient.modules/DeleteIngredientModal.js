@@ -19,6 +19,15 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook 
 
         if (succesfullyDeleted) {
             alert("Eliminado con éxito");
+ 
+            const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+
+            // Filtrar el ingrediente a eliminar
+            const updatedIngredients = existingIngredients.filter(ingredient => ingredient.id !== fullProps.id);
+
+            // Guardar la lista actualizada de ingredientes en el local storage
+            localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
+
             
             if (passedHook) {
                 passedHook(prev => prev + 1);

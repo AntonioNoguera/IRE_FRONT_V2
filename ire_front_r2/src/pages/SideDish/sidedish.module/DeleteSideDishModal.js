@@ -12,10 +12,47 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
 
-const UpdateSideDish = ({ isModalOpen, closeModal, fullProps }) => {
+const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => {
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
         alert("Le picaste aceptar");
+
+        let extras = JSON.parse(localStorage.getItem('extras')) || {
+            Tipos: [],
+            Proteínas: [],
+            Salsas: [],
+            Complementos: []
+        };
+
+        const removeExtra = (type) => {
+            const index = extras[type].findIndex(item => item.id === fullProps.id);
+            if (index !== -1) {
+                extras[type].splice(index, 1);
+            }
+        };
+
+        switch (fullProps.typeOption) {
+            case 'Tipos':
+                removeExtra('Tipos');
+                break;
+            case 'Proteínas':
+                removeExtra('Proteínas');
+                break;
+            case 'Salsas':
+                removeExtra('Salsas');
+                break;
+            case 'Acompañamientos':
+                removeExtra('Complementos');
+                break;
+            default:
+                alert(`Tipo original no válido: ${fullProps.typeOption}`);
+                return;
+        }
+
+        
+        localStorage.setItem('extras', JSON.stringify(extras));
+
+        passedHook(prev => prev + 1)
         closeModal(); // Cierra el modal después de aceptar
     };
 

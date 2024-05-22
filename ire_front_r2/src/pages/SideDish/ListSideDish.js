@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { useEffect, useState } from 'react';
 
 import "./sidedish.module/complementHolder.css";
 
@@ -15,66 +15,8 @@ import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 import UpdateSideDishModal from "./sidedish.module/UpdateSideDishModal";
 import DeleteSideDishModal from "./sidedish.module/DeleteSideDishModal";
 
-const mockData = {
-    "complements": [
-        {
-            "id": 0,
-            "name": "string"
-        }
-    ],
-    "proteins": [
-        {
-            "id": 0,
-            "name": "string"
-        }
-    ],
-    "sauces": [
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },{
-            "id": 0,
-            "name": "string"
-        }, 
-    ],
-    "types": [
-        {
-            "id": 0,
-            "name": "f"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "f"
-        },
-        {
-            "id": 0,
-            "description": "OnlyItem With description",
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-    ]
-}
 
-const ComplementItem = ({fullSideDish, typeOfComplement}) => {
+const ComplementItem = ({fullSideDish, typeOfComplement,passedHook}) => {
  
     fullSideDish.typeOption = typeOfComplement;
 
@@ -93,13 +35,15 @@ const ComplementItem = ({fullSideDish, typeOfComplement}) => {
                 styleName = 'dark' 
                 type ='editCookie'
                 fullProps = {fullSideDish}
+                hook = {passedHook}
                 RenderedComponent = {UpdateSideDishModal}
                 />
 
             <SvgButton 
                 size='30px' 
                 styleName = 'dark' 
-                type ='trashCan'
+                type ='trashCan' 
+                hook = {passedHook}
                 fullProps = {fullSideDish}
                 RenderedComponent = {DeleteSideDishModal}
                 />
@@ -110,52 +54,89 @@ const ComplementItem = ({fullSideDish, typeOfComplement}) => {
 
 const backgroundItemColors = ['#009FE3', '#1D7093']
 
-const TopComplementHolder = ({ name, items, classValue =  'complementHolder',backgroundItem = '#B89554'}) => {
-    if (name !== "types") {
+const TopComplementHolder = ({ name, items, classValue =  'complementHolder',backgroundItem = '#B89554',fatherHook,keyValue}) => {
+    
         return (
             <div className = {classValue} style={{backgroundColor : backgroundItem}}>
                 <CenteredDisplay width="100%">
                     <p className = 'complementTitle'> {name} </p>
                 </CenteredDisplay> 
+                
                 {
-                    items.map((item, index) => (
-                        <ComplementItem 
-                            typeOfComplement = {name}
-                            key = {item.id} 
-                            fullSideDish = {item} /> 
-                    ))
+                    items && items.length > 0 ? (
+                        items.map((item, index) => (
+                            <ComplementItem 
+                                typeOfComplement={keyValue}
+                                key={item.id} 
+                                fullSideDish={item} 
+                                passedHook = {fatherHook}
+                            />
+                        ))
+                    ) : (
+                        <div>No hay elementos disponibles</div>
+                    )
                 }
+                    
+                
             </div>
-        );
-    }
+        ); 
     return null;
 }
 
-
 const ListSideDish = () => {
     var iterator = 0;
+
+    const [extraList, setExtraList] = useState([]);
+
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+
+    // useEffect para cargar los grupos desde el local storage al montar el componente
+    
+
+    useEffect(() => {
+        const storedExtras = JSON.parse(localStorage.getItem('extras')) || []; 
+        setExtraList(storedExtras); 
+    }, [updateTrigger]);
+
+    console.log(extraList)
 
     return (
         <MotionImplementation>  
             <WhiteDummySpacer/>
             <Title> Listado de Complementos </Title> 
             
-            <TopComplementHolder 
-                classValue = "typesHolder" 
-                key={"Tipos de Platillo"} 
-                name={"Tipos de Platillo"} 
-                items={mockData.types} 
-                /> 
-
+            {
+                extraList.Tipos && extraList.Tipos.length > 0  ?(
+                <TopComplementHolder
+                    classValue="typesHolder"
+                    key="Tipos"
+                    keyValue = "Tipos"
+                    name="Tipos de Platillo"
+                    fatherHook = {setUpdateTrigger}
+                    items={extraList.Tipos}
+                />
+                ):(
+                    <div className='no hay'>
+                        No hay Tipos de platillos definidos
+                    </div>
+                )
+            }
+                
+                
             <HorizontalDisplay  >
                 {
-                    Object.entries(mockData).map(([key, value],index) => (
-                        <TopComplementHolder 
+                    Object.entries(extraList).map(([key, value],index) => (
+                        key !== "Tipos" && (
+                            <TopComplementHolder 
                             key={key} 
+                            keyValue={key}
                             name={key} 
                             items={value} 
                             backgroundItem = {backgroundItemColors[index%2]}
+                            fatherHook = {setUpdateTrigger}
                             />
+                        )
+                        
                     ))
                 }
             </HorizontalDisplay>
