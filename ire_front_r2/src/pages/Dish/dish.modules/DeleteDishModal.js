@@ -12,11 +12,26 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
-const DeleteDishModal = ({ isModalOpen, closeModal, fullProps }) => {
+const DeleteDishModal = ({ isModalOpen, closeModal, fullProps,passedHook }) => {
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        alert("Le picaste aceptar");
+        const Success = true
+
+        const dishes = JSON.parse(localStorage.getItem('dishes') || '[]');
+        
+        const filteredDishes = dishes.filter(dish => dish.id !== fullProps.id);
+        
+        localStorage.setItem('dishes', JSON.stringify(filteredDishes));
+
+        if(Success){
+            alert("Eliminado con exito")
+
+            passedHook(prev => prev + 1)
+        } else {
+            alert("Problemas para eliminar")
+        }
+ 
         closeModal(); // Cierra el modal después de aceptar
     };
 

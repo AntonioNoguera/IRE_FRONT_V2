@@ -4,6 +4,9 @@ import Title from "../../components/Layouts/Title";
 import Button from "../../components/UIcomponents/Button";
 import EditText from "../../components/UIcomponents/EditText";
 
+import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
+
+
 import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection"; 
@@ -15,6 +18,7 @@ import  MotionImplementation  from './../../components/Layouts/MotionImplementat
 import { useState } from "react";
 
 const NewDish = () => {
+
     const [dishName, setDishName ] = useState('');
     const [dishTemperature,setDishTemperature] = useState ('')
 
@@ -24,6 +28,51 @@ const NewDish = () => {
     const [dishProtein, setDishProtein ] = useState(''); 
 
     const extraObject = JSON.parse(localStorage.getItem('extras')) || [];
+
+    const manageSave = () => {
+        const validation = true;
+        const success = true;
+
+        if(validation){
+            if(success){
+                
+                const newAdditionDish = {
+                    id : uuidv4(),
+                    name : dishName,
+                    sauceId : dishSauce,
+                    complementId : dishComplement,
+                    typeId : dishType,
+                    assamble : false,
+                    proteinId : dishProtein,
+                    temperature : dishTemperature,
+                    rating : 0,
+                    additionDate : new Date().toISOString(),
+                }
+
+                const existingDishes = JSON.parse(localStorage.getItem('dishes')) || [];
+
+                const updatedDishes = [...existingDishes, newAdditionDish];
+                
+                localStorage.setItem('dishes', JSON.stringify(updatedDishes));
+
+
+                setDishName("");
+                setDishTemperature("");
+                setDishType("");
+                setDishSauce("");
+                setDishComplement("");
+                setDishProtein("");
+
+                alert("Añadido con exito")
+
+
+            }else{
+                alert("Wasnt posible")
+            }
+        } else {
+            alert("validation pending")
+        }
+    }
 
     const temperatureOptions = [
         { name : "Frío" , value : "Frío" },
@@ -36,7 +85,7 @@ const NewDish = () => {
         <MotionImplementation verticalCentered = 'enabled'>
 
             <CenteredDisplay>  
-            <Title> Agregar Ingrediente </Title>
+            <Title> Agregar Platillo </Title>
 
                 <Label>Escribe el nombre del platillo:</Label>
                 <EditText
@@ -55,8 +104,11 @@ const NewDish = () => {
                 <DropDownSelection
                     onChange = { e => setDishType(e.target.value)}
                     selectedOption = {dishType}
-                    optionsAvailable={[]}
-                    placeholder = "Ingresa el tipo del platillo"/>
+                    optionsAvailable = {extraObject.Tipos.map(type => ({
+                        value: type.id,
+                        name: type.name
+                    }))}
+                    placeHolder = "Ingresa el tipo del platillo"/>
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
@@ -64,8 +116,11 @@ const NewDish = () => {
                         <DropDownSelection
                             onChange = { e => setDishProtein(e.target.value)}
                             selectedOption = {dishProtein}
-                            optionsAvailable={[]}
-                            placeholder = "Ingresa la proteína del platillo"/>
+                            optionsAvailable = {extraObject.Proteínas.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))}
+                            placeHolder = "Ingresa la proteína del platillo"/>
                     </CenteredDisplay>
                     
                     <WhiteDummySpacer/>
@@ -75,8 +130,11 @@ const NewDish = () => {
                         <DropDownSelection
                             onChange = { e => setDishComplement(e.target.value)}
                             selectedOption = {dishComplement}
-                            optionsAvailable={[]}
-                            placeholder = "Ingresa el acompañamiento del platillo"/>
+                            optionsAvailable = {extraObject.Acompañamientos.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))} 
+                            placeHolder = "Ingresa el acompañamiento del platillo"/>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
@@ -85,14 +143,17 @@ const NewDish = () => {
                         <Label>Salsa:</Label> 
                         <DropDownSelection
                             onChange = { e => setDishSauce(e.target.value)}
-                            previousValue= {dishSauce}
-                            optionsAvailable={[]}
-                            placeholder = "Ingresa la salsa del platillo"/> 
+                            selectedOption = {dishSauce}
+                            optionsAvailable = {extraObject.Salsas.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))} 
+                            placeHolder = "Ingresa la salsa del platillo"/> 
                     </CenteredDisplay>
                 </HorizontalDisplay>
  
  
-                <Button>Agregar</Button>  
+                <Button onClick={manageSave}>Agregar</Button>  
                 
             </CenteredDisplay> 
         </MotionImplementation>

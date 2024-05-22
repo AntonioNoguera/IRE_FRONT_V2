@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+
 import CenteredDisplay from "../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
@@ -166,7 +168,26 @@ const mockDatagroup = {
     ]
 }
 
-const IngredientItemHolder = ({backgroundColor,fullProps}) => {
+const IngredientItemHolder = ({backgroundColor,fullProps,fatherHook}) => {
+    const FormattedDate = ( isoDate ) => {
+        const formatDate = (isoDate) => { 
+          const date = new Date(isoDate);
+          
+          if (isNaN(date)) {
+            return 'Fecha inválida';
+          }
+      
+          const day = String(date.getUTCDate()).padStart(2, '0');
+          const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+          const year = date.getUTCFullYear();
+          
+          return `${day}/${month}/${year}`;
+        };
+      
+        const formattedDate = formatDate(isoDate);
+      
+        return formattedDate;
+      };
 
     fullProps.complementInfo = mockDatagroup
 
@@ -178,19 +199,20 @@ const IngredientItemHolder = ({backgroundColor,fullProps}) => {
                 </CenteredDisplay>
 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
-                    <p className='itemCountTitle'>Tipo:</p>
-                    <p className='itemCountHolder'>{fullProps.existence}</p >
+                    <p className='itemCountTitle'>Temperatura:</p>
+                    <p className='itemCountHolder'>{fullProps.temperature}</p >
                 </div> 
 
                 <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                     <p className='itemCountTitle'> Fecha de Creación:</p>
-                    <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
+                    <p className='itemCountHolder'>{FormattedDate(fullProps.additionDate)}</p >
                 </div> 
                 
                 <SvgButton 
                     type = 'editCookie'
                     fullProps = {fullProps}
                     RenderedComponent = {UpdateDishModal}
+                    hook = {fatherHook}
                     />
                 
                 <WhiteDummySpacer/>
@@ -199,6 +221,7 @@ const IngredientItemHolder = ({backgroundColor,fullProps}) => {
                     type = 'trashCan'
                     fullProps = {fullProps}
                     RenderedComponent = {DeleteDishModal}
+                    hook = {fatherHook}
                     />
 
             </HorizontalDisplay>
@@ -206,16 +229,17 @@ const IngredientItemHolder = ({backgroundColor,fullProps}) => {
     )
 }
 
-const IngredientGroupHolder = ({name, items,index,backgrounColors}) => {
+const IngredientGroupHolder = ({name, items,index,backgrounColors,passedHook}) => {
     return(
         <>
             <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
             {
-                items.map((ingredient, index) => (
+                items.map((dish, index) => (
                     <IngredientItemHolder
                         backgroundColor = {backgrounColors[index%2]}
                         key = {index} 
-                        fullProps = { ingredient } 
+                        fullProps = { dish } 
+                        fatherHook = {passedHook}
                     />
                 ))
             }
@@ -225,6 +249,33 @@ const IngredientGroupHolder = ({name, items,index,backgrounColors}) => {
 
 
 const ListDish = () => {
+    
+    //Getting the extras object
+    const storedExtras = JSON.parse(localStorage.getItem('extras')) || [];
+
+    //Hook Post Operaciones
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+    const [dishData, setDishData] = useState([]);
+ 
+    useEffect(() => {
+        const storedDishes = JSON.parse(localStorage.getItem('dishes')) || [];
+
+        const processedData = storedExtras.Tipos.map(extra => {
+            const typeDishes = storedDishes.filter(dish => dish.typeId === extra.id);
+            return {
+                typeName: extra.name,
+                items: typeDishes
+            };
+        });
+
+        setDishData(processedData); 
+
+        
+
+    }, [updateTrigger]);
+    
+    console.log(dishData)
+
     return ( 
         <MotionImplementation >
 
@@ -232,12 +283,13 @@ const ListDish = () => {
             <Title>Listado de Platillos</Title>
             
             { 
-                dataMock.map((groupIngredient, index) => (
+                dishData.map((dishType, index) => (
                     <IngredientGroupHolder 
                         backgrounColors = {colorOption[index%2]} 
                         key = {index}
-                        name = {groupIngredient.groupName}
-                        items = {groupIngredient.items}    
+                        name = {dishType.typeName}
+                        items = {dishType.items}    
+                        passedHook = {setUpdateTrigger}
                     />
                     
                 ))
