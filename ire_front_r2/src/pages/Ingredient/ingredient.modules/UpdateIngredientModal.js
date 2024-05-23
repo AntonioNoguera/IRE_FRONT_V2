@@ -14,11 +14,7 @@ import DropDownSelection from './../../../components/UIcomponents/DropDownSelect
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => { 
     const storedGroups = JSON.parse(localStorage.getItem('groups')) || []; 
-    // Definición de funciones manejadoras dentro del componente
-    
-    console.log(storedGroups)
-    console.log(fullProps.groupId)
-    console.log(storedGroups.find(it => it.id === fullProps.groupId).id || "" )
+    // Definición de funciones manejadoras dentro del componente 
      
     const [ingredientName, setIngredientName] = useState(fullProps.name);
     const [ingredientAmount, setIngredientAmount] = useState(fullProps.existence);

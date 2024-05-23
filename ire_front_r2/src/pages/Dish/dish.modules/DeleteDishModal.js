@@ -12,7 +12,7 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
-const DeleteDishModal = ({ isModalOpen, closeModal, fullProps,passedHook }) => {
+const DeleteDishModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
@@ -41,7 +41,7 @@ const DeleteDishModal = ({ isModalOpen, closeModal, fullProps,passedHook }) => {
     };
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal  isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
                 <Title> Eliminar Platillo </Title> 
 

@@ -1,52 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-
     /*Proyect Colors*/
     --ire-white: #FFF;
     --ire-black: #000;
-
     --ire-darkGray: #303231;
-    --ire-darkBrown : #786C55;
+    --ire-darkBrown: #786C55;
     --ire-lightGray: #D9D9D9;
     --ire-lightGreen: #7CA88B;
-    --ire-skyBlue:#009FE3;
+    --ire-skyBlue: #009FE3;
     --ire-lightSkyBlue: #Acddf3;
     --ire-seaBlue: #1D7093;
     --ire-lightBrown: #B89554;
     --ire-darkYellow: #F7B334;
-    
     --ire-yellowInput: #ffcf77;
-    
-    --ire-redButton:#F75633;
-    --ire-redButtonHover:#ff9d87;
-    --ire-greenButton:#51B75B;
-    --ire-greenButtonHover:#caffcf;
-
+    --ire-redButton: #F75633;
+    --ire-redButtonHover: #ff9d87;
+    --ire-greenButton: #51B75B;
+    --ire-greenButtonHover: #caffcf;
     --ire-bodyTextColor: #484848;
-
     --ire-grayPlaceholders: #727272;
-
-
     /*Proyect Font Sizes*/
     --ire-Subtitle: 24px;
-
-
     /*Proyect Font Styles*/
-
     --ire-Bold: 500;
     --ire-SemiBold: 450;
     --ire-Regular: 380;
     --ire-Light: 200;
 }
 
-body{
+body {
     font-family: "Jost", sans-serif;
 }
 
 * {
     margin: 0;
-    padding:0;
+    padding: 0;
     font-family: "Jost", sans-serif;
 }
 
@@ -54,12 +43,11 @@ body{
     display: flex;
 }
 
-.contentContainer{
+.contentContainer {
     width: 100%;
 }
 
-  html, body, #root {
-    
+html, body, #root {
     max-width: 100%;
     overflow-x: hidden;
     height: 100%;

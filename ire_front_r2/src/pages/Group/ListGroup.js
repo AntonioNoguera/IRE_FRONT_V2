@@ -54,8 +54,7 @@ const ListGroup = () => {
 
     useEffect(() => {
         const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
-        setGroups(storedGroups);
-        console.log(storedGroups);
+        setGroups(storedGroups); 
     }, [updateTrigger]);
 
     return (

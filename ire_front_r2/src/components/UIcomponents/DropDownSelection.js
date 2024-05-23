@@ -11,8 +11,7 @@ const componentStyles = {
 const DropDownSelection = ({ placeHolder, selectedOption = "", optionsAvailable = [], onChange }) => {
     const [selected, setSelected] = useState(selectedOption);
 
-    useEffect(() => {
-        console.log("the use effect is being called wtf"  +"opcion seleccoinada :  "+selectedOption)
+    useEffect(() => { 
         setSelected(selectedOption);
     }, [selectedOption]);
 

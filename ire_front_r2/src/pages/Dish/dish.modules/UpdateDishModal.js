@@ -26,8 +26,7 @@ const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHo
     const [dishProtein, setDishProtein ] = useState(fullProps.proteinId); 
 
     const extraObject = JSON.parse(localStorage.getItem('extras')) || [];
-
-    console.log(fullProps.sauceId + "===" +  dishSauce)
+ 
  
 
     // Definición de funciones manejadoras dentro del componente

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+
 import CenteredDisplay from "../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
@@ -25,122 +27,18 @@ import UpdateRecipeModal from "./recipe.modules/UpdateRecipeModal";
 
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
-const dataMock = [
-    {
-        dishGroup: "Desayuno",
-        items:[
-            {
-                id: 0,
-                dish : 'tascs',
-                date : '21/21/21',
-                recipeItems : [
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                    services : 20
-                },
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                    
-                ]
-            }, 
-            {
-                id: 0,
-                dish : 'asdf',
-                date : '21/21/21',
-                recipeItems : [
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                    
-                ]
-            }, 
-        ]
-    },
-    {
-        dishGroup: "Comida",
-        items:[
-            {
-                id: 0,
-                dish : 'aasdfasdsdf',
-                date : '21/21/21',
-                recipeItems : [
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                    
-                ]
-            }, 
-            {
-                id: 0,
-                dish : 'asdf',
-                date : '21/21/21',
-                recipeItems : [
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                {
-                    existence: 0,
-                    group_id: 0,
-                    id: 0,
-                    name: "string",
-                    unit: "string",
-                },
-                    
-                ]
-            }, 
-        ]
-    },
-]
-
-
-
 const colorOption = [
     ['#009FE3', '#1D7093'] , 
     ['#F7B334', '#786C55'] 
 ]
 
-const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => { 
+const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}) => { 
 
     return( 
         <div className = 'mainHolderStyle mainRecipeHolder' style={{  display: 'flex', backgroundColor : backgroundColor}}>
         <HorizontalDisplay> 
             <CenteredDisplay width="100%">
-                <p className = 'groupName'> {fullProps.dish} </p>
+                <p className = 'groupName'> {fullProps.name} </p>
             </CenteredDisplay>
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
@@ -150,17 +48,19 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => {
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                 <p className='itemCountTitle'> Fecha de Creación:</p>
-                <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
+                <p className='itemCountHolder'>{fullProps.additionDate}</p >
             </div> 
             
             <SvgButton 
                 type = 'editCookie'
                 fullProps = { fullProps }
+                hook = {passedHook}
                 RenderedComponent = { UpdateRecipeModal } />
             
             <WhiteDummySpacer/>
             <SvgButton type = 'trashCan'
-                fullProps = { fullProps }
+                fullProps = { fullProps } 
+                hook = {passedHook}
                 RenderedComponent = { DeleteRecipeModal } />
             
         </HorizontalDisplay>
@@ -168,23 +68,31 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor}) => {
     )
 }
 
-const RecipeGroups = ({name, items,index,backgrounColors}) => {
+const RecipeGroups = ({typeName, dishes,index,backgrounColors, fatherHook}) => {
     return(
         <>
-            <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
+            <SubTitle style={{ marginTop: '70px' }}>{typeName}</SubTitle>
             {
-            items.map((recipe, index) => {
-                    // Asigna el nombre del plato a la receta 
+
+            
+                dishes.map((recipe, index) => (
                     
-                    return (
-                        <IngredientItemHolder
-                            backgroundColor={backgrounColors[index % 2]}
-                            key={index}
-                            itemCount={items.length}
-                            fullProps={recipe}
-                        />
-                    );
-                })
+                    recipe.items.length === 0 ? (
+                        <div style={{ color: 'red', textAlign: 'center', padding: '20px' }}>
+                            No hay recetas disponibles.
+                        </div>
+                    ) : (
+
+                    <IngredientItemHolder
+                        backgroundColor={backgrounColors[index % 2]}
+                        key={index}
+                        itemCount={recipe.items.length}
+                        fullProps={recipe}
+                        passedHook={fatherHook}
+                    />
+                ))
+            )
+            
             }
         </>
     )
@@ -192,6 +100,35 @@ const RecipeGroups = ({name, items,index,backgrounColors}) => {
 
 
 const ListRecipe = () => {
+    const storedTypes = JSON.parse(localStorage.getItem('extras')).Tipos || [];
+    const storedDishes = JSON.parse(localStorage.getItem('dishes')) || [];
+    const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+
+    
+    //Hooks
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+
+    const [proccesedRecipes, setProccessedRecipes ] = useState([]);
+
+    useEffect(() => {
+        const storedRecipes = JSON.parse(localStorage.getItem('recipes')) || []; 
+
+        // Procesar datos  
+        const grouped = storedTypes.map(type => ({
+            dishType: type.name,
+            dishes: storedDishes
+                .filter(dish => dish.typeId === type.id)
+                .map(dish => ({
+                    ...dish,
+                    items: storedRecipes.filter(recipe => recipe.dishId === dish.id)
+                }))
+        }));
+         
+
+        setProccessedRecipes(grouped); 
+    }, [updateTrigger]);
+
+
     return (
         <MotionImplementation
                 initial = {{x:200, opacity:0}}
@@ -202,12 +139,13 @@ const ListRecipe = () => {
             <Title>Listado de Recetas</Title>
             
             { 
-                dataMock.map((recipe, index) => (
+                proccesedRecipes.map((recipe, index) => (
                     <RecipeGroups 
                         backgrounColors = {colorOption[index%2]} 
                         key = {index}
-                        name = {recipe.dishGroup}
-                        items = {recipe.items}    
+                        typeName = {recipe.dishType}
+                        dishes = {recipe.dishes}    
+                        fatherHook = {setUpdateTrigger}
                     />
                     
                 ))

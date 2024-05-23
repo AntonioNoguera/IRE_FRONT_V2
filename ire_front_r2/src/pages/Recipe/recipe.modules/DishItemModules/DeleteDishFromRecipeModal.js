@@ -8,13 +8,26 @@ import Button from "../../../../components/UIcomponents/Button";
 import Label from "../../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 
-const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} }) => {
+const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} , overAllValue, passedHook}) => {
     
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        alert("Le picaste aceptar");
-        closeModal(); // Cierra el modal después de aceptar
+        const validation = true;
+        if(validation){
+
+            const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+ 
+            const updatedRecipes = existingRecipes.filter(recipe => recipe.id !== fullProps.id);
+ 
+            localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+            closeModal()
+
+            passedHook(prev => prev + 1)
+        }else{
+            alert("problems when delee")
+        }
+        ; // Cierra el modal después de aceptar
     };
 
     const onDecline = () => {
@@ -23,7 +36,7 @@ const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} }) 
     };
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal isOpen={isModalOpen} onClose={closeModal} overAll = {overAllValue}>
             <CenteredDisplay width="90%">
                 <Title>Eliminar Ingrediente de la Receta</Title> 
 
@@ -33,10 +46,15 @@ const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} }) 
                     Esta acción es irreversible y no se puede deshacer. 
                 </SubTitle>
                 
-                <Label textAlignment="center">
-                    Receta del platillo a Eliminar: {fullProps.name}
-                </Label>
-
+                <HorizontalDisplay>
+                    <Label textAlignment="center">
+                        Receta del platillo a Eliminar: {fullProps.dish}
+                    </Label>
+                    <Label textAlignment="center">
+                        Receta del platillo a Eliminar: {fullProps.name}
+                    </Label>
+                </HorizontalDisplay>
+                
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />

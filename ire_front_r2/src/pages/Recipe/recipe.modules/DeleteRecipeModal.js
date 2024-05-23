@@ -12,11 +12,27 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
-const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
+const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        alert("Le picaste aceptar");
+        const succed = true;
+
+        console.log(fullProps)
+
+        if(succed){
+            const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+ 
+            const updatedRecipes = existingRecipes.filter(recipe => recipe.dishId !== fullProps.id);
+ 
+            localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+            
+            passedHook(prev => prev + 1)
+            closeModal()
+        }else{
+            alert("Problem on the succed")
+        }
+
         closeModal(); // Cierra el modal después de aceptar
     };
 

@@ -21,6 +21,7 @@ const SvgButton = (
 						styleName = 'light', 
 						fullProps,
 						hook,
+						overAll = false,
 						RenderedComponent = NewRequisitionModal
 					}
 				) => {
@@ -62,6 +63,7 @@ const SvgButton = (
                     isModalOpen={isModalOpen} 
                     fullProps={fullProps}
 					passedHook = {hook}
+					overAllValue = {overAll}
                 />
             
 

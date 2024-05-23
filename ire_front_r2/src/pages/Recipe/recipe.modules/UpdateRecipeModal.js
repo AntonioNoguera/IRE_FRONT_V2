@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
@@ -19,12 +20,10 @@ import "./recipeHolder.css"
 
 const classOptions = ['BlueSTD', 'BlueStrong']
 
-const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
+const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
     // Definición de funciones manejadoras dentro del componente
-    const onAccept = () => {
-        alert("Le picaste aceptar");
-        closeModal(); // Cierra el modal después de aceptar
-    };
+     
+    const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
     const onDecline = () => {
         alert("Le picaste cancelar");
@@ -39,9 +38,13 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
                 <Label>Selecciona un ingrediente de la receta a editar:</Label>
                 <WhiteDummySpacer/>
                  {
-                    fullProps.recipeItems.map((dishItem,index) => {
+                    fullProps.items.map((ingredientItem,index) => {
 
-                        dishItem.dish = fullProps.dish;
+                        const fullIngredient = storedIngredients.find( ingredient => ingredient.id === ingredientItem.ingredientId )
+                        ingredientItem.name = fullIngredient.name;
+                        ingredientItem.dish = fullProps.name;
+                        ingredientItem.unit = fullIngredient.unit;
+
                         return(
                         <HorizontalDisplay  
                             classNameSend = {classOptions[index%2]}
@@ -49,20 +52,25 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps }) => {
                             width = "auto">
                                 
                             <p className='ingredientItemHolder' style={{width:"100%"}}>
-                                {dishItem.name} 
+                                {fullIngredient.name} 
                             </p>
                             
                                 <SvgButton
                                     type='editCookie'
                                     size='35px'
                                     RenderedComponent={UpdataDishFromRecipe}
-                                    fullProps = {dishItem}/>
+                                    fullProps = {ingredientItem}
+                                    overAll = {true}
+                                    hook = {passedHook}
+                                    />
                                 <WhiteDummySpacer/>
                                 <SvgButton 
                                     type='trashCan'
                                     size='35px' 
-                                    RenderedComponent={DeleteDishFromRecipeModal}
-                                    fullProps = {dishItem}
+                                    RenderedComponent={DeleteDishFromRecipeModal} 
+                                    hook = {passedHook}
+                                    overAll = {true}
+                                    fullProps = {ingredientItem}
                                     />  
                             
                         </HorizontalDisplay>)

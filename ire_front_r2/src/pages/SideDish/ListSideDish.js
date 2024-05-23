@@ -97,9 +97,7 @@ const ListSideDish = () => {
         const storedExtras = JSON.parse(localStorage.getItem('extras')) || []; 
         setExtraList(storedExtras); 
     }, [updateTrigger]);
-
-    console.log(extraList)
-
+ 
     return (
         <MotionImplementation>  
             <WhiteDummySpacer/>

@@ -23,86 +23,7 @@ import SvgButton from "../../components/UIcomponents/SvgButton";
 
 import UpdateDishModal from "./dish.modules/UpdateDishModal";
 import DeleteDishModal from "./dish.modules/DeleteDishModal";
-
-const dataMock = [
-    {
-        groupName: "Desayuno",
-        items:[
-            {
-                "id": 2,
-                "name": "Pozole Verde",
-                "assamble": true,
-                "temperature": "Frío",
-                "last_made": "2024-04-24T01:42:25.740694206",
-                "services": 0,
-                "rating": 0,
-                "complement": {
-                  "id": 4,
-                  "name": "Tostadas"
-                },
-                "sauce": {
-                  "id": 1,
-                  "name": "Salsa Roja"
-                },
-                "protein": {
-                  "id": 3,
-                  "name": "Pollo Deshebrado"
-                },
-                "type": {
-                  "id": 5,
-                  "name": "Desayuno"
-                }
-              },
-              {
-                "id": 2,
-                "name": "Pozole Amarillo",
-                "assamble": true,
-                "temperature": "Frío",
-                "last_made": "2024-04-24T01:42:25.740694206",
-                "services": 0,
-                "rating": 0,
-                "complement": {
-                  "id": 4,
-                  "name": "Tostadas"
-                },
-                "sauce": {
-                  "id": 1,
-                  "name": "Salsa Roja"
-                },
-                "protein": {
-                  "id": 3,
-                  "name": "Pollo Deshebrado"
-                },
-                "type": {
-                  "id": 5,
-                  "name": "name in order"
-                }
-              },
-        ]
-    },{
-        groupName: "Comida",
-        items:[
-            {
-                "existence": 0,
-                "group_id": 0,
-                "group_name": "string",
-                "id": 0,
-                "last_time_used": "string",
-                "name": "salchicha",
-                "unit": "string"
-              },
-              {
-                "existence": 0,
-                "group_id": 0,
-                "group_name": "string",
-                "id": 0,
-                "last_time_used": "string",
-                "name": "leche",
-                "unit": "string"
-              },
-        ]
-    },
-] 
+ 
 
 const colorOption = [
     ['#009FE3', '#1D7093'] , 
@@ -272,9 +193,7 @@ const ListDish = () => {
 
         
 
-    }, [updateTrigger]);
-    
-    console.log(dishData)
+    }, [updateTrigger]); 
 
     return ( 
         <MotionImplementation >

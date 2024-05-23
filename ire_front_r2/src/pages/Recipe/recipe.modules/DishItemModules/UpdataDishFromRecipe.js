@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Modal from './../../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
 import CenteredDisplay from "../../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../../components/Layouts/HorizontalDisplay";
@@ -12,13 +13,46 @@ import BigTextArea from './../../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../../components/UIcomponents/DropDownSelection';
  
-const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps }) => {
+const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps, overAllValue, passedHook }) => {
 
-    console.log(fullProps)
+    const [recipeAmount, setRecipeAmount] = useState (fullProps.ingredientAmount);
+    const [recipeService, setRecipeService] = useState (fullProps.service);
+    
+ 
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        alert("Le picaste aceptar");
+        const validation = true;
+        const succed = true;
+
+        if(validation){
+            if(succed){
+                const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+                const updatedRecipes = existingRecipes.map(recipe =>
+                    recipe.id === fullProps.id
+                        ? {
+                            ...recipe, 
+                            id: recipe.id,
+                            dishId: recipe.dishId,  
+                            ingredientId: recipe.ingredientId,
+                            ingredientAmount: recipeAmount,
+                            service: recipeService, 
+                            additionDate: recipe.additionDate, 
+                        }
+                        : recipe
+                );
+
+                localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+
+                passedHook(prev => prev + 1)
+            }else{
+                alert("Problems on the update")
+            }
+
+            
+        }else{
+            alert("Problemas en la eejcución")
+        }
         closeModal(); // Cierra el modal después de aceptar
     };
 
@@ -28,7 +62,8 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps }) => {
     };
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        
+        <Modal isOpen={isModalOpen} onClose={closeModal} overAll = {overAllValue}>
             <CenteredDisplay width="80%">
                 <Title> Modificar el Ingrediente de la Receta </Title> 
 
@@ -39,14 +74,20 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps }) => {
 
                 <Label textAlignment='start'>Cantidad del Ingrediente Necesitada:</Label>
                 <HorizontalDisplay>
-                    <EditText previousValue={fullProps.existence}>Ingresa la cantidad del ingrediente</EditText> 
+                    <EditText 
+                        previousValue = {recipeAmount}
+                        onChange = { e => setRecipeAmount(e.target.value) }
+                        placeholder="Ingresa la cantidad del ingrediente"/>
                         
                     <Label marginTop = '0px'>{fullProps.unit}</Label>
                 </HorizontalDisplay>
                 
 
                 <Label textAlignment='start'>Número de Servicios que cubre:</Label>
-                <EditText previousValue = {fullProps.services}>Ingresa el número de servicios</EditText>
+                <EditText 
+                    previousValue = {recipeService}
+                    placeholder = "Ingresa el número de servicios"
+                    onChange = {e => setRecipeService(e.target.value)}/>
 
                  
                 <HorizontalDisplay>

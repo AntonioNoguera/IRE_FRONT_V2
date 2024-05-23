@@ -118,8 +118,7 @@ const ListIngredient = () => {
             };
         });
 
-        setDataProcessed(processedData);
-        console.log(processedData);
+        setDataProcessed(processedData); 
     }, [updateTrigger]);
 
     return (
