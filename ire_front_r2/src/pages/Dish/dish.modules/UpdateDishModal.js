@@ -10,7 +10,6 @@ import EditText from '../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
 
-
 const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHook }) => {
     const temperatureOptions = [
         { name : "Frío" , value : "Frío" },
