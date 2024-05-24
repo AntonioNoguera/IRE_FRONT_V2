@@ -5,15 +5,6 @@ import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
 import SubTitle from "../../components/Layouts/SubTitle";
 
-import Button from "../../components/UIcomponents/Button";
-import EditText from "../../components/UIcomponents/EditText";
-
-import BigTextArea from "../../components/UIcomponents/BigTextArea";
-import Label from "../../components/UIcomponents/Label";
-
-import { motion } from 'framer-motion';
-import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
-
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
 import MotionImplementation from './../../components/Layouts/MotionImplementation';
@@ -25,12 +16,14 @@ import SvgButton from "../../components/UIcomponents/SvgButton";
 import DeleteIngredientModal from "./ingredient.modules/DeleteIngredientModal";
 import UpdateIngredientModal from "./ingredient.modules/UpdateIngredientModal";
 
+import { useSnackbar } from 'notistack'; 
+
 const colorOption = [
     ['#009FE3', '#1D7093'],
     ['#F7B334', '#786C55']
 ];
 
-const groupsCasted = [];
+const groupsCasted = []; 
 
 const IngredientItemHolder = ({ fullProps, backgroundColor, fatherHook }) => {
     fullProps.complementsAvailable = groupsCasted;

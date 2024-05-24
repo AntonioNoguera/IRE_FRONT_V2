@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
+import Modal from './../../../components/UIcomponents/Modal';  
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
 import Title from "../../../components/Layouts/Title";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
-import EditText from '../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../components/UIcomponents/BigTextArea';
+import EditText from '../../../components/UIcomponents/EditText'; 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
 
+import { useSnackbar } from 'notistack'; 
+
 const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHook }) => {
+
+    const { enqueueSnackbar } = useSnackbar();
+    
     const temperatureOptions = [
         { name : "Frío" , value : "Frío" },
         { name : "Caliente" , value : "Caliente" },
@@ -26,18 +30,14 @@ const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHo
     const [dishProtein, setDishProtein ] = useState(fullProps.proteinId); 
 
     const extraObject = JSON.parse(localStorage.getItem('extras')) || [];
- 
- 
-
-    // Definición de funciones manejadoras dentro del componente
+    
     const onAccept = () => {
         const validation = true;
         const success = true;
-        if (validation) {
-            if (success) { 
-                //Update members
 
-                
+        if (validation) {
+            if (success) {  
+ 
                 const dishes = JSON.parse(localStorage.getItem('dishes') || '[]');
     
                 const dishesFound = dishes.findIndex(g => g.id === fullProps.id);
@@ -55,29 +55,25 @@ const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHo
                         sauceId: dishSauce,
                         temperature:dishTemperature,
                         typeId:dishType, 
-                    };
+                    }; 
 
-                
+                    localStorage.setItem('dishes', JSON.stringify(dishes)); 
 
-                    localStorage.setItem('dishes', JSON.stringify(dishes));
-
+                    passedHook(prev => prev + 1);}
                     
-                    passedHook(prev => prev + 1)
-                }
+                    closeModal();
+
+                    enqueueSnackbar("El ingrediente ha sido actualizado correctamente", { variant: 'success' });
 
             } else {
-                alert("Problems")
+                enqueueSnackbar("El nombre del platillo ya existe, o genera conflicto con otra entidad", { variant: 'error' });
             }
         } else {
-            alert("PENDING VALIDATION")
+            enqueueSnackbar("Es necesario cubrir todos los campos para poder continuar", { variant: 'warning' });
         }
-        closeModal();
     };
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
-    };
+    const onDecline = () => {  closeModal();  };
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>

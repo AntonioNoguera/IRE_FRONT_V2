@@ -18,37 +18,28 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 
 import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
 
-import { motion } from 'framer-motion';
+import { useSnackbar } from 'notistack'; 
 
 const NewSideDish = () => {     
+    const { enqueueSnackbar } = useSnackbar();
+
     const optionsTypes = [
-        {
-            name : "Tipos",
-            value : "Tipos"
-        },
-        {
-            name : "Proteínas",
-            value : "Proteínas"
-        },
-        {
-            name : "Salsas",
-            value : "Salsas"
-        },
-        {
-            name : "Acompañamientos",
-            value : "Acompañamientos"
-        },
-    ]
+        { name : "Tipos", value : "Tipos" },
+        { name : "Proteínas", value : "Proteínas" },
+        { name : "Salsas", value : "Salsas" },
+        { name : "Acompañamientos", value : "Acompañamientos" },
+    ] 
 
     const [extraName, setExtraName ] = useState("");
     const [extraDescription, setExtraDescription ] = useState("");
     const [extraType, setExtraType ] = useState("");
 
     const manageSelection = () => {
-        const validation = true
-        const success = true
-        if (validation) {
-            if(success) { 
+        const validation = true;
+        const success = true;
+
+        if ( validation ) {
+            if( success ) { 
 
                 let extras = JSON.parse(localStorage.getItem('extras')) || {
                     Tipos: [],
@@ -56,16 +47,14 @@ const NewSideDish = () => {
                     Salsas: [],
                     Acompañamientos: []
                 };
-
-                // Crear el nuevo complemento
+ 
                 const newExtra = {
                     id: uuidv4(),
                     name: extraName,
                     description: extraDescription
                 };
-
-                // Añadir el nuevo complemento en la llave correspondiente
-                switch (extraType) {
+ 
+                switch ( extraType ) {
                     case 'Tipos':
                         extras.Tipos.push(newExtra);
                         break;
@@ -87,18 +76,17 @@ const NewSideDish = () => {
                 setExtraDescription("");
                 setExtraType("");
 
-                alert("Guardado con exito")
-
-                // Guardar el objeto actualizado en localStorage
+                enqueueSnackbar("¡Complemento almacenado con éxito!", { variant: 'success'});
+ 
                 localStorage.setItem('extras', JSON.stringify(extras));
+
             } else {
-                alert("expecifiCA ERRONEA")
+                enqueueSnackbar("El nombre de este complemento ya esta ocupado, cambia de nombre, o actualiza tu complemento.", { variant: 'error' });
             }
-        } else {
-            alert("Grupos pendientes")
+        } else { 
+            enqueueSnackbar("¡Campos pendientes, para continuar todos los campos requiren estar cubiertos!", { variant: 'warning' });
         }
     }
-
 
     return (
             <MotionImplementation verticalCentered='enabled'>
@@ -124,7 +112,7 @@ const NewSideDish = () => {
                     placeHolder = "Selecciona el tipo del complemento"
                     selectedOption = {extraType}/>
 
-                <Button onClick={manageSelection}>Agregar</Button>  
+                <Button onClick = {manageSelection}> Agregar </Button>  
                 </CenteredDisplay>
             </MotionImplementation> 
     )

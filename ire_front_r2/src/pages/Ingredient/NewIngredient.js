@@ -3,22 +3,24 @@ import CenteredDisplay from "../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
 import Button from "../../components/UIcomponents/Button";
-import EditText from "../../components/UIcomponents/EditText";
-import BigTextArea from "../../components/UIcomponents/BigTextArea";
+import EditText from "../../components/UIcomponents/EditText"; 
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 import MotionImplementation from './../../components/Layouts/MotionImplementation';
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
-import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
+import { v4 as uuidv4 } from 'uuid'; 
+
+import { useSnackbar } from 'notistack'; 
 
 const NewIngredients = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [groupsAvailable, setGroupsAvailable] = useState([]);
     const [ingredientName, setIngredientName] = useState('');
     const [ingredientAmount, setIngredientAmout] = useState('');
     const [ingredientUnit, setIngredientUnit] = useState('');
     const [ingredientGroup, setIngredientGroup] = useState('');
-
-    // useEffect para cargar los grupos desde el local storage al montar el componente
+    
     useEffect(() => {
         const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
         setGroupsAvailable(storedGroups);
@@ -41,11 +43,9 @@ const NewIngredients = () => {
                 };
 
                 const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-
-                // Añadir el nuevo ingrediente a la lista de ingredientes
+                
                 const updatedIngredients = [...existingIngredients, newIngredient];
-
-                // Guardar la lista actualizada de ingredientes en el local storage
+                
                 localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
 
                 // Limpiar los campos de entrada
@@ -54,12 +54,12 @@ const NewIngredients = () => {
                 setIngredientUnit('');
                 setIngredientGroup('');
 
-                alert("Ingrediente añadido");
+                enqueueSnackbar("Se ha guardado correctamente el ingrediente", { variant: 'success'});
             } else {
-                alert("Problemas con la adición");
+                enqueueSnackbar("Problemas con el almacenado del ingrediento", { variant: 'error'});
             }
         } else {
-            alert("Validación fallida");
+            enqueueSnackbar("Todos los campos deben de ser cubierto para poder dar de alta el ingrediente", { variant: 'warning'});
         }
     };
 

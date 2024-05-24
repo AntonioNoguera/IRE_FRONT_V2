@@ -9,18 +9,16 @@ import Button from "../../../../components/UIcomponents/Button";
 import Label from "../../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 import EditText from '../../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../../components/UIcomponents/BigTextArea';
 
-import DropDownSelection from './../../../../components/UIcomponents/DropDownSelection';
+import { useSnackbar } from 'notistack';  
  
 const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps, overAllValue, passedHook }) => {
 
-    const [recipeAmount, setRecipeAmount] = useState (fullProps.ingredientAmount);
-    const [recipeService, setRecipeService] = useState (fullProps.service);
-    
- 
+    const { enqueueSnackbar } = useSnackbar();
 
-    // Definición de funciones manejadoras dentro del componente
+    const [recipeAmount, setRecipeAmount] = useState (fullProps.ingredientAmount);
+    const [recipeService, setRecipeService] = useState (fullProps.service); 
+
     const onAccept = () => {
         const validation = true;
         const succed = true;
@@ -43,33 +41,29 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps, overAllValue
                 );
 
                 localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
-
+                closeModal();
                 passedHook(prev => prev + 1)
-            }else{
-                alert("Problems on the update")
+                
+                enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' }); 
+            } else {
+                enqueueSnackbar("Problemas con la ejecución de tu operación", { variant: 'error' });
             }
-
-            
-        }else{
-            alert("Problemas en la eejcución")
+        } else {
+            enqueueSnackbar("Todos los campos deben de ser cubiertos para poder realizar la operación", { variant: 'warning' });
         }
-        closeModal(); // Cierra el modal después de aceptar
-    };
-
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
-    };
-
-    return (
         
+    };
+
+    const onDecline = () => {  closeModal();  };
+
+    return ( 
         <Modal isOpen={isModalOpen} onClose={closeModal} overAll = {overAllValue}>
             <CenteredDisplay width="80%">
                 <Title> Modificar el Ingrediente de la Receta </Title> 
 
                 <HorizontalDisplay>
-                    <Label textAlignment="Center" > Nombre del Platillo: <span>{fullProps.dish}</span></Label>
-                    <Label textAlignment="Center" > Nombre del Ingrediente: <span>{fullProps.name}</span></Label>
+                    <Label textAlignment = "Center" > Nombre del Platillo: <span>{fullProps.dish}</span></Label>
+                    <Label textAlignment = "Center" > Nombre del Ingrediente: <span>{fullProps.name}</span></Label>
                 </HorizontalDisplay>
 
                 <Label textAlignment='start'>Cantidad del Ingrediente Necesitada:</Label>
@@ -91,9 +85,9 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps, overAllValue
 
                  
                 <HorizontalDisplay>
-                    <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
+                    <Button type = 'cancelStyle' onClick = { onDecline }>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button onClick = { onAccept }>Agregar</Button>
                 </HorizontalDisplay>
                 </CenteredDisplay>
         </Modal>

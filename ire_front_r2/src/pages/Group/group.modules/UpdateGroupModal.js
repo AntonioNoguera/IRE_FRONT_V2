@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
+import Modal from './../../../components/UIcomponents/Modal';
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
 import Title from "../../../components/Layouts/Title";
@@ -12,7 +12,11 @@ import DropDownSelection from './../../../components/UIcomponents/DropDownSelect
 
 import ColorOptions from './../../../../src/GlobalValues';
 
+
+import { useSnackbar } from 'notistack'; 
+
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {  
+    const { enqueueSnackbar } = useSnackbar();
 
     const [groupName, setGroupName] = useState(fullProps.name);
     const [groupDescription, setGroupDescription] = useState(fullProps.description);
@@ -22,34 +26,45 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {
         
             const groupsStr = localStorage.getItem('groups');
             const groups = groupsStr ? JSON.parse(groupsStr) : [];
- 
-            const groupIndex = groups.findIndex(g => g.id === fullProps.id);
-            if (groupIndex !== -1) {
-                groups[groupIndex] = {
-                    ...groups[groupIndex],
-                    name: groupName,
-                    description: groupDescription,
-                    color: groupColor
-                };
 
-                alert("grupo modificado correctamente"); 
+            const validataion = true;
 
-                localStorage.setItem('groups', JSON.stringify(groups));
-                if(passedHook){
-                    passedHook(prev => prev + 1);
-                    
-                    closeModal(); // Cierra el modal después de aceptar
+            const success = true;
+
+            if( validataion ){
+
+                if( success ){
+                    const groupIndex = groups.findIndex( g => g.id === fullProps.id );
+                    if (groupIndex !== -1) {
+
+                        groups[groupIndex] = {
+                            ...groups[groupIndex],
+                            name: groupName,
+                            description: groupDescription,
+                            color: groupColor
+                        };
+
+                        localStorage.setItem('groups', JSON.stringify(groups)); 
+                        passedHook(prev => prev + 1);
+                        
+                        closeModal();
+
+                        enqueueSnackbar("Grupo actualizado correctamente", { variant: 'success' });
+                        
+                    } else {
+                        enqueueSnackbar("Grupo no encontrado, verifica la información", { variant: 'error' });
+                    }
+
+                } else {
+                    enqueueSnackbar("El grupo ya existe o genera conflicto con otra entidad", { variant: 'error' });
                 }
-            }else{
-                alert("grupo no encontrado")
-            }
-
-        
+                
+            } else { 
+                enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
+            } 
     };
 
-    const onDecline = () => { 
-        closeModal(); 
-    };
+    const onDecline = () => {  closeModal();  };
 
     return ( 
         <Modal isOpen={isModalOpen} onClose={closeModal}>

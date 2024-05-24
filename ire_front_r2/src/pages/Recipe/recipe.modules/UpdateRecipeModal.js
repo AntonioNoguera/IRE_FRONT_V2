@@ -25,9 +25,8 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =
      
     const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+    const onDecline = () => { 
+        closeModal();
     };
 
     return (

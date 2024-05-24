@@ -7,34 +7,53 @@ import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 import MotionImplementation from './../../components/Layouts/MotionImplementation';
-import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
+import { v4 as uuidv4 } from 'uuid';
+
 import ColorOptions from './../../../src/GlobalValues';
 
+import { useSnackbar } from 'notistack'; 
 
 
 const NewGroup = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
     const [groupColor, setGroupColor] = useState('');
 
     const handleAddGroup = () => {
-        const groupData = {
-            id: uuidv4(),
-            name: groupName,
-            description: groupDescription,
-            color: groupColor
-        };
-        
-        const existingGroups = JSON.parse(localStorage.getItem('groups')) || [];
+        const success = true;
+        const validation = true;
 
-        const updatedGroups = [...existingGroups, groupData];
+        if( validation ){
+            if( success ){
+
+                const groupData = {
+                    id: uuidv4(),
+                    name: groupName,
+                    description: groupDescription,
+                    color: groupColor
+                };
+                
+                const existingGroups = JSON.parse(localStorage.getItem('groups')) || [];
         
-        localStorage.setItem('groups', JSON.stringify(updatedGroups));
-        
-        setGroupName('')
-        setGroupDescription('')
-        setGroupColor('')
-        alert("Grupo añadido correctamente: ");
+                const updatedGroups = [...existingGroups, groupData];
+                
+                localStorage.setItem('groups', JSON.stringify(updatedGroups));
+                
+                setGroupName('')
+                setGroupDescription('')
+                setGroupColor('')
+
+                enqueueSnackbar("Grupo almacenado correctamente", { variant: 'success' });
+            } else {
+                enqueueSnackbar("El nombre del grupo ya se encuentra ocupado, o genera conflictos con otra entidad", { variant: 'error' });
+            }
+        } else {
+            enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
+        }
+
+       
     };
 
     return (

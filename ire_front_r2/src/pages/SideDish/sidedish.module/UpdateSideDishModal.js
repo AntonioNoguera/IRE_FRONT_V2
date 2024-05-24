@@ -9,6 +9,7 @@ import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 import EditText from '../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
+import { useSnackbar } from 'notistack'; 
 
 const optionsTypes = [
     { name: "Tipos", value: "Tipos" },
@@ -18,6 +19,9 @@ const optionsTypes = [
 ];
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    
+    const { enqueueSnackbar } = useSnackbar();
+
     const [extraName, setExtraName] = useState(fullProps.name);
     const [extraDescription, setExtraDescription] = useState(fullProps.description);
     const [extraType, setExtraType] = useState(fullProps.typeOption);
@@ -26,8 +30,7 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
         const validate = true;
         const success = true;
         if (validate) {
-            if (success) {
-                alert("Complemento actualizado con éxito");
+            if (success) { 
                 
                 let extras = JSON.parse(localStorage.getItem('extras')) || {
                     Tipos: [],
@@ -114,7 +117,7 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
                             return;
                     }
                 } else {
-                    // Si el tipo no cambia, simplemente actualiza el complemento en el mismo tipo
+                    
                     switch (extraType) {
                         case 'Tipos':
                             updateExtra('Tipos');
@@ -133,22 +136,24 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
                             return;
                     }
                 }
-
-                // Guardar el objeto actualizado en el localStorage
-                localStorage.setItem('extras', JSON.stringify(extras));
+ 
+                localStorage.setItem('extras', JSON.stringify(extras)); 
+                
                 passedHook(prev => prev + 1)
                 closeModal();
+                
+                enqueueSnackbar("Complemnto Actualizado con Éxito", { variant: 'success'});
+
             } else {
-                alert("Complemento ya existe en la base de datos");
+                enqueueSnackbar("El nombre de este complemento ya existe", { variant: 'error'});
             }
         } else {
-            alert("Campos pendientes");
+            enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning'}); 
         }
     };
 
     const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+        closeModal() 
     };
 
     return (
@@ -158,30 +163,30 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
 
                 <Label>Nombre del Complemento:</Label>
                 <EditText 
-                    previousValue={extraName}
-                    onChange={e => setExtraName(e.target.value)}
+                    previousValue = {extraName}
+                    onChange = {e => setExtraName(e.target.value)}
                     placeholder="Ingresa el nombre del complemento"
                 />
 
                 <Label>Descripción de Complemento:</Label>
                 <BigTextArea 
-                    previousValue={extraDescription}
-                    onChange={e => setExtraDescription(e.target.value)}
-                    placeholder="Ingresa un texto descriptivo de tu complemento"
+                    previousValue = {extraDescription}
+                    onChange = {e => setExtraDescription(e.target.value)}
+                    placeholder = "Ingresa un texto descriptivo de tu complemento"
                 />
 
                 <Label>Tipo de Complemento:</Label>
                 <DropDownSelection
-                    selectedOption={extraType}
-                    onChange={e => setExtraType(e.target.value)}
-                    optionsAvailable={optionsTypes}
-                    placeHolder="Selecciona el tipo del complemento"
+                    selectedOption = {extraType}
+                    onChange = {e => setExtraType(e.target.value)}
+                    optionsAvailable = {optionsTypes}
+                    placeHolder = "Selecciona el tipo del complemento"
                 />
                  
                 <HorizontalDisplay>
-                    <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
+                    <Button type = 'cancelStyle' onClick = {onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Actualizar</Button>
+                    <Button onClick = {onAccept}>Actualizar</Button>
                 </HorizontalDisplay>
             </CenteredDisplay>
         </Modal>

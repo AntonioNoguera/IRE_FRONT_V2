@@ -1,63 +1,63 @@
 const GlobalValues = [
     {
-        "name": "Rosa",
-        "value": "#FFC0CB"
+        "name": "Azul Bebé",
+        "value": "#AFCDE9"
     },
     {
-        "name": "Rosa Claro",
-        "value": "#FFB6C1"
+        "name": "Azul Oscuro",
+        "value": "#10576D"
     },
     {
-        "name": "Salmón Claro",
-        "value": "#FFA07A"
+        "name": "Oro Viejo",
+        "value": "#98764C"
     },
     {
-        "name": "Durazno",
-        "value": "#FFDAB9"
+        "name": "Naranja Oscuro",
+        "value": "#D98C22"
     },
     {
-        "name": "Rosa Brumoso",
-        "value": "#FFE4E1"
+        "name": "Verde Oliva",
+        "value": "#698570"
     },
     {
-        "name": "Lavanda Claro",
-        "value": "#FFF0F5"
+        "name": "Aguamarina",
+        "value": "#91C8D0"
     },
     {
-        "name": "Turquesa Pálido",
-        "value": "#AFEEEE"
+        "name": "Turquesa Oscuro",
+        "value": "#2B5C70"
     },
     {
-        "name": "Azul Polvo",
-        "value": "#B0E0E6"
+        "name": "Bronce",
+        "value": "#8C6B3E"
     },
     {
-        "name": "Verde Pálido",
-        "value": "#98FB98"
+        "name": "Naranja Brillante",
+        "value": "#E89B24"
     },
     {
-        "name": "Verde Claro",
-        "value": "#90EE90"
+        "name": "Verde Bosque",
+        "value": "#5D7565"
     },
     {
-        "name": "Amarillo Claro",
-        "value": "#FAFAD2"
+        "name": "Cian Claro",
+        "value": "#B0DFEB"
     },
     {
-        "name": "Azul Claro",
-        "value": "#ADD8E6"
+        "name": "Azul Petróleo",
+        "value": "#144D61"
     },
     {
-        "name": "Cardo",
-        "value": "#D8BFD8"
+        "name": "Dorado Claro",
+        "value": "#A38745"
     },
     {
-        "name": "Lavanda",
-        "value": "#E6E6FA"
+        "name": "Mandarina",
+        "value": "#FFA931"
     },
     {
-        "name": "Ciruela",
-        "value": "#DDA0DD"
+        "name": "Verde Pastel",
+        "value": "#85B29A"
     }
 ];
 

@@ -15,10 +15,9 @@ import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
 import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+ 
 
-import { motion } from 'framer-motion';
-
-import { SnackbarProvider, useSnackbar } from 'notistack'; 
+import { useSnackbar } from 'notistack'; 
 
 const NewRecipe = () => {
 
@@ -70,7 +69,7 @@ const NewRecipe = () => {
                 enqueueSnackbar("Error al añadir la receta", { variant: 'error' });
             }
         } else {
-            enqueueSnackbar("Campos pendientes", { variant: 'warning' });
+            enqueueSnackbar("Campos pendientes, es necesario que todos los campos sean cubiertos", { variant: 'warning' });
         }
     };
 

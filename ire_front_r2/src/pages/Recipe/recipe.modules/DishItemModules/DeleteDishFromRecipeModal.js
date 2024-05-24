@@ -8,8 +8,11 @@ import Button from "../../../../components/UIcomponents/Button";
 import Label from "../../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 
+import { useSnackbar } from 'notistack'; 
+
 const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} , overAllValue, passedHook}) => {
     
+    const { enqueueSnackbar } = useSnackbar();
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
@@ -21,19 +24,16 @@ const DeleteDishFromRecipeModal = ({ isModalOpen, closeModal, fullProps = {} , o
             const updatedRecipes = existingRecipes.filter(recipe => recipe.id !== fullProps.id);
  
             localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+            enqueueSnackbar("Ingrediente eliminado correctamente", { variant: 'success'});
             closeModal()
 
             passedHook(prev => prev + 1)
         }else{
-            alert("problems when delee")
-        }
-        ; // Cierra el modal después de aceptar
+            enqueueSnackbar("Problemas al eliminar el Ingrediente", { variant: 'error'});
+        } 
     };
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
-    };
+    const onDecline = () => {  closeModal();  };
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal} overAll = {overAllValue}>

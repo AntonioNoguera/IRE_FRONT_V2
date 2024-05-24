@@ -6,13 +6,15 @@ import Title from "../../../components/Layouts/Title";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
-import EditText from '../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../components/UIcomponents/BigTextArea';
+import EditText from '../../../components/UIcomponents/EditText'; 
+
+import { useSnackbar } from 'notistack'; 
 
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
-  
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => { 
+    const { enqueueSnackbar } = useSnackbar();
+    
     const storedGroups = JSON.parse(localStorage.getItem('groups')) || []; 
     // Definición de funciones manejadoras dentro del componente 
      
@@ -47,19 +49,16 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => 
 
 
                 passedHook(prev => prev +1)
-                alert("Ingrediente dado de alta!")
+                enqueueSnackbar("Ingrediente actualizado exitosamente", { variant: 'success' });
             }else{
-                alert("no ha sido posible dar de alta el ingrediente")
+                enqueueSnackbar("Problemas con la eliminación del ingrediente", { variant: 'error' });
             }
         }else{
-            alert("Campos pendientes")
+            enqueueSnackbar("Todos los campos deben de ser cubiertos para poder actualizar el ingrediente", { variant: 'warning' });
         } 
     };
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
-    };
+    const onDecline = () => {  closeModal();  };
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>

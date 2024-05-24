@@ -1,18 +1,18 @@
 import React from 'react';
-import Modal from './../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
+import Modal from './../../../components/UIcomponents/Modal';
 import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../components/Layouts/HorizontalDisplay";
 import Title from "../../../components/Layouts/Title";
 import SubTitle from "../../../components/Layouts/SubTitle";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
-import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
-import EditText from '../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../components/UIcomponents/BigTextArea';
+import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer"; 
 
-import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
+
+import { useSnackbar } from 'notistack'; 
  
 const DeleteGroupModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    const { enqueueSnackbar } = useSnackbar();
     
     const onAccept = () => {
         
@@ -22,17 +22,12 @@ const DeleteGroupModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =>
         
         localStorage.setItem('groups', JSON.stringify(filteredGroups));
 
-        alert("Grupo eliminado correctamente.");
-        closeModal();
-        
-        if (passedHook) {
-            passedHook(prev => prev + 1);
-        }
+        enqueueSnackbar("Grupo eliminado correctamente", { variant: 'success' });
+        closeModal(); 
+        passedHook(prev => prev + 1); 
     };
 
-    const onDecline = () => {
-        closeModal(); 
-    };
+    const onDecline = () => {  closeModal();  };
 
     return (
         <Modal isOpen = {isModalOpen} onClose={closeModal}>

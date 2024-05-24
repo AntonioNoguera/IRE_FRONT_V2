@@ -30,65 +30,6 @@ const colorOption = [
     ['#F7B334', '#786C55'] 
 ]
 
-const mockDatagroup = {
-    "complements": [
-        {
-            "id": 0,
-            "name": "string"
-        }
-    ],
-    "proteins": [
-        {
-            "id": 0,
-            "name": "string"
-        }
-    ],
-    "sauces": [
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },{
-            "id": 0,
-            "name": "string"
-        }, 
-    ],
-    "types": [
-        {
-            "id": 0,
-            "name": "aasdf"
-        },
-        {
-            "id": 0,
-            "name": "asdfasfasdfasdf"
-        },
-        {
-            "id": 0,
-            "name": "string"
-        },
-        {
-            "id": 0,
-            "name": "f232323"
-        },
-        {
-            "id": 0,
-            "description": "OnlyItem With description",
-            "name": "name in order"
-        },
-        {
-            "id": 0,
-            "name": "stringsasdaaaa"
-        },
-    ]
-}
-
 const IngredientItemHolder = ({backgroundColor,fullProps,fatherHook}) => {
     const FormattedDate = ( isoDate ) => {
         const formatDate = (isoDate) => { 
@@ -109,8 +50,7 @@ const IngredientItemHolder = ({backgroundColor,fullProps,fatherHook}) => {
       
         return formattedDate;
       };
-
-    fullProps.complementInfo = mockDatagroup
+      
 
     return( 
             <div className = 'mainHolderStyle' style={{  display: 'flex', backgroundColor : backgroundColor}}>

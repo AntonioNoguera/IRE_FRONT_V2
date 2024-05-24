@@ -7,12 +7,12 @@ import SubTitle from "../../../components/Layouts/SubTitle";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
-import EditText from '../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 
-import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
+import { useSnackbar } from 'notistack'; 
  
 const DeleteDishModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+
+    const { enqueueSnackbar } = useSnackbar();
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {

@@ -6,16 +6,14 @@ import Title from "../../../components/Layouts/Title";
 import SubTitle from "../../../components/Layouts/SubTitle";
 import Button from "../../../components/UIcomponents/Button";
 import Label from "../../../components/UIcomponents/Label";
-import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
-import EditText from '../../../components/UIcomponents/EditText';
-import BigTextArea from './../../../components/UIcomponents/BigTextArea';
+import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer"; 
 
-import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
+import { useSnackbar } from 'notistack'; 
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => {
-    // Definición de funciones manejadoras dentro del componente
-    const onAccept = () => {
-        alert("Le picaste aceptar");
+    const { enqueueSnackbar } = useSnackbar();
+    
+    const onAccept = () => {  
 
         let extras = JSON.parse(localStorage.getItem('extras')) || {
             Tipos: [],
@@ -42,23 +40,23 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => 
                 removeExtra('Salsas');
                 break;
             case 'Acompañamientos':
-                removeExtra('Complementos');
+                removeExtra('Acompañamientos');
                 break;
             default:
                 alert(`Tipo original no válido: ${fullProps.typeOption}`);
                 return;
         }
 
-        
         localStorage.setItem('extras', JSON.stringify(extras));
+        
+        enqueueSnackbar("Complemento eliminado con éxito", { variant: 'success'});
 
         passedHook(prev => prev + 1)
-        closeModal(); // Cierra el modal después de aceptar
+        closeModal();
     };
 
-    const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+    const onDecline = () => { 
+        closeModal();
     };
 
     return (

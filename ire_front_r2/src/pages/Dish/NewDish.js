@@ -4,20 +4,21 @@ import Title from "../../components/Layouts/Title";
 import Button from "../../components/UIcomponents/Button";
 import EditText from "../../components/UIcomponents/EditText";
 
-import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUIDs
+import { v4 as uuidv4 } from 'uuid';
 
-
-import BigTextArea from "../../components/UIcomponents/BigTextArea";
 import Label from "../../components/UIcomponents/Label";
 import DropDownSelection from "../../components/UIcomponents/DropDownSelection"; 
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
-
 import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
 import { useState } from "react";
 
+import { useSnackbar } from 'notistack'; 
+
 const NewDish = () => {
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const [dishName, setDishName ] = useState('');
     const [dishTemperature,setDishTemperature] = useState ('')
@@ -55,22 +56,17 @@ const NewDish = () => {
                 
                 localStorage.setItem('dishes', JSON.stringify(updatedDishes));
 
+                setDishName("");  setDishTemperature("");
+                setDishType("");  setDishSauce("");
+                setDishComplement("");  setDishProtein("");
 
-                setDishName("");
-                setDishTemperature("");
-                setDishType("");
-                setDishSauce("");
-                setDishComplement("");
-                setDishProtein("");
-
-                alert("Añadido con exito")
-
+                enqueueSnackbar("El platillo se ha guardado correctamente", { variant: 'success' })
 
             }else{
-                alert("Wasnt posible")
+                enqueueSnackbar("El nombre del platillo ya existe, o genera conflicto con otra entidad", { variant: 'error' })
             }
         } else {
-            alert("validation pending")
+            enqueueSnackbar("Es necesario que cubras todos los campos para poder continuar", { variant: 'warning' })
         }
     }
 
