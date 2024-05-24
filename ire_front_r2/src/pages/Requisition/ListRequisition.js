@@ -16,7 +16,7 @@ import UpgradeIngredientModal from "./requisition.modules/AtomIngredientModals/U
 import DeleteDishFromRecipeModal from "../Recipe/recipe.modules/DishItemModules/DeleteDishFromRecipeModal";
 
  
-import NewDishForRequisitionModal from './requisition.modules/NewDishForRequisitionModal';
+import NewIngredientModal from './requisition.modules/AtomIngredientModals/NewIngredientModal';
 import DeleteDishForRequisition from './requisition.modules/DeleteDishForRequisition';
 import UpdateDayForRequisition from './requisition.modules/UpdateDayForRequisition'; 
 
@@ -179,7 +179,7 @@ const RequisitionItem = ({fullProps}) => {
                         type="addSign" 
                         size="30" 
                         fullProps = {fullProps}
-                        RenderedComponent={NewDishForRequisitionModal}/>
+                        RenderedComponent={NewIngredientModal}/>
 
                     <WhiteDummySpacer/>
 
@@ -279,6 +279,8 @@ const ListRequisition = () => {
                     />
             ))
         }
+
+        <WhiteDummySpacer/><WhiteDummySpacer/><WhiteDummySpacer/> 
 
         <div className='bottomNavigation'>
             <div className="bottomButton">

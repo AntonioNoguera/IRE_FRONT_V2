@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Modal from './../../../components/UIcomponents/Modal'
+import Modal from '../../../../components/UIcomponents/Modal'
 
-import CenteredDisplay from "../../../components/Layouts/CenteredDisplay";
-import HorizontalDisplay from "./../../../components/Layouts/HorizontalDisplay";
-import Title from "../../../components/Layouts/Title";
-import Button from "../../../components/UIcomponents/Button";
-import EditText from "../../../components/UIcomponents/EditText";
+import CenteredDisplay from "../../../../components/Layouts/CenteredDisplay";
+import HorizontalDisplay from "../../../../components/Layouts/HorizontalDisplay";
+import Title from "../../../../components/Layouts/Title";
+import Button from "../../../../components/UIcomponents/Button";
+import EditText from "../../../../components/UIcomponents/EditText";
 
-import BigTextArea from "../../../components/UIcomponents/BigTextArea";
-import Label from "../../../components/UIcomponents/Label";
-import DropDownSelection from "../../../components/UIcomponents/DropDownSelection";
+import BigTextArea from "../../../../components/UIcomponents/BigTextArea";
+import Label from "../../../../components/UIcomponents/Label";
+import DropDownSelection from "../../../../components/UIcomponents/DropDownSelection";
 
-import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
+import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 
 import { motion } from 'framer-motion'; 
-import NewRequisitionModal from './NewRequisitionModal';
+import NewRequisitionModal from '../NewRequisitionModal';
 
 const onAccept = () => {
     alert("Le picaste aceptar");
@@ -25,7 +25,7 @@ const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const NewDishForRequisitionModal = ({ isModalOpen, closeModal, fullProps }) => {
+const NewIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
@@ -70,4 +70,4 @@ const NewDishForRequisitionModal = ({ isModalOpen, closeModal, fullProps }) => {
     )
 }
 
-export default NewDishForRequisitionModal;
+export default NewIngredientModal;
