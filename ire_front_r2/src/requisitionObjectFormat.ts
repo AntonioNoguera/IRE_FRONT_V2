@@ -23,3 +23,11 @@ const requisition = [
         ]
     },
 ]
+
+/**
+ * 
+ * Dev Notes
+ * UI Error on ingredient (Wrong Shown)
+ * SWAP THE PLATILLO N RECETA POSITION
+ * PENDING ALERT ON DISHES???
+ */

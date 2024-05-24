@@ -23,7 +23,7 @@ import UpdateDayForRequisition from './requisition.modules/UpdateDayForRequisiti
 const dataMock = [
     {
         id : '0',
-        stringDay : 'test',
+        stringDay : 'Lunes',
         date : "string",
         state : true,
         dishes : [
@@ -63,7 +63,7 @@ const dataMock = [
     },
     {
         id : '0',
-        stringDay : 'test',
+        stringDay : 'Martes',
         date : "string",
         state : true,
         dishes : [
@@ -240,7 +240,7 @@ const RequisitionHolder = ({fullFatherProps}) => {
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="DayStrongValue">Estado:</p> 
-                    <p className="DayLigthValue">{fullFatherProps.stringDay}</p>
+                    <p className="DayLigthValue">Activo</p>
                 </div>  
            
             </div>
