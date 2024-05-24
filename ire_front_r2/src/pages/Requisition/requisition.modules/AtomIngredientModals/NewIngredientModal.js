@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from '../../../../components/UIcomponents/Modal'
 
@@ -15,17 +15,94 @@ import DropDownSelection from "../../../../components/UIcomponents/DropDownSelec
 import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 
 import { motion } from 'framer-motion'; 
+
+import { useSnackbar } from 'notistack'; 
+
 import NewRequisitionModal from '../NewRequisitionModal';
 
-const onAccept = () => {
-    alert("Le picaste aceptar");
-}
+
+const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
+const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
 const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const NewIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
+const NewIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [groupIngredient, setGroupIngredient] = useState("");
+    const [reqIngredient, setReqIngredient] = useState("");
+    const [reqIngAmount, setIngAmount] = useState("");
+
+    const [reqIngOptions, setIngOptions] = useState([]);
+
+    const [ingUnit, setIngUnit] = useState("Unidad");
+
+    useEffect(()=>{
+        const filteredGroups = storedIngredients.filter(ingredient => ingredient.groupId === groupIngredient);
+        setIngOptions(filteredGroups);
+    }, [groupIngredient]);
+
+    useEffect(()=>{ 
+        const foundIngredient = storedIngredients.find(ingredient => ingredient.id === reqIngredient)
+
+        if(foundIngredient){ 
+            setIngUnit(foundIngredient.unit);
+        }
+        
+    }, [reqIngredient]);
+
+
+    const onAccept = () => {
+        const validation = true;
+        const success = true;
+    
+        if ( validation ) {
+            if ( success ) {
+    
+                const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
+
+                // Encontrar la requisición y el día correspondientes
+                let dayFound = false;
+                storedRequisitions.forEach(requisition => {
+                    requisition.weekDays.forEach(day => {
+                        if (day.dayId === fullProps.fatherProps.dayId) {
+                            // Encontrar el platillo correspondiente
+                            const dish = day.dishes.find(d => d.dishId === fullProps.dishId);
+                            if (dish) {
+                                // Añadir el nuevo ingrediente al platillo
+                                const newIngredient = {
+                                    ingredientId: reqIngredient, // Reemplazar con el actual ingredientId
+                                    ingredientAmount: reqIngAmount, // Reemplazar con el valor real
+                                    operationTime: new Date().toISOString() // Hora actual
+                                };
+                                dish.dishIngredients.push(newIngredient);
+                                dayFound = true;
+                            }
+                        }
+                    });
+                });
+
+                if (!dayFound) {
+                    enqueueSnackbar("No se encontró el día especificado o el platillo en el día", { variant: 'error' });
+                    return;
+                }
+
+                // Actualizar el local storage
+                localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+                passedHook(prev => prev + 1)
+                closeModal()
+    
+                enqueueSnackbar("El ingrediente se ha almacenado correctamente", { variant: 'success' });
+            } else {
+                enqueueSnackbar("El ingrediente ya se encuentra en este platillo, modifica sus valores", { variant: 'error' });
+            }
+        } else {
+            enqueueSnackbar("Es necesario cubrir todos los campos para poder continuar", { variant: 'warning' });
+        }
+    }
+
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
@@ -35,33 +112,55 @@ const NewIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
                         <Label>Grupo del Ingrediente:</Label>
-                        <DropDownSelection>Selecciona el grupo de tu ingrediente</DropDownSelection>
+                        <DropDownSelection
+                            optionsAvailable = {storedGroups.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))}
+                            onChange={e => setGroupIngredient(e.target.value)}
+                            selectedOption = {groupIngredient}
+                            placeHolder="Selecciona el grupo de tu ingrediente"/>
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">
                         <Label>Ingrediente:</Label>
-                        <DropDownSelection>Ingrediente a añadir </DropDownSelection>
+                        <DropDownSelection 
+                            optionsAvailable = {reqIngOptions.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))}
+                            selectedOption={reqIngredient}
+                            onChange={ e=> setReqIngredient(e.target.value)}
+
+                            placeHolder="Ingrediente a añadir"/>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay> 
 
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
-                        <Label>Cantidad del ingrediente para <span>{fullProps.services}</span> servicios:</Label>
-                        <EditText>Valor numérico de la cantidad del ingrediente</EditText>
+                        <Label>Cantidad del ingrediente para <span>{fullProps.dishServices}</span> servicios:</Label>
+                        <HorizontalDisplay>
+                            <EditText
+                            previousValue={reqIngAmount}
+                            onChange={e => setIngAmount(e.target.value)}
+                            placeholder = "Valor numérico de la cantidad del ingrediente"/>
+                            <Label marginTop='5PX'>{ingUnit}</Label> 
+                        </HorizontalDisplay>
+                        
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
-                        <Label marginTop='50px'>asdf</Label>  
+                         
                     
                 </HorizontalDisplay>
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer/>
-                    <Button>Agregar</Button>  
+                    <Button onClick={onAccept}>Agregar</Button>  
                 </HorizontalDisplay>
                 
             </CenteredDisplay> 

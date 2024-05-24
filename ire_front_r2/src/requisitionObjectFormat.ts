@@ -5,6 +5,7 @@ const requisition = [
         weekDays : [
             {
                 dayName : "",
+                dayValue : "",
                 dayStatus : true,
                 dishes : [
                     {

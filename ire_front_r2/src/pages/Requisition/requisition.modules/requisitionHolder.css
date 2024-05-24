@@ -122,3 +122,37 @@ svg{
     fill:white;
     height: 25px;
 }
+
+
+.addDishToDay{
+    width: 20%;
+    margin-inline: 40%;
+    background-color: #F7B334;
+    
+    color:white; 
+    border-radius: 20px;
+    text-align: center;
+    padding: 5px 10px;
+
+    cursor: pointer;
+    
+    box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
+
+    transition: backgroundColor .5s, color .5s;
+
+}
+
+.addDishToDay:hover{
+    width: 20%;
+    margin-inline: 40%;
+    background-color: red;
+    border-radius: 20px;
+    text-align: center;
+    padding: 5px 10px;
+
+    
+    color:#b68b3c; 
+    background-color: #f9cf81;
+    
+    box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
+}

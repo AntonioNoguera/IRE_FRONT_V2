@@ -38,16 +38,16 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps }) => {
             <WhiteDummySpacer/> 
                 <HorizontalDisplay>
                     <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
-                        <Label marginTop='0px'>Día: </Label> <WhiteDummySpacer/>  {fullProps.fatherProps.stringDay}  
+                        <Label marginTop='0px'>Día: </Label> <WhiteDummySpacer/>  {fullProps.fatherProps.dayName}  
                     </div>
 
                     <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
-                        <Label marginTop='0px'>Platilo:</Label> <WhiteDummySpacer/>  {fullProps.dish}  
+                        <Label marginTop='0px'>Platilo:</Label> <WhiteDummySpacer/>  {fullProps.fullDishProps.name}  
                     </div>
 
 
                     <div style={{display:'flex',flexDirection : 'row', alignItems:'center',fontSize:'20px'}}>
-                        <Label marginTop='0px'>Servicio:</Label>  <WhiteDummySpacer/> {fullProps.services}
+                        <Label marginTop='0px'>Servicio:</Label>  <WhiteDummySpacer/> {fullProps.dishServices}
                     </div>
                 </HorizontalDisplay>
                  

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import ReactDOM from 'react-dom';
 import Modal from './../../../components/UIcomponents/Modal'
 
@@ -16,6 +17,8 @@ import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 
 import { motion } from 'framer-motion'; 
 
+import { useSnackbar } from 'notistack'; 
+
 const onAccept = () => {
     alert("Le picaste aceptar");
 }
@@ -24,7 +27,80 @@ const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
+const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps }) => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    const storedTypes = JSON.parse(localStorage.getItem('extras')).Tipos || [];
+    const storedDish = JSON.parse(localStorage.getItem('dishes')) || [];
+
+    const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
+
+    //Hooks for the for
+ 
+
+    const [ReqType, setReqType] = useState(""); 
+    const [ReqDish, setReqDish] = useState([]); 
+    const [ReqServices, setReqServices] = useState("");
+
+    const [dishOptions, setDishOptions ] = useState([]);
+ 
+    useEffect(() => {  
+        const availableDish = storedDish.filter(dish => dish.typeId === ReqType )
+        if(availableDish) {
+            setDishOptions(availableDish)
+        }
+          
+    }, [ReqType]);
+
+    const manageSave = () => {
+
+        const validation = true;
+        const success = true;
+
+        if( validation ){
+            if( success ){
+
+                console.log(fullProps.dayId);
+
+                const newDish = {
+                    dishId: ReqDish, // Replace with actual dishId
+                    dishIngredients: [],
+                    dishServices: ReqServices
+                };
+
+                // Find the current requisition directly by dayId
+                let found = false;
+
+                storedRequisitions.forEach(requisition => {
+                    requisition.weekDays.forEach(day => {
+                        if (day.dayId === fullProps.dayId) {
+                            day.dishes.push(newDish);
+                            found = true;
+                        }
+                    });
+                });
+
+                if (!found) {
+                    enqueueSnackbar("No se encontró la requisición para el día especificado", { variant: 'error' });
+                    return;
+                }
+
+                // Update local storage
+                localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+
+                passedHook(prev => prev + 1)
+                closeModal();
+                enqueueSnackbar("Platillo añadido correctamente", { variant: 'success' });
+
+            } else {
+                enqueueSnackbar("El platillo ya se encuentra en la requisición de este día", { variant: 'error' });
+            } 
+
+        } else {
+            enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
+        }
+    }
+
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <> 
@@ -34,14 +110,31 @@ const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
                 <HorizontalDisplay>
                     <CenteredDisplay width="100%">
                         <Label>Tipo de platillo:</Label>
-                        <DropDownSelection>Valor numérico de Ingrediente</DropDownSelection>
+                        <DropDownSelection
+                            selectedOption = { ReqType }
+                            onChange = { e => setReqType(e.target.value)}
+                            placeHolder = "Selecciona el tipo" 
+                            optionsAvailable = {storedTypes.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))}
+                            />
                     </CenteredDisplay>
 
                     <WhiteDummySpacer/>
 
                     <CenteredDisplay width="100%">
                         <Label>Platillo:</Label>
-                        <DropDownSelection>Unidad del Ingrediente</DropDownSelection>
+                        
+                        <DropDownSelection
+                            selectedOption = { ReqDish }
+                            onChange = { e => setReqDish(e.target.value)}
+                            placeHolder = "Selecciona un platillo" 
+                            optionsAvailable = {dishOptions.map(type => ({
+                                value: type.id,
+                                name: type.name
+                            }))}
+                            />
                     </CenteredDisplay>
                     
                 </HorizontalDisplay> 
@@ -51,7 +144,10 @@ const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
 
                     <CenteredDisplay width="100%">
                         <Label>Número de Servicios:</Label>
-                        <EditText>Unidad del Ingrediente</EditText>
+                        <EditText
+                            placeholder="Ingresa el número de servicios del platillo"
+                            previousValue ={ReqServices} 
+                            onChange={e  => setReqServices(e.target.value)}/>
                     </CenteredDisplay>
                     
                 </HorizontalDisplay>
@@ -59,7 +155,7 @@ const NewRequisitionModal = ({ isModalOpen, closeModal }) => {
                 <HorizontalDisplay>
                     <Button type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer/>
-                    <Button>Agregar</Button>  
+                    <Button onClick={manageSave} >Agregar</Button>  
                 </HorizontalDisplay>
                 
             </CenteredDisplay> 
