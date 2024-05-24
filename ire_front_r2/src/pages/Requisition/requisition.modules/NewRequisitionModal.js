@@ -19,14 +19,6 @@ import { motion } from 'framer-motion';
 
 import { useSnackbar } from 'notistack'; 
 
-const onAccept = () => {
-    alert("Le picaste aceptar");
-}
-
-const onDecline = () => {
-    alert("Le picaste declinar");
-}
-
 const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps }) => {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -103,7 +95,6 @@ const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps })
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <> 
             <CenteredDisplay width="100%">  
             <Title> Añadir platillo a la requisición </Title> 
 
@@ -159,7 +150,6 @@ const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps })
                 </HorizontalDisplay>
                 
             </CenteredDisplay> 
-        </>
         </Modal>
     )
 }

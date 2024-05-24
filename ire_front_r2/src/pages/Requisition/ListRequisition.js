@@ -22,34 +22,40 @@ import DeleteDishForRequisition from './requisition.modules/DeleteDishForRequisi
 import UpdateDayForRequisition from './requisition.modules/UpdateDayForRequisition'; 
 
 import NewRequisitionModal from './requisition.modules/NewRequisitionModal';
+import DeleteIngredientModal from './requisition.modules/AtomIngredientModals/DeleteIngredientModal';
+
+import { useSnackbar } from 'notistack';
 
 const storedDishes = JSON.parse(localStorage.getItem('dishes')) || [];
+const storedExtras = JSON.parse(localStorage.getItem('extras')) || [];
 const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
-const RequisitionAtom = ({fullAtomProps}) => {
-    const specificIngredient = storedIngredients.find(ingredient => ingredient.id === fullAtomProps.ingredientId)
+const RequisitionAtom = ({fullAtomProps, parentHook}) => {
+    const specificIngredient = storedIngredients.find(ingredient => ingredient.id === fullAtomProps.ingredientId) 
 
-    const convertISOToStandardTime = (isoString) => {
+    const convertISOToStandardTimeWithAMPM = (isoString) => {
         const date = new Date(isoString);
-    
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
+
+        let hours = date.getHours();
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
-    
-        return `${hours}:${minutes}`;
-    }
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; // La hora '0' debe ser '12'
+
+        return `${hours}:${minutes} ${ampm}`;
+    };
 
     return (
         <div className='itemHolder'> 
+        
             <div className="itemInfo">
                 {specificIngredient.name}
                 <span> / </span>
                 {fullAtomProps.ingredientAmount} {specificIngredient.unit}
                 <span> / </span>
-                <span> {convertISOToStandardTime(fullAtomProps.operationTime)} </span> 
+                <span> {convertISOToStandardTimeWithAMPM(fullAtomProps.operationTime)} </span> 
             </div>
             
             <div className='atomToolbar'>
@@ -57,6 +63,7 @@ const RequisitionAtom = ({fullAtomProps}) => {
                     type = 'editCookie' 
                     styleName="dark" 
                     size = '30px'
+                    hook = {parentHook}
                     fullProps = {fullAtomProps}
                     RenderedComponent={UpgradeIngredientModal}  />
 
@@ -66,8 +73,9 @@ const RequisitionAtom = ({fullAtomProps}) => {
                     type = 'trashCan' 
                     styleName="dark"  
                     size = '30px'
+                    hook = {parentHook}
                     fullProps = {fullAtomProps}
-                    RenderedComponent={DeleteDishFromRecipeModal}
+                    RenderedComponent={DeleteIngredientModal}
                     />
             </div>
             
@@ -122,12 +130,17 @@ const RequisitionItem = ({fullProps, passHook}) => {
             <hr/>
             
             {fullProps.dishIngredients.length !== 0 ? (
-                fullProps.dishIngredients.map((element, index) => (
-                    <RequisitionAtom
+                fullProps.dishIngredients.map((element, index) => {
+ 
+                    element.inheritProps = fullProps;
+                    return(
+                        <RequisitionAtom
+                        parentHook = {passHook}
                         key={index}
                         fullAtomProps={element}
                     />
-                ))
+                    ) 
+                })
             ) : (
                 <div>No hay ingredientes</div>
             )}
@@ -135,8 +148,8 @@ const RequisitionItem = ({fullProps, passHook}) => {
             <hr/>
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
-                    <p className="ItemStrongValue">Tipos:</p> 
-                    <p className="ItemLigthValue">{fullProps.type}</p>
+                    <p className="ItemStrongValue">Tipo:</p> 
+                    <p className="ItemLigthValue">{storedExtras.Tipos.find(type => type.id === fullProps.fullDishProps.typeId).name}</p>
                 </div>  
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
@@ -201,6 +214,8 @@ const RequisitionHolder = ({ fullFatherProps, fatherHook }) => {
     );
 }
 const ListRequisition = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
     function getWeekRangeString(date = new Date()) {
         const dayOfWeek = date.getDay(); // 0 (Domingo) - 6 (Sábado)
       
@@ -271,14 +286,26 @@ const ListRequisition = () => {
       }
 
       const noMockData =  getRequisitionForCurrentWeek();
-
-      console.log(noMockData);
+ 
 
       const [updateTrigger, setUpdateTrigger] = useState(0);
 
-      useEffect(() => {
-         
-    }, [updateTrigger]);
+      const goBackRequisition = () => {
+        
+        const existPreviusReq = false;
+        if(existPreviusReq){
+
+        }else{
+            enqueueSnackbar("No existe requisición más vieja", { variant: 'warning' });
+
+        }
+      }
+
+      const goNextRequisition = () => {
+            
+      }
+
+      useEffect(() => { }, [updateTrigger]);
 
      return(
         <MotionImplementation>
@@ -297,26 +324,21 @@ const ListRequisition = () => {
 
             <WhiteDummySpacer/><WhiteDummySpacer/><WhiteDummySpacer/> 
 
-            <div className='bottomNavigation'>
+            <div className='bottomNavigation' onClick = {goNextRequisition}>
                 <div className="bottomButton">
-                <svg viewBox="0 0 24 24" className="rotate">
-                    <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
-                </svg>
-                <WhiteDummySpacer/>
-                    Semana Anterior
-                </div>
-                <div className="bottomButton">
-                    Nuevo Día de Semana
-                <WhiteDummySpacer/>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-                </div>
-                <div className="bottomButton">
+                    <svg viewBox="0 0 24 24" className="rotate">
+                        <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
+                    </svg>
+                    <WhiteDummySpacer/>
+                        Semana Anterior
+                </div> 
+                <div className="bottomButton" onClick={goBackRequisition}>
 
-                Semana Posterior
-                <WhiteDummySpacer/>
-                <svg viewBox="0 0 24 24">
-                    <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
-                </svg>
+                    Semana Posterior
+                    <WhiteDummySpacer/>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
+                    </svg>
                     
                 </div>
             </div>

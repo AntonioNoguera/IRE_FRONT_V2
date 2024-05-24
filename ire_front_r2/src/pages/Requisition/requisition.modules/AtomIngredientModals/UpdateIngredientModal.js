@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './../../../../components/UIcomponents/Modal';  // Asegúrate de que la ruta es correcta
 import CenteredDisplay from "../../../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../../../components/Layouts/HorizontalDisplay";
@@ -10,14 +10,32 @@ import WhiteDummySpacer from "../../../../components/Layouts/WhiteDummySpacer";
 import EditText from '../../../../components/UIcomponents/EditText';
 import BigTextArea from './../../../../components/UIcomponents/BigTextArea';
 
+import { useSnackbar } from 'notistack';  
 import DropDownSelection from './../../../../components/UIcomponents/DropDownSelection';
  
-const UpgradeIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
+const UpgradeIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
 
-    // Definición de funciones manejadoras dentro del componente
+    const { enqueueSnackbar } = useSnackbar();
+
+
+    const [newAmount, setAmount ] = useState(fullProps.ingredientAmount); 
+
+    
+    const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+
     const onAccept = () => {
-        alert("Le picaste aceptar");
-        closeModal(); // Cierra el modal después de aceptar
+        const validation = true;
+
+        if( validation ) {
+
+            passedHook(prev => prev + 1);
+            enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' }); 
+
+        } else {
+            enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'error' }); 
+        }
+
+        closeModal();
     };
 
     const onDecline = () => {
@@ -25,24 +43,35 @@ const UpgradeIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
         closeModal(); // Cierra el modal después de declinar
     };
 
-    return (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <CenteredDisplay width="90%">
-                <Title> Editar Ingrediente de Requisición </Title> 
+    const modifiedIngredient = storedIngredients.find(ingredient => ingredient.id === fullProps.ingredientId)
 
-                <SubTitle textAlignment="center" paddingLeft='0px'>
-                    ¿Estás seguro de que deseas eliminar esta Receta? 
-                    <br/>
-                    Esta acción es irreversible y no se puede deshacer. 
-                </SubTitle>
+    return (
+        <Modal isOpen = {isModalOpen} onClose = {closeModal}>
+            <CenteredDisplay width="90%">
+                <Title> Editar Ingrediente de Requisición </Title>  
                 
-                <Label textAlignment="Center" >
-                    Receta del platillo a Eliminar: {fullProps.dish}</Label>
+                <SubTitle>Platillo: {fullProps.inheritProps.fullDishProps.name} </SubTitle>
+                
+                <SubTitle>Ingrediente: {modifiedIngredient.name} </SubTitle>
+
+                <Label>
+                    Ingresa la nueva cantidad del ingrediente para {fullProps.inheritProps.dishServices} servicios:    
+                </Label>
+                
+                
+                <HorizontalDisplay>
+                    <EditText
+                        previousValue = {newAmount}
+                        onChange = {e => setAmount(e.target.value)}
+                        placeholder = "Ingresa la nueva cantidad del ingrediente"/>
+
+                    <Label marginTop='5px'>{modifiedIngredient.unit}</Label>
+                </HorizontalDisplay>
 
                 <HorizontalDisplay>
-                    <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
-                    <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button type='cancelStyle' onClick = {onDecline}>Cancelar</Button>
+                        <WhiteDummySpacer />
+                    <Button onClick = {onAccept}>Agregar</Button>
                 </HorizontalDisplay>
                 </CenteredDisplay>
         </Modal>

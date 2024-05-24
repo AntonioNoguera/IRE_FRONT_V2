@@ -12,23 +12,37 @@ import BigTextArea from './../../../../components/UIcomponents/BigTextArea';
 
 import DropDownSelection from './../../../../components/UIcomponents/DropDownSelection';
  
-const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
+import { useSnackbar } from 'notistack';  
 
-    // Definición de funciones manejadoras dentro del componente
+const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || []
+
     const onAccept = () => {
-        alert("Le picaste aceptar");
+        console.log(fullProps)
+        alert(fullProps.inheritProps.fullDishProps.id);
+        alert(fullProps.inheritProps.fatherProps.dayId);
+        alert(fullProps.ingredientId);
+
+
+        enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' }); 
+
+
+        passedHook(prev => prev + 1);
         closeModal(); // Cierra el modal después de aceptar
     };
 
     const onDecline = () => {
-        alert("Le picaste cancelar");
-        closeModal(); // Cierra el modal después de declinar
+        closeModal();
     };
+
+    const modifiedIngredient = storedIngredients.find(ingredient => ingredient.id === fullProps.ingredientId)
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
-                <Title> Eliminar Ingrediente de la Requisición </Title> 
+                <Title> Eliminar Ingrediesnte de la Requisición </Title> 
 
                 <SubTitle textAlignment="center" paddingLeft='0px'>
                     ¿Estás seguro de que deseas eliminar esta Receta? 
@@ -36,13 +50,20 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps }) => {
                     Esta acción es irreversible y no se puede deshacer. 
                 </SubTitle>
                 
-                <Label textAlignment="Center" >
-                    Receta del platillo a Eliminar: {fullProps.dish}</Label>
+                <HorizontalDisplay>
+                    <Label textAlignment="Center" >
+                         Eliminando del platillo: {fullProps.inheritProps.fullDishProps.name}
+                    </Label>
+
+                    <Label textAlignment="Center" >
+                       Ingrediente: {modifiedIngredient.name}
+                    </Label>
+                </HorizontalDisplay>
 
                 <HorizontalDisplay>
-                    <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
+                    <Button type='cancelStyle' onClick = {onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button onClick = {onAccept}>Agregar</Button>
                 </HorizontalDisplay>
                 </CenteredDisplay>
         </Modal>

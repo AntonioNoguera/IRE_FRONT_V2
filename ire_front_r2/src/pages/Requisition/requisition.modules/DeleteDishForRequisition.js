@@ -17,16 +17,29 @@ import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 import { motion } from 'framer-motion'; 
 import SubTitle from '../../../components/Layouts/SubTitle';
 
-const onAccept = () => {
-    alert("Le picaste aceptar");
-}
+import { useSnackbar } from 'notistack'; 
 
 const onDecline = () => {
     alert("Le picaste declinar");
 }
 
-const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps }) => {
- 
+const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps, passedHook }) => {
+    const { enqueueSnackbar } = useSnackbar();
+    
+    const onAccept = () => {
+        const succed = true;
+
+        if( succed ){
+
+            enqueueSnackbar("Platillo eliminado con éxitos", { variant: 'success' });
+
+            passedHook(prev => prev + 1);
+            closeModal();
+        } else {
+            enqueueSnackbar("No fue posible eliminar el platillo, verifica el estado de tu requisición", { variant: 'error' });
+
+        }
+    }
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -55,7 +68,7 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps }) => {
                 <HorizontalDisplay>
                     <Button type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer/>
-                    <Button>Agregar</Button>  
+                    <Button onClick={onAccept}>Agregar</Button>  
                 </HorizontalDisplay>
                 
             </CenteredDisplay> 
