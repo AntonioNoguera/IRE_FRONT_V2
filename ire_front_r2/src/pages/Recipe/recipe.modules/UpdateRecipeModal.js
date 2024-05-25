@@ -34,7 +34,7 @@ const UpdateRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =
             <CenteredDisplay width="100%">
                 <Title> Editar Receta </Title>
  
-                <Label>Selecciona un ingrediente de la receta a editar:</Label>
+                <Label>Selecciona el ingrediente de la receta {fullProps.name} a modificar:</Label>
                 <WhiteDummySpacer/>
                  {
                     fullProps.items.map((ingredientItem,index) => {

@@ -11,6 +11,15 @@ import { useSnackbar } from 'notistack';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => { 
+    console.log(fullProps)
+
+    const clearHooks = () => {
+        setIngredientName("")
+        setIngredientAmount("")
+        setIngredientUnit("")
+        setIngredientGroup("")
+    }
+
     const { enqueueSnackbar } = useSnackbar();
     
     const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
@@ -61,11 +70,15 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => 
         localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
 
         passedHook(prev => prev + 1);
+        //We had some issues with the passedHook, temp fix relods page
+        window.location.reload();
+
         enqueueSnackbar("Ingrediente actualizado exitosamente", { variant: 'success' });
+        clearHooks();
         closeModal();
     };
 
-    const onDecline = () => { closeModal(); };
+    const onDecline = () => { clearHooks(); closeModal(); };
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -74,7 +87,7 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps , passedHook }) => 
 
                 <Label>Nombre del Ingrediente:</Label>
                 <EditText 
-                    previousValue={ingredientName}
+                    previousValue = {ingredientName}
                     onChange={e => setIngredientName(e.target.value)}
                     placeholder="Ingresa el nombre del Ingrediente"
                 />

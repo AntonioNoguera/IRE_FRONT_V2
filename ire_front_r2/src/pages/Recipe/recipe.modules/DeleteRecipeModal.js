@@ -13,6 +13,7 @@ import BigTextArea from './../../../components/UIcomponents/BigTextArea';
 import DropDownSelection from './../../../components/UIcomponents/DropDownSelection';
  
 const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
+    console.log(fullProps)
 
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
@@ -51,12 +52,12 @@ const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =
                 </SubTitle>
                 
                 <Label textAlignment="Center" >
-                    Receta del platillo a Eliminar: {fullProps.dish}</Label>
+                    Receta del platillo a Eliminar: {fullProps.name}</Label>
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button onClick={onAccept}>Eliminar</Button>
                 </HorizontalDisplay>
                 </CenteredDisplay>
         </Modal>

@@ -87,7 +87,7 @@ const UpdateDishFromRecipe = ({ isModalOpen, closeModal, fullProps, overAllValue
                 <HorizontalDisplay>
                     <Button type = 'cancelStyle' onClick = { onDecline }>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick = { onAccept }>Agregar</Button>
+                    <Button onClick = { onAccept }>Modificar</Button>
                 </HorizontalDisplay>
                 </CenteredDisplay>
         </Modal>

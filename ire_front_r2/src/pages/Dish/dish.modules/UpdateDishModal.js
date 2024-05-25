@@ -76,6 +76,9 @@ const UpdateSideDishModal = ({ isModalOpen, closeModal, fullProps = {}, passedHo
 
             localStorage.setItem('dishes', JSON.stringify(dishes));
             passedHook(prev => prev + 1);
+            
+            //We had some issues with the passedHook, temp fix relods page
+            window.location.reload();
             closeModal();
 
             enqueueSnackbar("El platillo ha sido actualizado correctamente", { variant: 'success' });

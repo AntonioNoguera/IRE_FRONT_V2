@@ -224,138 +224,210 @@ const RequisitionHolder = ({ fullFatherProps, fatherHook }) => {
         </div>
     );
 }
+
+
 const ListRequisition = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     function getWeekRangeString(date = new Date()) {
         const dayOfWeek = date.getDay(); // 0 (Domingo) - 6 (Sábado)
-      
         const diffToMonday = (dayOfWeek + 6) % 7;
-      
         const monday = new Date(date);
         monday.setDate(date.getDate() - diffToMonday);
-      
         const sunday = new Date(monday);
         sunday.setDate(monday.getDate() + 6);
       
         const formatDate = (date) => {
-          const year = date.getFullYear();
-          const month = String(date.getMonth() + 1).padStart(2, '0');
-          const day = String(date.getDate()).padStart(2, '0');
-          return `${year}-${month}-${day}`;
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         };
       
         return `${formatDate(monday)} to ${formatDate(sunday)}`;
-      }
+    }
       
-      function createWeekDays(startDate) {
+    function createWeekDays(startDate) {
         const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
         const weekDays = [];
         const currentDate = new Date();
       
         for (let i = 0; i < 7; i++) {
-          const day = new Date(startDate);
-          day.setDate(startDate.getDate() + i);
+            const day = new Date(startDate);
+            day.setDate(startDate.getDate() + i);
       
-          const dayStatus = Math.abs((currentDate - day) / (1000 * 60 * 60 * 24)) <= 3;
+            const dayStatus = (currentDate - day) / (1000 * 60 * 60 * 24) <= 3;
       
-          weekDays.push({
-            dayId : uuidv4(), 
-            dayName: dayNames[i],
-            dayValue: day.getDate(),
-            dayStatus: dayStatus,
-            dishes: [],
-          });
+            weekDays.push({
+                dayId: uuidv4(),
+                dayName: dayNames[i],
+                dayValue: day.toISOString(),  // Almacenar la fecha completa
+                dayStatus: dayStatus,
+                dishes: [],
+            });
         }
       
         return weekDays;
-      }
+    }
       
-      function getRequisitionForCurrentWeek() {
+    function recalculateDayStatus(weekDays) {
+        const currentDate = new Date();
+        weekDays.forEach(day => {
+            const dayDate = new Date(day.dayValue);
+            day.dayStatus = (currentDate - dayDate) / (1000 * 60 * 60 * 24) <= 3;
+        });
+    }
+    
+    function getRequisitionForCurrentWeek() {
         const currentWeekRange = getWeekRangeString();
         const requisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
+        
+        let workingSessionDay = localStorage.getItem('workingSessionDay');
+
+        if (!workingSessionDay) {
+            workingSessionDay = new Date().toISOString();
+            localStorage.setItem('workingSessionDay', workingSessionDay);
+        }
 
         let currentWeekRequisition = requisitions.find(r => r.daysCovered === currentWeekRange);
       
         if (!currentWeekRequisition) {
-
-          const monday = new Date();
-          const dayOfWeek = monday.getDay();
-          const diffToMonday = (dayOfWeek + 6) % 7;
-          monday.setDate(monday.getDate() - diffToMonday);
+            const monday = new Date();
+            const dayOfWeek = monday.getDay();
+            const diffToMonday = (dayOfWeek + 6) % 7;
+            monday.setDate(monday.getDate() - diffToMonday);
       
-          currentWeekRequisition = {
-            daysCovered: currentWeekRange,
-            weekDays: createWeekDays(monday),
-          };
-
-          requisitions.push(currentWeekRequisition);
-          localStorage.setItem('requisitions', JSON.stringify(requisitions));
+            currentWeekRequisition = {
+                daysCovered: currentWeekRange,
+                weekDays: createWeekDays(monday),
+            };
+    
+            requisitions.push(currentWeekRequisition);
+            localStorage.setItem('requisitions', JSON.stringify(requisitions));
+        } else {
+            recalculateDayStatus(currentWeekRequisition.weekDays);
         }
       
         return currentWeekRequisition;
-      }
+    }
 
-      const noMockData =  getRequisitionForCurrentWeek();
- 
-
-      const [updateTrigger, setUpdateTrigger] = useState(0);
-
-      const goBackRequisition = () => {
+    function getPreviousWeekRequisition() {
+        const workingSessionDay = localStorage.getItem('workingSessionDay');
         
-        const existPreviusReq = false;
-        if(existPreviusReq){
-
-        }else{
-            enqueueSnackbar("No existe requisición más vieja", { variant: 'warning' });
-
+        if (!workingSessionDay) {
+            return {};
         }
-      }
 
-      const goNextRequisition = () => {
-            
-      }
+        const previousDate = new Date(workingSessionDay);
+        previousDate.setDate(previousDate.getDate() - 7);
 
-      useEffect(() => { }, [updateTrigger]);
+        const previousWeekRange = getWeekRangeString(previousDate);
+        const requisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
+        const previousWeekRequisition = requisitions.find(r => r.daysCovered === previousWeekRange);
 
-     return(
+        if (!previousWeekRequisition) {
+            enqueueSnackbar("No existe requisición más vieja", { variant: 'warning' });
+            return {};
+        } else {
+            enqueueSnackbar("Datos cargados con éxito", { variant: 'success' });
+            recalculateDayStatus(previousWeekRequisition.weekDays);
+            localStorage.setItem('workingSessionDay', previousDate.toISOString());
+            return previousWeekRequisition;
+        }
+    }
+
+    function getNextWeekRequisition() {
+        const workingSessionDay = localStorage.getItem('workingSessionDay');
+        
+        if (!workingSessionDay) {
+            return {};
+        }
+    
+        const nextDate = new Date(workingSessionDay);
+        nextDate.setDate(nextDate.getDate() + 7);
+    
+        const nextWeekRange = getWeekRangeString(nextDate);
+        const requisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
+        let nextWeekRequisition = requisitions.find(r => r.daysCovered === nextWeekRange);
+    
+        if (!nextWeekRequisition) {
+            const monday = new Date(nextDate);
+            const dayOfWeek = monday.getDay();
+            const diffToMonday = (dayOfWeek + 6) % 7;
+            monday.setDate(monday.getDate() - diffToMonday);
+    
+            nextWeekRequisition = {
+                daysCovered: nextWeekRange,
+                weekDays: createWeekDays(monday),
+            };
+    
+            requisitions.push(nextWeekRequisition);
+            localStorage.setItem('requisitions', JSON.stringify(requisitions));
+        } else {
+            recalculateDayStatus(nextWeekRequisition.weekDays);
+        }
+
+        localStorage.setItem('workingSessionDay', nextDate.toISOString());
+        return nextWeekRequisition;
+    }
+
+    const [currentWeekData, setCurrentWeekData] = useState(() => getRequisitionForCurrentWeek());
+
+    const goBackRequisition = () => {
+        const previousWeekData = getPreviousWeekRequisition();
+        if (Object.keys(previousWeekData).length > 0) {
+            setCurrentWeekData(previousWeekData);
+        }
+    }
+
+    const goForwardRequisition = () => {
+        const nextWeekData = getNextWeekRequisition();
+        if (Object.keys(nextWeekData).length > 0) {
+            setCurrentWeekData(nextWeekData);
+        }
+    }
+
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+
+    useEffect(() => {
+        // Aquí no hacemos nada, ya que solo queremos actualizar cuando updateTrigger cambie
+    }, [updateTrigger]);
+
+    return (
         <MotionImplementation>
             <WhiteDummySpacer/><WhiteDummySpacer/>
             <Title>Requisición Semanal</Title>
             {
-                noMockData.weekDays.map((requisition, index) => (
-
-                        <RequisitionHolder
-                            key = { index }
-                            fullFatherProps = {requisition}
-                            fatherHook={setUpdateTrigger}
-                        />
+                currentWeekData.weekDays.map((requisition, index) => (
+                    <RequisitionHolder
+                        key={index}
+                        fullFatherProps={requisition}
+                        fatherHook={setUpdateTrigger}
+                    />
                 ))
             }
 
             <WhiteDummySpacer/><WhiteDummySpacer/><WhiteDummySpacer/> 
 
-            <div className='bottomNavigation' onClick = {goNextRequisition}>
-                <div className="bottomButton">
+            <div className='bottomNavigation'>
+                <div className="bottomButton" onClick={goBackRequisition}>
                     <svg viewBox="0 0 24 24" className="rotate">
                         <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
                     </svg>
                     <WhiteDummySpacer/>
-                        Semana Anterior
+                    Semana Anterior
                 </div> 
-                <div className="bottomButton" onClick={goBackRequisition}>
-
+                <div className="bottomButton" onClick={goForwardRequisition}>
                     Semana Posterior
                     <WhiteDummySpacer/>
                     <svg viewBox="0 0 24 24">
                         <path d="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" />
                     </svg>
-                    
                 </div>
             </div>
-
         </MotionImplementation>
-    )
-}
+    );
+};
 
 export default ListRequisition;
+ 

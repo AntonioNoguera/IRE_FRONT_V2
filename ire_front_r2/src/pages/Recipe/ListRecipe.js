@@ -50,7 +50,7 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}
                 <p className='itemCountTitle'> Fecha de Creación:</p>
                 <p className='itemCountHolder'>{fullProps.additionDate}</p >
             </div> 
-            
+             
             <SvgButton 
                 type = 'editCookie'
                 fullProps = { fullProps }
@@ -71,12 +71,11 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}
 const RecipeGroups = ({typeName, dishes,index,backgrounColors, fatherHook}) => {
     return(
         <>
-            <SubTitle style={{ marginTop: '70px' }}>{typeName}</SubTitle>
+            <SubTitle style={{ marginTop: '70px' }} paddingLeft='0PX'>{typeName}</SubTitle>
             {
 
             
-                dishes.map((recipe, index) => (
-                    
+                dishes.map((recipe, index) => ( 
                     recipe.items.length === 0 ? (
                         <div style={{ color: 'red', textAlign: 'center', padding: '20px' }}>
                             No hay recetas disponibles.
@@ -89,6 +88,7 @@ const RecipeGroups = ({typeName, dishes,index,backgrounColors, fatherHook}) => {
                         itemCount={recipe.items.length}
                         fullProps={recipe}
                         passedHook={fatherHook}
+                        
                     />
                 ))
             )
