@@ -23,6 +23,7 @@ const UpdateDayForRequisition = ({ isModalOpen, closeModal ,fullProps, passedHoo
     const onDecline = () => {
         console.log(fullProps);
     }
+    
     //Hooks
     const { enqueueSnackbar } = useSnackbar();
 

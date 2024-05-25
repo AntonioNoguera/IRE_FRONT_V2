@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Title from "../../components/Layouts/Title";
 import ComponentHolder from "../../components/Layouts/ComponentHolder";
 import HorizontalSpray from "../../components/Layouts/HorizontalSpray";
-import  MotionImplementation  from './../../components/Layouts/MotionImplementation';
+import MotionImplementation from './../../components/Layouts/MotionImplementation';
 
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay"; 
 
@@ -28,33 +28,51 @@ const NewSideDish = () => {
         { name : "Proteínas", value : "Proteínas" },
         { name : "Salsas", value : "Salsas" },
         { name : "Acompañamientos", value : "Acompañamientos" },
-    ] 
+    ]; 
 
     const [extraName, setExtraName ] = useState("");
     const [extraDescription, setExtraDescription ] = useState("");
     const [extraType, setExtraType ] = useState("");
 
+    const validateForm = () => {
+        return extraName !== "" && extraDescription !== "" && extraType !== "";
+    }
+
+    const validation = () => {
+        const extras = JSON.parse(localStorage.getItem('extras')) || {
+            Tipos: [],
+            Proteínas: [],
+            Salsas: [],
+            Acompañamientos: []
+        };
+
+        const allExtras = [
+            ...extras.Tipos,
+            ...extras.Proteínas,
+            ...extras.Salsas,
+            ...extras.Acompañamientos
+        ];
+
+        return !allExtras.some(extra => extra.name === extraName);
+    }
+
     const manageSelection = () => {
-        const validation = true;
-        const success = true;
-
-        if ( validation ) {
-            if( success ) { 
-
+        if (validateForm()) {
+            if(validation()) { 
                 let extras = JSON.parse(localStorage.getItem('extras')) || {
                     Tipos: [],
                     Proteínas: [],
                     Salsas: [],
                     Acompañamientos: []
                 };
- 
+
                 const newExtra = {
                     id: uuidv4(),
                     name: extraName,
                     description: extraDescription
                 };
- 
-                switch ( extraType ) {
+
+                switch (extraType) {
                     case 'Tipos':
                         extras.Tipos.push(newExtra);
                         break;
@@ -76,45 +94,45 @@ const NewSideDish = () => {
                 setExtraDescription("");
                 setExtraType("");
 
-                enqueueSnackbar("¡Complemento almacenado con éxito!", { variant: 'success'});
- 
+                enqueueSnackbar("¡Complemento almacenado con éxito!", { variant: 'success' });
+
                 localStorage.setItem('extras', JSON.stringify(extras));
 
             } else {
-                enqueueSnackbar("El nombre de este complemento ya esta ocupado, cambia de nombre, o actualiza tu complemento.", { variant: 'error' });
+                enqueueSnackbar("El nombre de este complemento ya está ocupado, cambia de nombre, o actualiza tu complemento.", { variant: 'error' });
             }
-        } else { 
+        } else {
             enqueueSnackbar("¡Campos pendientes, para continuar todos los campos requiren estar cubiertos!", { variant: 'warning' });
         }
     }
 
     return (
-            <MotionImplementation verticalCentered='enabled'>
-                <CenteredDisplay>
+        <MotionImplementation verticalCentered='enabled'>
+            <CenteredDisplay>
                 <Title> Nuevo Complemento </Title> 
 
                 <Label>Nombre del Complemento:</Label> 
                 <EditText
-                    placeholder = "Ingresa el nombre del complemento"
-                    previousValue = {extraName}
-                    onChange={ e => setExtraName(e.target.value)} />
+                    placeholder="Ingresa el nombre del complemento"
+                    previousValue={extraName}
+                    onChange={e => setExtraName(e.target.value)} />
 
                 <Label>Descripción de Complemento:</Label> 
                 <BigTextArea
-                    previousValue = {extraDescription}
-                    onChange = {e => setExtraDescription(e.target.value)}
-                    placeholder = "Ingresa un texto descriptivo de tu complemento" />
+                    previousValue={extraDescription}
+                    onChange={e => setExtraDescription(e.target.value)}
+                    placeholder="Ingresa un texto descriptivo de tu complemento" />
 
                 <Label>Tipo de Complemento:</Label> 
                 <DropDownSelection 
-                    onChange = {e => setExtraType(e.target.value)}
-                    optionsAvailable = {optionsTypes}
-                    placeHolder = "Selecciona el tipo del complemento"
-                    selectedOption = {extraType}/>
+                    onChange={e => setExtraType(e.target.value)}
+                    optionsAvailable={optionsTypes}
+                    placeHolder="Selecciona el tipo del complemento"
+                    selectedOption={extraType}/>
 
-                <Button onClick = {manageSelection}> Agregar </Button>  
-                </CenteredDisplay>
-            </MotionImplementation> 
+                <Button onClick={manageSelection}> Agregar </Button>  
+            </CenteredDisplay>
+        </MotionImplementation> 
     )
 }
 

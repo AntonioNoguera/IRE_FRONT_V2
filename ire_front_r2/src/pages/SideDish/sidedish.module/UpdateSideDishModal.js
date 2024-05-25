@@ -26,11 +26,32 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
     const [extraDescription, setExtraDescription] = useState(fullProps.description);
     const [extraType, setExtraType] = useState(fullProps.typeOption);
 
+    const validateForm = () => {
+        return extraName !== "" && extraDescription !== "" && extraType !== "";
+    }
+
+    const validation = () => {
+        const extras = JSON.parse(localStorage.getItem('extras')) || {
+            Tipos: [],
+            Proteínas: [],
+            Salsas: [],
+            Acompañamientos: []
+        };
+
+        const allExtras = [
+            ...extras.Tipos,
+            ...extras.Proteínas,
+            ...extras.Salsas,
+            ...extras.Acompañamientos
+        ];
+
+        return !allExtras.some(extra => extra.name === extraName);
+    }
+
     const onAccept = () => {
-        const validate = true;
-        const success = true;
-        if (validate) {
-            if (success) { 
+
+        if (validateForm()) {
+            if (validation()) { 
                 
                 let extras = JSON.parse(localStorage.getItem('extras')) || {
                     Tipos: [],
