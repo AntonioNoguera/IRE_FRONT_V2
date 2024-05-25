@@ -376,21 +376,21 @@ const ListRequisition = () => {
     const goBackRequisition = () => {
         const previousWeekData = getPreviousWeekRequisition();
         if (Object.keys(previousWeekData).length > 0) {
-            setCurrentWeekData(previousWeekData);
+            setCurrentWeekData(previousWeekData); 
         }
     }
 
     const goForwardRequisition = () => {
         const nextWeekData = getNextWeekRequisition();
         if (Object.keys(nextWeekData).length > 0) {
-            setCurrentWeekData(nextWeekData);
+            setCurrentWeekData(nextWeekData); 
         }
     }
 
     const [updateTrigger, setUpdateTrigger] = useState(0);
 
     useEffect(() => {
-         
+        setCurrentWeekData(getRequisitionForCurrentWeek());
     }, [updateTrigger]);
 
     return (
@@ -400,9 +400,9 @@ const ListRequisition = () => {
             {
                 currentWeekData.weekDays.map((requisition, index) => (
                     <RequisitionHolder
-                        key={index}
-                        fullFatherProps={requisition}
-                        fatherHook={setUpdateTrigger}
+                        key = {index}
+                        fullFatherProps = {requisition}
+                        fatherHook = {setUpdateTrigger}
                     />
                 ))
             }
