@@ -13,7 +13,6 @@ import ColorOptions from './../../../src/GlobalValues';
 
 import { useSnackbar } from 'notistack'; 
 
-
 const NewGroup = () => {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -21,29 +20,34 @@ const NewGroup = () => {
     const [groupDescription, setGroupDescription] = useState('');
     const [groupColor, setGroupColor] = useState('');
 
+    const validation = () => { 
+        return groupName !== "" && groupDescription !== "" && groupColor !== "";
+    };
+
+    const success = () => {
+        const existingGroups = JSON.parse(localStorage.getItem('groups')) || [];
+        return !existingGroups.some(group => group.name === groupName);
+    };
+
     const handleAddGroup = () => {
-        const success = true;
-        const validation = true;
-
-        if( validation ){
-            if( success ){
-
+        if (validation()) {
+            if (success()) {
                 const groupData = {
                     id: uuidv4(),
                     name: groupName,
                     description: groupDescription,
                     color: groupColor
                 };
-                
+
                 const existingGroups = JSON.parse(localStorage.getItem('groups')) || [];
-        
+
                 const updatedGroups = [...existingGroups, groupData];
-                
+
                 localStorage.setItem('groups', JSON.stringify(updatedGroups));
-                
-                setGroupName('')
-                setGroupDescription('')
-                setGroupColor('')
+
+                setGroupName('');
+                setGroupDescription('');
+                setGroupColor('');
 
                 enqueueSnackbar("Grupo almacenado correctamente", { variant: 'success' });
             } else {
@@ -52,8 +56,6 @@ const NewGroup = () => {
         } else {
             enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
         }
-
-       
     };
 
     return (

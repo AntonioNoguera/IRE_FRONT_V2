@@ -12,7 +12,6 @@ import DropDownSelection from './../../../components/UIcomponents/DropDownSelect
 
 import ColorOptions from './../../../../src/GlobalValues';
 
-
 import { useSnackbar } from 'notistack'; 
 
 const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {  
@@ -22,49 +21,48 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {
     const [groupDescription, setGroupDescription] = useState(fullProps.description);
     const [groupColor, setGroupColor] = useState(fullProps.color);
 
-    const onAccept = () => {
-        
-            const groupsStr = localStorage.getItem('groups');
-            const groups = groupsStr ? JSON.parse(groupsStr) : [];
-
-            const validataion = true;
-
-            const success = true;
-
-            if( validataion ){
-
-                if( success ){
-                    const groupIndex = groups.findIndex( g => g.id === fullProps.id );
-                    if (groupIndex !== -1) {
-
-                        groups[groupIndex] = {
-                            ...groups[groupIndex],
-                            name: groupName,
-                            description: groupDescription,
-                            color: groupColor
-                        };
-
-                        localStorage.setItem('groups', JSON.stringify(groups)); 
-                        passedHook(prev => prev + 1);
-                        
-                        closeModal();
-
-                        enqueueSnackbar("Grupo actualizado correctamente", { variant: 'success' });
-                        
-                    } else {
-                        enqueueSnackbar("Grupo no encontrado, verifica la información", { variant: 'error' });
-                    }
-
-                } else {
-                    enqueueSnackbar("El grupo ya existe o genera conflicto con otra entidad", { variant: 'error' });
-                }
-                
-            } else { 
-                enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
-            } 
+    const validation = () => { 
+        return groupName !== "" && groupDescription !== "" && groupColor !== "";
     };
 
-    const onDecline = () => {  closeModal();  };
+    const success = () => {
+        const existingGroups = JSON.parse(localStorage.getItem('groups')) || [];
+        return !existingGroups.some(group => group.name === groupName && group.id !== fullProps.id);
+    };
+
+    const onAccept = () => {
+        if (validation()) {
+            if (success()) {
+                const groupsStr = localStorage.getItem('groups');
+                const groups = groupsStr ? JSON.parse(groupsStr) : [];
+                
+                const groupIndex = groups.findIndex(g => g.id === fullProps.id);
+                if (groupIndex !== -1) {
+                    groups[groupIndex] = {
+                        ...groups[groupIndex],
+                        name: groupName,
+                        description: groupDescription,
+                        color: groupColor
+                    };
+
+                    localStorage.setItem('groups', JSON.stringify(groups)); 
+                    passedHook(prev => prev + 1);
+                    
+                    closeModal();
+
+                    enqueueSnackbar("Grupo actualizado correctamente", { variant: 'success' });
+                } else {
+                    enqueueSnackbar("Grupo no encontrado, verifica la información", { variant: 'error' });
+                }
+            } else {
+                enqueueSnackbar("El grupo ya existe o genera conflicto con otra entidad", { variant: 'error' });
+            }
+        } else { 
+            enqueueSnackbar("Todos los campos deben de ser cubiertos", { variant: 'warning' });
+        } 
+    };
+
+    const onDecline = () => { closeModal(); };
 
     return ( 
         <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -75,13 +73,15 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {
                 <EditText 
                     previousValue={groupName} 
                     onChange={e => setGroupName(e.target.value)} 
-                >Ingresa el nombre del complemento</EditText>
+                    placeholder="Ingresa el nombre del grupo"
+                />
 
                 <Label>Descripción de Grupo:</Label> 
                 <BigTextArea 
                     previousValue={groupDescription} 
                     onChange={e => setGroupDescription(e.target.value)} 
-                >Ingresa un texto descriptivo de tu complemento</BigTextArea>
+                    placeholder="Ingresa una clara descripción acerca del grupo"
+                />
 
                 <Label>Color del Grupo:</Label> 
                 <DropDownSelection  
@@ -94,7 +94,7 @@ const UpdateSideDish = ({ isModalOpen, closeModal, fullProps, passedHook}) => {
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button onClick={onAccept}>Actualizar</Button>
                 </HorizontalDisplay>
             </CenteredDisplay>
         </Modal>
