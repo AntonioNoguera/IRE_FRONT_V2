@@ -9,57 +9,54 @@ import Label from "../../../components/UIcomponents/Label";
 import WhiteDummySpacer from "../../../components/Layouts/WhiteDummySpacer";
 
 import { useSnackbar } from 'notistack'; 
- 
-const DeleteDishModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
 
+const DeleteDishModal = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
     const { enqueueSnackbar } = useSnackbar();
 
-    // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
-        const Success = true
+        const recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
+        const dishInUse = recipes.some(recipe => recipe.dishId === fullProps.id);
+
+        if (dishInUse) {
+            enqueueSnackbar("No se puede eliminar el platillo porque está asociado a una receta", { variant: 'error' });
+            return;
+        }
 
         const dishes = JSON.parse(localStorage.getItem('dishes') || '[]');
-        
         const filteredDishes = dishes.filter(dish => dish.id !== fullProps.id);
         
         localStorage.setItem('dishes', JSON.stringify(filteredDishes));
 
-        if(Success){
-            alert("Eliminado con exito")
-
-            passedHook(prev => prev + 1)
-        } else {
-            alert("Problemas para eliminar")
-        }
- 
+        enqueueSnackbar("El platillo ha sido eliminado con éxito", { variant: 'success' });
+        passedHook(prev => prev + 1);
         closeModal(); // Cierra el modal después de aceptar
     };
 
     const onDecline = () => {
-        alert("Le picaste cancelar");
         closeModal(); // Cierra el modal después de declinar
     };
 
     return (
-        <Modal  isOpen={isModalOpen} onClose={closeModal}>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
             <CenteredDisplay width="90%">
                 <Title> Eliminar Platillo </Title> 
 
-                <SubTitle textAlignment = "center" paddingLeft='0px'>
+                <SubTitle textAlignment="center" paddingLeft='0px'>
                     ¿Estás seguro de que deseas eliminar este Platillo? 
                     <br/>
                     Esta acción es irreversible y no se puede deshacer. 
                 </SubTitle>
                 
-                <Label textAlignment="Center" >
-                    Platillo a Eliminar: {fullProps.name}</Label>
+                <Label textAlignment="center">
+                    Platillo a Eliminar: {fullProps.name}
+                </Label>
 
                 <HorizontalDisplay>
                     <Button type='cancelStyle' onClick={onDecline}>Cancelar</Button>
                     <WhiteDummySpacer />
-                    <Button onClick={onAccept}>Agregar</Button>
+                    <Button onClick={onAccept}>Eliminar</Button>
                 </HorizontalDisplay>
-                </CenteredDisplay>
+            </CenteredDisplay>
         </Modal>
     );
 };
