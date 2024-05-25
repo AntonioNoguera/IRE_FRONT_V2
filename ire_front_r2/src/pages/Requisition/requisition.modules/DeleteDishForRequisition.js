@@ -19,25 +19,46 @@ import SubTitle from '../../../components/Layouts/SubTitle';
 
 import { useSnackbar } from 'notistack'; 
 
-const onDecline = () => {
-    alert("Le picaste declinar");
-}
 
-const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps, passedHook }) => {
+const DeleteDishForRequisition = ({ isModalOpen, closeModal, fullProps, passedHook }) => {
     const { enqueueSnackbar } = useSnackbar();
+
+    const onDecline = () => { 
+        console.log(fullProps)
+        alert("Le picaste declinar");
+    }
     
-    const onAccept = () => {
-        const succed = true;
+    const onAccept = () => { 
 
-        if( succed ){
+        const dishId = fullProps.dishId;
+        const dayId = fullProps.fatherProps.dayId;
 
-            enqueueSnackbar("Platillo eliminado con éxitos", { variant: 'success' });
+        // Leer las requisiciones del localStorage
+        const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
 
+        // Buscar el día correspondiente y eliminar el platillo
+        let dishFound = false;
+
+        storedRequisitions.forEach(requisition => {
+            requisition.weekDays.forEach(day => {
+                if (day.dayId === dayId) {
+                    const dishIndex = day.dishes.findIndex(dish => dish.dishId === dishId);
+                    if (dishIndex !== -1) {
+                        day.dishes.splice(dishIndex, 1);
+                        dishFound = true;
+                    }
+                }
+            });
+        });
+
+        if (dishFound) {
+            // Actualizar el localStorage
+            localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+            enqueueSnackbar("Platillo eliminado con éxito", { variant: 'success' });
             passedHook(prev => prev + 1);
             closeModal();
         } else {
             enqueueSnackbar("No fue posible eliminar el platillo, verifica el estado de tu requisición", { variant: 'error' });
-
         }
     }
 
@@ -66,7 +87,7 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal,fullProps, passedHoo
                  
 
                 <HorizontalDisplay>
-                    <Button type='cancelStyle'>Cancelar</Button>  
+                    <Button onClick={onDecline} type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer/>
                     <Button onClick={onAccept}>Agregar</Button>  
                 </HorizontalDisplay>

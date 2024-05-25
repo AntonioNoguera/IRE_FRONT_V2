@@ -17,8 +17,7 @@ const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =
     // Definición de funciones manejadoras dentro del componente
     const onAccept = () => {
         const succed = true;
-
-        console.log(fullProps)
+ 
 
         if(succed){
             const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];

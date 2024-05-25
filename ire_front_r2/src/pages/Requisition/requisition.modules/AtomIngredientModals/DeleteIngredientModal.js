@@ -20,17 +20,45 @@ const DeleteIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook 
     const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || []
 
     const onAccept = () => {
-        console.log(fullProps)
-        alert(fullProps.inheritProps.fullDishProps.id);
-        alert(fullProps.inheritProps.fatherProps.dayId);
-        alert(fullProps.ingredientId);
+        const dayId = fullProps.inheritProps.fatherProps.dayId;
+        const dishId = fullProps.inheritProps.fullDishProps.id;
+        const ingredientId = fullProps.ingredientId;
 
+        // Leer las requisiciones del localStorage
+        const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
 
-        enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' }); 
+        // Buscar el día correspondiente
+        const requisition = storedRequisitions.find(req => 
+            req.weekDays.some(day => day.dayId === dayId)
+        );
 
+        if (requisition) {
+            const day = requisition.weekDays.find(day => day.dayId === dayId);
 
-        passedHook(prev => prev + 1);
-        closeModal(); // Cierra el modal después de aceptar
+            if (day) {
+                // Buscar el platillo correspondiente
+                const dish = day.dishes.find(dish => dish.dishId === dishId);
+
+                if (dish) {
+                    // Filtrar los ingredientes para eliminar el que coincide
+                    dish.dishIngredients = dish.dishIngredients.filter(ingredient => ingredient.ingredientId !== ingredientId);
+
+                    // Actualizar el localStorage
+                    localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+
+                    enqueueSnackbar("Ingrediente eliminado correctamente", { variant: 'success' });
+                    passedHook(prev => prev + 1);
+                } else {
+                    enqueueSnackbar("Platillo no encontrado", { variant: 'error' });
+                }
+            } else {
+                enqueueSnackbar("Día no encontrado", { variant: 'error' });
+            }
+        } else {
+            enqueueSnackbar("Requisición no encontrada", { variant: 'error' });
+        }
+
+        closeModal();
     };
 
     const onDecline = () => {

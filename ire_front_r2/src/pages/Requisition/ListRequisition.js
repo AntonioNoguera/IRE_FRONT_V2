@@ -127,7 +127,7 @@ const RequisitionItem = ({fullProps, passHook}) => {
            
             </HorizontalDisplay>
             
-            <hr/>
+            <hr className ="reqHr"/>
             
             {fullProps.dishIngredients.length !== 0 ? (
                 fullProps.dishIngredients.map((element, index) => {
@@ -142,10 +142,11 @@ const RequisitionItem = ({fullProps, passHook}) => {
                     ) 
                 })
             ) : (
-                <div>No hay ingredientes</div>
+                <div className='noIngredientsDish'>No hay ingredientes</div>
             )}
             
-            <hr/>
+            <hr className ="reqHr"/>
+
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
                     <p className="ItemStrongValue">Tipo:</p> 
@@ -187,20 +188,30 @@ const RequisitionHolder = ({ fullFatherProps, fatherHook }) => {
                 </div>  
             </div>
 
-            {fullFatherProps.dishes.map((dish, index) => {
-                dish.fatherProps = fullFatherProps;
-                return (
-                    <RequisitionItem 
-                        key={index}
-                        fullProps={dish}
-                        passHook = {fatherHook}
-                    />
-                );
-            })}
+            {fullFatherProps.dishes.length > 0 ? (
+                fullFatherProps.dishes.map((dish, index) => {
+                    dish.fatherProps = fullFatherProps;
+                    return (
+                        <RequisitionItem 
+                            key={index}
+                            fullProps={dish}
+                            passHook={fatherHook}
+                        />
+                    );
+                })
+            ) : (
+                <div className='noDishesOnDay'>
+                    No hay platillos disponibles
+                </div>
+            )}
 
             {fullFatherProps.dayStatus && (
-                <div className="addDishToDay" onClick={openModal}>
+                <div className="addDishToDay bottomButton" onClick={openModal}> 
+                    
                     Añade Platillo a la Requisición
+                    <WhiteDummySpacer/>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                 
                 </div>
             )}
             

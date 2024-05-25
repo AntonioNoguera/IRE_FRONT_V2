@@ -50,9 +50,7 @@ const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps })
         const success = true;
 
         if( validation ){
-            if( success ){
-
-                console.log(fullProps.dayId);
+            if( success ){ 
 
                 const newDish = {
                     dishId: ReqDish, // Replace with actual dishId
