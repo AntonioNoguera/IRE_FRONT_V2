@@ -33,6 +33,25 @@ const colorOption = [
 ]
 
 const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}) => { 
+    const FormattedDate = (isoDate) => {
+        const formatDate = (isoDate) => {
+            const date = new Date(isoDate);
+
+            if (isNaN(date)) {
+                return 'Fecha inválida';
+            }
+
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+            const year = date.getUTCFullYear();
+
+            return `${day}/${month}/${year}`;
+        };
+
+        const formattedDate = formatDate(isoDate);
+
+        return formattedDate;
+    };
 
     return( 
         <div className = 'mainHolderStyle mainRecipeHolder' style={{  display: 'flex', backgroundColor : backgroundColor}}>
@@ -42,13 +61,13 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}
             </CenteredDisplay>
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
-                <p className='itemCountTitle'>Numero:</p>
+                <p className='itemCountTitle'>Número de Ingredientes:</p>
                 <p className='itemCountHolder'>{itemCount}</p >
             </div> 
 
             <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
                 <p className='itemCountTitle'> Fecha de Creación:</p>
-                <p className='itemCountHolder'>{fullProps.additionDate}</p >
+                <p className='itemCountHolder'>{FormattedDate(fullProps.additionDate)}</p >
             </div> 
              
             <SvgButton 

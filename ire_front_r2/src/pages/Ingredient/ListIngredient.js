@@ -26,6 +26,26 @@ const colorOption = [
 const groupsCasted = []; 
 
 const IngredientItemHolder = ({ fullProps, backgroundColor, fatherHook }) => {
+    const FormattedDate = ( isoDate ) => {
+        const formatDate = (isoDate) => { 
+          const date = new Date(isoDate);
+          
+          if (isNaN(date)) {
+            return 'Fecha inválida';
+          }
+      
+          const day = String(date.getUTCDate()).padStart(2, '0');
+          const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+          const year = date.getUTCFullYear();
+          
+          return `${day}/${month}/${year}`;
+        };
+      
+        const formattedDate = formatDate(isoDate);
+      
+        return formattedDate;
+      };
+
     fullProps.complementsAvailable = groupsCasted;
     fullProps.groupsAvailable = groupsCasted;
     fullProps.proteinsAvailable = groupsCasted;
@@ -38,14 +58,14 @@ const IngredientItemHolder = ({ fullProps, backgroundColor, fatherHook }) => {
                     <p className='groupName'> {fullProps.name} </p>
                 </CenteredDisplay>
 
-                <div className="itemInfoHolder">
-                    <p className='itemCountTitle'>Fecha de Registro:</p>
-                    <p className='itemCountHolder'>{fullProps.existence}</p >
+                <div className="itemInfoHolder" style={{width: '200px'}}>
+                    <p className='itemCountTitle'>Cantidad Actual:</p>
+                    <p className='itemCountHolder'>{fullProps.existence} {fullProps.unit}</p >
                 </div>
 
                 <div className="itemInfoHolder">
-                    <p className='itemCountTitle'>Cantidad Actual:</p>
-                    <p className='itemCountHolder'>{fullProps.lastTimeUsed}</p >
+                    <p className='itemCountTitle'>Fecha de Registro:</p>
+                    <p className='itemCountHolder'>{FormattedDate(fullProps.lastTimeUsed)}</p >
                 </div>
                 <WhiteDummySpacer />
                 <SvgButton

@@ -17,15 +17,22 @@ import DeleteGroupModal from "./group.modules/DeleteGroupModal";
 import UpdateGroupModal from "./group.modules/UpdateGroupModal";
 
 const GroupHolder = ({ fullGroupProps, passedHook  }) => {
+
+    console.log("fullGroupProps")
+    console.log(fullGroupProps)
+        
+    const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+
     return (
-        <div className='mainHolderStyle' style={{ backgroundColor: fullGroupProps.color, display: 'flex' }}>
+        <div className='mainHolderStyle' style = {{ backgroundColor: fullGroupProps.color, display: 'flex' }}>
             <HorizontalDisplay> 
                 <CenteredDisplay width="100%">
-                    <p className='groupName'> {fullGroupProps.name} </p>
+                    <p className='groupName'> {fullGroupProps.name } </p>
                 </CenteredDisplay> 
+ 
                 <div style={{ marginInline: '50px' }}>
-                    <p className='itemCountTitle'>Elementos en el grupo:</p>
-                    <p className='itemCountHolder'>{fullGroupProps.itemCount}</p>
+                    <p className='itemCountTitle'>Ingredientes en el grupo:</p>
+                    <p className='itemCountHolder'>{ storedIngredients.filter(ing => ing.groupId === fullGroupProps.id).length }</p>
                 </div> 
                 <SvgButton 
                     type='editCookie'

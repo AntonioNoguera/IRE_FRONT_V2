@@ -390,7 +390,7 @@ const ListRequisition = () => {
     const [updateTrigger, setUpdateTrigger] = useState(0);
 
     useEffect(() => {
-        // Aquí no hacemos nada, ya que solo queremos actualizar cuando updateTrigger cambie
+         
     }, [updateTrigger]);
 
     return (

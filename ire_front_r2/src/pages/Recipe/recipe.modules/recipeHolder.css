@@ -44,18 +44,7 @@
 
     box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
 }
-
-.mainRecipeHolder {
-    cursor:pointer;
-    opacity: 1;
-    transition: opacity 0.3s color .3s;
-}
  
-.mainRecipeHolder:hover {
-    opacity: .6;
-    color : black
-}
-
 .BlueSTD{
     width: 80%;
     margin-block: 5px;
