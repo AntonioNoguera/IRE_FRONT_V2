@@ -26,47 +26,59 @@ const NewIngredients = () => {
         setGroupsAvailable(storedGroups);
     }, []);
 
+    const validateForm = () => {
+        return (
+            ingredientName !== '' &&
+            ingredientAmount !== '' &&
+            ingredientUnit !== '' &&
+            ingredientGroup !== ''
+        );
+    };
+
+    const ingredientExists = () => {
+        const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+        return existingIngredients.some(ingredient => ingredient.name === ingredientName);
+    };
+
     const handleAddIngredient = () => {
-        const addedSuccesfully = true;  
-        const validation = true;
-
-        if (validation) {
-            if (addedSuccesfully) {
-
-                const newIngredient = {
-                    id: uuidv4(), 
-                    name: ingredientName,
-                    existence: ingredientAmount,
-                    unit: ingredientUnit,
-                    lastTimeUsed: new Date().toISOString(), 
-                    groupId: ingredientGroup
-                };
-
-                const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-                
-                const updatedIngredients = [...existingIngredients, newIngredient];
-                
-                localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
-
-                // Limpiar los campos de entrada
-                setIngredientName('');
-                setIngredientAmout('');
-                setIngredientUnit('');
-                setIngredientGroup('');
-
-                enqueueSnackbar("Se ha guardado correctamente el ingrediente", { variant: 'success'});
-            } else {
-                enqueueSnackbar("Problemas con el almacenado del ingrediento", { variant: 'error'});
-            }
-        } else {
-            enqueueSnackbar("Todos los campos deben de ser cubierto para poder dar de alta el ingrediente", { variant: 'warning'});
+        if (!validateForm()) {
+            enqueueSnackbar("Todos los campos deben de ser cubierto para poder dar de alta el ingrediente", { variant: 'warning' });
+            return;
         }
+
+        if (ingredientExists()) {
+            enqueueSnackbar("Ya existe un ingrediente con el mismo nombre", { variant: 'error' });
+            return;
+        }
+
+        const newIngredient = {
+            id: uuidv4(), 
+            name: ingredientName,
+            existence: ingredientAmount,
+            unit: ingredientUnit,
+            lastTimeUsed: new Date().toISOString(), 
+            groupId: ingredientGroup
+        };
+
+        const existingIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+        
+        const updatedIngredients = [...existingIngredients, newIngredient];
+        
+        localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
+
+        // Limpiar los campos de entrada
+        setIngredientName('');
+        setIngredientAmout('');
+        setIngredientUnit('');
+        setIngredientGroup('');
+
+        enqueueSnackbar("Se ha guardado correctamente el ingrediente", { variant: 'success' });
     };
 
     return (
         <MotionImplementation verticalCentered='enabled'>
             <CenteredDisplay>
-                <Title> Agregar Ingrediente </Title>
+                <Title>Agregar Ingrediente</Title>
                 <Label>Nombre del Ingrediente:</Label>
 
                 <EditText
