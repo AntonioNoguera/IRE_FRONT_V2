@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Title from "../../components/Layouts/Title";
+
+import Subtitle from "../../components/Layouts/SubTitle";
 import ComponentHolder from "../../components/Layouts/ComponentHolder";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 
@@ -363,7 +365,11 @@ const ListRequisition = () => {
     
             requisitions.push(nextWeekRequisition);
             localStorage.setItem('requisitions', JSON.stringify(requisitions));
+            
+            enqueueSnackbar("Datos creados con éxito", { variant: 'success' });
         } else {
+            
+            enqueueSnackbar("Datos cargados con éxito", { variant: 'success' });
             recalculateDayStatus(nextWeekRequisition.weekDays);
         }
 
@@ -397,6 +403,11 @@ const ListRequisition = () => {
         <MotionImplementation>
             <WhiteDummySpacer/><WhiteDummySpacer/>
             <Title>Requisición Semanal</Title>
+            <Subtitle paddingLeft='0px'>Periodo Semanal: 
+                <span className='coveredPeriod'>
+                    de {currentWeekData.daysCovered.replaceAll("-","/").replace("to", "a")}
+                </span>
+            </Subtitle>
             {
                 currentWeekData.weekDays.map((requisition, index) => (
                     <RequisitionHolder

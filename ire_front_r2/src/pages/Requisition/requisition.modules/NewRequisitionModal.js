@@ -79,6 +79,12 @@ const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps })
 
         localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
 
+
+        setReqType(""); 
+        setReqDish(""); 
+    
+        setReqServices("");
+
         passedHook(prev => prev + 1);
         closeModal();
         enqueueSnackbar("Platillo añadido correctamente", { variant: 'success' });

@@ -180,3 +180,9 @@ svg{
 .noIngredientsDish{
     padding: 10px 0px
 }
+
+.coveredPeriod{
+    color: black;
+    padding-left: 20px;
+    font-weight: 350;
+}
