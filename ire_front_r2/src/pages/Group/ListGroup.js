@@ -71,7 +71,7 @@ const ListGroup = () => {
                     />
                 ))
             ) : (
-                <p>No hay grupos disponibles.</p>
+                <p className = "noHayGroups">No hay grupos disponibles.<br/>¡Prueba Añadir uno!</p>
             )}
         </MotionImplementation>
     );

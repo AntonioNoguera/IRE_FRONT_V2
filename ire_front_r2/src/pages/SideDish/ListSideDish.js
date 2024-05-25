@@ -73,7 +73,10 @@ const TopComplementHolder = ({ name, items, classValue =  'complementHolder',bac
                             />
                         ))
                     ) : (
-                        <div>No hay elementos disponibles</div>
+                        <>
+                        <hr/>
+                        <div className='noHaySide'>No hay elementos disponibles</div> 
+                        </> 
                     )
                 }
                     
@@ -103,22 +106,15 @@ const ListSideDish = () => {
             <WhiteDummySpacer/>
             <Title> Listado de Complementos </Title> 
             
-            {
-                extraList.Tipos && extraList.Tipos.length > 0  ?(
-                <TopComplementHolder
-                    classValue="typesHolder"
-                    key="Tipos"
-                    keyValue = "Tipos"
-                    name="Tipos de Platillo"
-                    fatherHook = {setUpdateTrigger}
-                    items={extraList.Tipos}
-                />
-                ):(
-                    <div className='no hay'>
-                        No hay Tipos de platillos definidos
-                    </div>
-                )
-            }
+           
+            <TopComplementHolder
+                classValue="typesHolder"
+                key="Tipos"
+                keyValue = "Tipos"
+                name="Tipos de Platillo"
+                fatherHook = {setUpdateTrigger}
+                items={extraList.Tipos}
+            />  
                 
                 
             <HorizontalDisplay  >

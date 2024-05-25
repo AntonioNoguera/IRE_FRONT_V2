@@ -52,7 +52,7 @@ const IngredientItemHolder = ({ fullProps, backgroundColor, fatherHook }) => {
                     type='editCookie'
                     fullProps = {fullProps}
                     hook = {fatherHook}
-                    RenderedComponent={UpdateIngredientModal}
+                    RenderedComponent = {UpdateIngredientModal}
                 />
 
                 <WhiteDummySpacer />
@@ -70,7 +70,7 @@ const IngredientItemHolder = ({ fullProps, backgroundColor, fatherHook }) => {
 const IngredientGroupHolder = ({ name, items, backgrounColors, passedHook }) => {
     return (
         <>
-            <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
+            <SubTitle style={{ marginTop: '70px',}} paddingLeft='0px'>{name}</SubTitle>
             {
                 items && items.length > 0 ? (
                     items.map((ingredient, index) => (
@@ -82,7 +82,7 @@ const IngredientGroupHolder = ({ name, items, backgrounColors, passedHook }) => 
                         />
                     ))
                 ) : (
-                    <div>No hay ingredientes disponibles</div>
+                    <div className='noHayIngredientes'>No hay ingredientes disponibles en este grupo<br/>¡prueba añadir o mover uno!</div>
                 )
                 
             }
@@ -116,14 +116,15 @@ const ListIngredient = () => {
 
     return (
         <MotionImplementation
-            initial={{ x: 200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            initial = {{ x: 200, opacity: 0 }}
+            animate = {{ x: 0, opacity: 1 }}
             transition={{ type: 'linear', stiffness: 200, duration: 0.42 }} >
 
             <WhiteDummySpacer />
             <Title>Ingredientes</Title>
 
             {
+            dataprocessed.length > 0 ? (
                 dataprocessed.map((groupIngredient, index) => {
                     if (!groupsCasted.includes(groupIngredient.groupName)) {
                         groupsCasted.push(groupIngredient.groupName);
@@ -135,11 +136,16 @@ const ListIngredient = () => {
                             key={index}
                             name={groupIngredient.groupName}
                             items={groupIngredient.items}
-                            passedHook = { setUpdateTrigger }
+                            passedHook={setUpdateTrigger}
                         />
                     );
                 })
-            }
+            ) : (
+                <div className='noGroupsReq'>
+                    No hay grupos de platillos<br/>Es necesario dar de alta uno para poder verlos de este lado
+                </div>
+            )
+        }
 
         </MotionImplementation>
     )

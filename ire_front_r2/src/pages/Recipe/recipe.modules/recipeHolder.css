@@ -82,3 +82,11 @@
 .ingredientItemHolder{
     font-size: 30px;
 }
+
+.noDishes{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px; 
+    font-weight: 500;
+    color: rgb(110, 110, 110) !important; 
+}

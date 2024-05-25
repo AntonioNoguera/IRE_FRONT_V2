@@ -139,6 +139,7 @@ const ListRecipe = () => {
             <Title>Listado de Recetas</Title>
             
             { 
+            proccesedRecipes.length > 0 ? (
                 proccesedRecipes.map((recipe, index) => (
                     <RecipeGroups 
                         backgrounColors = {colorOption[index%2]} 
@@ -149,7 +150,9 @@ const ListRecipe = () => {
                     />
                     
                 ))
-            }
+            ) : (
+                <div className='noDishes'>No hay platillos dados de alta, primero da uno de alta,<br/>Luego vuelve aquí para dar una receta de alta.</div>
+            )}
 
         </MotionImplementation>
     )

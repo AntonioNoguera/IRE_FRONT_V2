@@ -26,26 +26,7 @@ const RouterPath = [
             } 
         ]
     },
-
-    {
-        path: "/platillos",
-        name: "Platillos",
-        icon: "cuenco-arroz.png",
-        page: Dish,
-        defaultPath: "/platillos/listado",
-        subPaths: [
-            {
-                path: "listado",
-                name: "Listado de Platillos",
-                page: ListDish
-            },
-            {
-                path: "nuevo",
-                name: "Nuevo Platillo",
-                page: NewDish
-            },
-        ]
-    },
+ 
 
     {
         path: "/recetas",
@@ -64,6 +45,26 @@ const RouterPath = [
                 name: "Nuevo Receta",
                 page: NewRecipe
             }, 
+        ]
+    },
+
+    {
+        path: "/platillos",
+        name: "Platillos",
+        icon: "cuenco-arroz.png",
+        page: Dish,
+        defaultPath: "/platillos/listado",
+        subPaths: [
+            {
+                path: "listado",
+                name: "Listado de Platillos",
+                page: ListDish
+            },
+            {
+                path: "nuevo",
+                name: "Nuevo Platillo",
+                page: NewDish
+            },
         ]
     },
 
@@ -106,6 +107,7 @@ const RouterPath = [
             },
         ]
     },
+    
     {
         path: "/complementos",
         name: "Complementos",

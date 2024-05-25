@@ -93,6 +93,7 @@ const IngredientItemHolder = ({backgroundColor,fullProps,fatherHook}) => {
 const IngredientGroupHolder = ({name, items,index,backgrounColors,passedHook}) => {
     return(
         <>
+
             <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
             {
                 items.map((dish, index) => (
@@ -141,18 +142,19 @@ const ListDish = () => {
             <WhiteDummySpacer />
             <Title>Listado de Platillos</Title>
             
-            { 
+            {dishData.length > 0 ? (
                 dishData.map((dishType, index) => (
                     <IngredientGroupHolder 
-                        backgrounColors = {colorOption[index%2]} 
-                        key = {index}
-                        name = {dishType.typeName}
-                        items = {dishType.items}    
-                        passedHook = {setUpdateTrigger}
+                        backgrounColors={colorOption[index % 2]} 
+                        key={index}
+                        name={dishType.typeName}
+                        items={dishType.items}
+                        passedHook={setUpdateTrigger}
                     />
-                    
                 ))
-            }
+            ) : (
+                <div className='noTypesDish'>No hay tipos de platillos <br/> ¡Da uno de alta para poder observarlos por acá!</div>
+            )}
             
         </MotionImplementation> 
     )
