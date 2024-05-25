@@ -18,7 +18,6 @@ const DeleteRecipeModal = ({ isModalOpen, closeModal, fullProps, passedHook }) =
     const onAccept = () => {
         const succed = true;
  
-
         if(succed){
             const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
  

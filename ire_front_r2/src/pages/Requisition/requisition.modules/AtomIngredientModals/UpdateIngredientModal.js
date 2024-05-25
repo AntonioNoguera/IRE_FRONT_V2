@@ -26,13 +26,43 @@ const UpgradeIngredientModal = ({ isModalOpen, closeModal, fullProps, passedHook
     const onAccept = () => {
         const validation = true;
 
-        if( validation ) {
+        if (validation) {
+            const dayId = fullProps.inheritProps.fatherProps.dayId;
+            const dishId = fullProps.inheritProps.fullDishProps.id;
+            const ingredientId = fullProps.ingredientId;
 
-            passedHook(prev => prev + 1);
-            enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' }); 
+            // Leer las requisiciones del localStorage
+            const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
 
+            // Buscar el día correspondiente y actualizar el ingrediente
+            let ingredientFound = false;
+
+            storedRequisitions.forEach(requisition => {
+                requisition.weekDays.forEach(day => {
+                    if (day.dayId === dayId) {
+                        const dish = day.dishes.find(dish => dish.dishId === dishId);
+                        if (dish) {
+                            const ingredient = dish.dishIngredients.find(ing => ing.ingredientId === ingredientId);
+                            if (ingredient) {
+                                ingredient.ingredientAmount = newAmount;
+                                ingredient.operationTime = new Date().toISOString();
+                                ingredientFound = true;
+                            }
+                        }
+                    }
+                });
+            });
+
+            if (ingredientFound) {
+                // Actualizar el localStorage
+                localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+                enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'success' });
+                passedHook(prev => prev + 1);
+            } else {
+                enqueueSnackbar("No se encontró el ingrediente", { variant: 'error' });
+            }
         } else {
-            enqueueSnackbar("Ingrediente actualizado correctamente", { variant: 'error' }); 
+            enqueueSnackbar("Validación fallida", { variant: 'error' });
         }
 
         closeModal();

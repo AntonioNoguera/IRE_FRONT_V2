@@ -33,7 +33,7 @@ const UpdateDayForRequisition = ({ isModalOpen, closeModal ,fullProps, passedHoo
 
     //Hooks for the for
     const [ReqType, setReqType] = useState(fullProps.fullDishProps.typeId); 
-    const [ReqDish, setReqDish] = useState(fullProps.dishId); 
+    const [ReqDish, setReqDish] = useState(""); 
     const [ReqServices, setReqServices] = useState(fullProps.dishServices);
 
     const [dishOptions, setDishOptions ] = useState([]);
@@ -41,29 +41,58 @@ const UpdateDayForRequisition = ({ isModalOpen, closeModal ,fullProps, passedHoo
     useEffect(() => {  
         const availableDish = storedDish.filter(dish => dish.typeId === ReqType )
         if(availableDish) {
-            setDishOptions(availableDish)
+            setDishOptions(availableDish) 
+            if(ReqDish === ""){
+                setReqDish(fullProps.dish)
+            }else{ 
+                setReqDish(availableDish[0].id)
+            }
         }
-          
     }, [ReqType]);
 
 
     const manageSave = () => {
-        const succed = true;
         const validation = true;
-        
+        const success = true;
+
         if (validation) {
-            if (succed) {
-                //Day Id
-                passedHook(prev => prev + 1)
-                closeModal();
-                enqueueSnackbar("No fue posible eliminar el platillo, verifica el estado de tu requisición", { variant: 'success' });
+            if (success) {
+                const dayId = fullProps.fatherProps.dayId;
+                const dishId = fullProps.dishId;
+
+                // Buscar el día correspondiente y actualizar el platillo
+                let dishFound = false;
+
+                storedRequisitions.forEach(requisition => {
+                    requisition.weekDays.forEach(day => {
+                        if (day.dayId === dayId) {
+                            const dish = day.dishes.find(d => d.dishId === dishId);
+                            if (dish) {
+                                dish.typeId = ReqType;
+                                dish.dishId = ReqDish;
+                                dish.dishServices = ReqServices;
+                                dishFound = true;
+                            }
+                        }
+                    });
+                });
+
+                if (dishFound) {
+                    // Actualizar el localStorage
+                    localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
+                    enqueueSnackbar("Platillo actualizado correctamente", { variant: 'success' });
+                    passedHook(prev => prev + 1);
+                    closeModal();
+                } else {
+                    enqueueSnackbar("No se encontró el platillo", { variant: 'error' });
+                }
             } else {
-                enqueueSnackbar("No fue posible eliminar el platillo, verifica el estado de tu requisición", { variant: 'error' });
+                enqueueSnackbar("No fue posible actualizar el platillo, verifica el estado de tu requisición", { variant: 'error' });
             }
         } else {
-            enqueueSnackbar("No fue posible eliminar el platillo, verifica el estado de tu requisición", { variant: 'warning' });
+            enqueueSnackbar("No fue posible actualizar el platillo, verifica el estado de tu requisición", { variant: 'warning' });
         }
-    }
+    };
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
