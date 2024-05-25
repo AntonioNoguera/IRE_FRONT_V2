@@ -32,11 +32,9 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal, fullProps, passedHo
 
         const dishId = fullProps.dishId;
         const dayId = fullProps.fatherProps.dayId;
-
-        // Leer las requisiciones del localStorage
+        
         const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
-
-        // Buscar el día correspondiente y eliminar el platillo
+        
         let dishFound = false;
 
         storedRequisitions.forEach(requisition => {
@@ -52,7 +50,7 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal, fullProps, passedHo
         });
 
         if (dishFound) {
-            // Actualizar el localStorage
+            
             localStorage.setItem('requisitions', JSON.stringify(storedRequisitions));
             enqueueSnackbar("Platillo eliminado con éxito", { variant: 'success' });
             passedHook(prev => prev + 1);
