@@ -8,6 +8,12 @@
     margin-block: 40px;
     padding-inline: 40px;
 }
+.groupNameCASTEDOUYT{
+    left: 0 !important;
+    
+    font-weight: 400;
+    font-size: 35px; 
+}
 
 .groupName { 
     font-weight: 400;

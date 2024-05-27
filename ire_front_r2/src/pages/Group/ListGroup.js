@@ -27,7 +27,7 @@ const GroupHolder = ({ fullGroupProps, passedHook  }) => {
         <div className='mainHolderStyle' style = {{ backgroundColor: fullGroupProps.color, display: 'flex' }}>
             <HorizontalDisplay> 
                 <CenteredDisplay width="100%">
-                    <p className='groupName'> {fullGroupProps.name } </p>
+                    <p className='groupNameCASTEDOUYT'> {fullGroupProps.name } </p>
                 </CenteredDisplay> 
  
                 <div style={{ marginInline: '50px' }}>

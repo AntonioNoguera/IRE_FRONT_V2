@@ -123,7 +123,7 @@ const IngredientGroupHolder = ({ name, items, index, backgrounColors, passedHook
     return (
         <>
 
-            <SubTitle style={{ marginTop: '70px' }}>{name}</SubTitle>
+            <SubTitle paddingLeft='0px' style={{ marginTop: '70px' }}>{name}</SubTitle>
             {
                 items.map((dish, index) => (
                     <IngredientItemHolder
