@@ -3,14 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CenteredDisplay from "../../components/Layouts/CenteredDisplay";
 import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
-import SubTitle from "../../components/Layouts/SubTitle";
-
-import Button from "../../components/UIcomponents/Button";
-import EditText from "../../components/UIcomponents/EditText";
-
-import BigTextArea from "../../components/UIcomponents/BigTextArea";
-import Label from "../../components/UIcomponents/Label";
-import DropDownSelection from "../../components/UIcomponents/DropDownSelection";
+import SubTitle from "../../components/Layouts/SubTitle"; 
 
 import WhiteDummySpacer from "../../components/Layouts/WhiteDummySpacer";
 
@@ -119,7 +112,7 @@ const RecipeGroups = ({typeName, dishes,index,backgrounColors, fatherHook}) => {
 
 
 const ListRecipe = () => {
-    const storedTypes = JSON.parse(localStorage.getItem('extras')).Tipos || [];
+    const storedTypes = JSON.parse(localStorage.getItem('extras')) || [];
     const storedDishes = JSON.parse(localStorage.getItem('dishes')) || [];
     const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
@@ -133,7 +126,7 @@ const ListRecipe = () => {
         const storedRecipes = JSON.parse(localStorage.getItem('recipes')) || []; 
 
         // Procesar datos  
-        const grouped = storedTypes.map(type => ({
+        const grouped = (storedTypes && storedTypes.Tipos && storedDishes && storedRecipes) ? storedTypes.Tipos.map(type => ({
             dishType: type.name,
             dishes: storedDishes
                 .filter(dish => dish.typeId === type.id)
@@ -141,7 +134,7 @@ const ListRecipe = () => {
                     ...dish,
                     items: storedRecipes.filter(recipe => recipe.dishId === dish.id)
                 }))
-        }));
+        })) : [];
          
 
         setProccessedRecipes(grouped); 

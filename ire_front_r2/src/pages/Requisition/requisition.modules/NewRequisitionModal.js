@@ -17,7 +17,7 @@ import { useSnackbar } from 'notistack';
 const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps }) => {
     const { enqueueSnackbar } = useSnackbar();
 
-    const storedTypes = JSON.parse(localStorage.getItem('extras')).Tipos || [];
+    const storedTypes = JSON.parse(localStorage.getItem('extras')) || [];
     const storedDish = JSON.parse(localStorage.getItem('dishes')) || [];
 
     const storedRequisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
@@ -101,11 +101,11 @@ const NewRequisitionModal = ({ isModalOpen, closeModal, passedHook, fullProps })
                         <DropDownSelection
                             selectedOption={ReqType}
                             onChange={e => setReqType(e.target.value)}
-                            placeHolder="Selecciona el tipo" 
-                            optionsAvailable={storedTypes.map(type => ({
+                            placeHolder="Selecciona el tipo"
+                            optionsAvailable={(storedTypes && storedTypes.Tipos) ? storedTypes.Tipos.map(type => ({
                                 value: type.id,
                                 name: type.name
-                            }))}
+                            })) : []}
                         />
                     </CenteredDisplay>
 
