@@ -87,7 +87,7 @@ const DeleteDishForRequisition = ({ isModalOpen, closeModal, fullProps, passedHo
                 <HorizontalDisplay>
                     <Button onClick={onDecline} type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer/>
-                    <Button onClick={onAccept}>Agregar</Button>  
+                    <Button onClick={onAccept}>Eliminar</Button>  
                 </HorizontalDisplay>
                 
             </CenteredDisplay> 

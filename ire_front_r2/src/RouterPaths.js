@@ -82,7 +82,7 @@ const RouterPath = [
             },
             {
                 path: "nuevo",
-                name: "Nuevo Ingredientes",
+                name: "Nuevo Ingrediente",
                 page: NewIngredient
             },
         ]

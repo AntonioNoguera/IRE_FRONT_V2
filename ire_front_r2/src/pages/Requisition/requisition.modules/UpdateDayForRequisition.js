@@ -150,7 +150,7 @@ const UpdateDayForRequisition = ({ isModalOpen, closeModal, fullProps, passedHoo
                 <HorizontalDisplay>
                     <Button onClick={onDecline} type='cancelStyle'>Cancelar</Button>  
                     <WhiteDummySpacer />
-                    <Button onClick={manageSave}>Agregar</Button>  
+                    <Button onClick={manageSave}>Modificar</Button>  
                 </HorizontalDisplay>
             </CenteredDisplay> 
         </Modal>

@@ -16,6 +16,8 @@ import SvgButton from "../../components/UIcomponents/SvgButton";
 import DeleteIngredientModal from "./ingredient.modules/DeleteIngredientModal";
 import UpdateIngredientModal from "./ingredient.modules/UpdateIngredientModal";
 
+import { Link } from 'react-router-dom';
+
 import { useSnackbar } from 'notistack'; 
 
 const colorOption = [
@@ -102,7 +104,14 @@ const IngredientGroupHolder = ({ name, items, backgrounColors, passedHook }) => 
                         />
                     ))
                 ) : (
-                    <div className='noHayIngredientes'>No hay ingredientes disponibles en este grupo<br/>¡prueba añadir o mover uno!</div>
+
+                    <div className = "noIngredients">
+                        <img class='empty_icon' src={`${process.env.PUBLIC_URL}/icons/empty.png`} />
+                        <p>
+                            No hay ingredientes en este grupo.<br />
+                            <Link to="/ingredientes/nuevo">¡Prueba Añadir uno!</Link>
+                        </p>
+                    </div> 
                 )
                 
             }
@@ -160,10 +169,14 @@ const ListIngredient = () => {
                         />
                     );
                 })
-            ) : (
-                <div className='noGroupsReq'>
-                    No hay grupos de platillos<br/>Es necesario dar de alta uno para poder verlos de este lado
-                </div>
+            ) : ( 
+                <div className = "noHayGroups">
+                    <img class='empty_icon' src={`${process.env.PUBLIC_URL}/icons/empty.png`} />
+                    <p>
+                        No hay grupos de ingredientes disponibles.<br />
+                        <Link to="/grupos/nuevo">¡Prueba Añadir uno!</Link>
+                    </p>
+                </div> 
             )
         }
 

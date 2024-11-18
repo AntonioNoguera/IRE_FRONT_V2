@@ -32,8 +32,23 @@ const storedDishes = JSON.parse(localStorage.getItem('dishes')) || [];
 const storedExtras = JSON.parse(localStorage.getItem('extras')) || [];
 const storedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
+console.log("Stored Dishes:", storedDishes);
+console.log("Stored Extras:", storedExtras);
+console.log("Stored Ingredients:", storedIngredients);
+
 const RequisitionAtom = ({fullAtomProps, parentHook}) => {
-    const specificIngredient = storedIngredients.find(ingredient => ingredient.id === fullAtomProps.ingredientId) 
+    const specificIngredient = storedIngredients.find(ingredient => ingredient.id === fullAtomProps.ingredientId) || { name: 'Ingrediente desconocido', unit: 'unidad' };
+
+    if (!specificIngredient) {
+        console.warn(`No se encontró ingrediente con ID: ${fullAtomProps.ingredientId}`);
+    }
+
+    if (!storedIngredients || storedIngredients.length === 0) {
+        console.warn("storedIngredients no está definido o está vacío:", storedIngredients);
+    }
+
+ 
+
 
     const convertISOToStandardTimeWithAMPM = (isoString) => {
         const date = new Date(isoString);
@@ -48,6 +63,8 @@ const RequisitionAtom = ({fullAtomProps, parentHook}) => {
 
         return `${hours}:${minutes} ${ampm}`;
     };
+
+
 
     return (
         <div className='itemHolder'> 
@@ -85,8 +102,25 @@ const RequisitionAtom = ({fullAtomProps, parentHook}) => {
     )
 }
 
-const RequisitionItem = ({fullProps, passHook}) => {
-    fullProps.fullDishProps = storedDishes.find(dish => dish.id === fullProps.dishId)
+const RequisitionItem = ({fullProps, passHook}) => { 
+
+    if (!storedDishes || storedDishes.length === 0) {
+        console.warn("storedDishes no está definido o está vacío:", storedDishes);
+    }
+ 
+    fullProps.fullDishProps = storedDishes.find(dish => dish.id === fullProps.dishId) || { name: 'Platillo desconocido', typeId: null };
+
+    if (!fullProps.fullDishProps) {
+        console.warn(`No se encontró platillo con ID: ${fullProps.dishId}`);
+    }
+
+    if (!storedExtras?.Tipos) {
+        console.warn("Tipos no está definido en storedExtras:", storedExtras);
+    }
+
+    const dishType = storedExtras?.Tipos?.find(type => type.id === fullProps.fullDishProps.typeId) || { name: 'Tipo desconocido' };
+    const dishName = fullProps.fullDishProps.name || 'Platillo desconocido';
+ 
 
     return (
         <div  className="dishHolder">
@@ -151,8 +185,7 @@ const RequisitionItem = ({fullProps, passHook}) => {
 
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
-                    <p className="ItemStrongValue">Tipo:</p> 
-                    <p className="ItemLigthValue">{storedExtras.Tipos.find(type => type.id === fullProps.fullDishProps.typeId).name}</p>
+                    <p className="ItemStrongValue">Tipo:  {dishName}</p>  
                 </div>  
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>

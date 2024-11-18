@@ -15,6 +15,7 @@ import "./group.modules/groupHolder.css"
 import SvgButton from "../../components/UIcomponents/SvgButton";
 import DeleteGroupModal from "./group.modules/DeleteGroupModal";
 import UpdateGroupModal from "./group.modules/UpdateGroupModal";
+import { Link } from 'react-router-dom';
 
 const GroupHolder = ({ fullGroupProps, passedHook  }) => {
 
@@ -77,8 +78,15 @@ const ListGroup = () => {
                         passedHook={setUpdateTrigger}
                     />
                 ))
-            ) : (
-                <p className = "noHayGroups">No hay grupos disponibles.<br/>¡Prueba Añadir uno!</p>
+            ) : ( 
+                <div className = "noHayGroups">
+                    <img class='empty_icon' src={`${process.env.PUBLIC_URL}/icons/empty.png`} />
+                    <p>
+                        No hay grupos disponibles.<br />
+                        <Link to="/grupos/nuevo">¡Prueba Añadir uno!</Link>
+                    </p>
+                </div>
+                      
             )}
         </MotionImplementation>
     );
