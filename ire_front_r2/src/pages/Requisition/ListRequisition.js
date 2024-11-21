@@ -181,11 +181,10 @@ const RequisitionItem = ({fullProps, passHook}) => {
                 <div className='noIngredientsDish'>No hay ingredientes</div>
             )}
             
-            <hr className ="reqHr"/>
-
+            <hr className ="reqHr"/> 
             <HorizontalDisplay justifyDirection="space-between" > 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
-                    <p className="ItemStrongValue">Tipo:  {dishName}</p>  
+                    <p className="ItemStrongValue">Tipo:  {dishType.name}</p>  
                 </div>  
 
                 <div style={{flexDirection:'row', display:'flex', justifyContent : 'center' }}>
@@ -313,16 +312,19 @@ const ListRequisition = () => {
         });
     }
     
-    function getRequisitionForCurrentWeek() {
-        const currentWeekRange = getWeekRangeString();
+    function getRequisitionForCurrentWeek() { 
         const requisitions = JSON.parse(localStorage.getItem('requisitions')) || [];
         
         let workingSessionDay = localStorage.getItem('workingSessionDay');
 
         if (!workingSessionDay) {
-            workingSessionDay = new Date().toISOString();
-            localStorage.setItem('workingSessionDay', workingSessionDay);
+            workingSessionDay = new Date();
+            localStorage.setItem('workingSessionDay', workingSessionDay.toISOString());
+        } else {
+            workingSessionDay = new Date(workingSessionDay);
         }
+
+        const currentWeekRange = getWeekRangeString(workingSessionDay);
 
         let currentWeekRequisition = requisitions.find(r => r.daysCovered === currentWeekRange);
       

@@ -5,8 +5,7 @@
     padding-block: 10px; 
     box-shadow: 0px 10px 10px 0px var(--ire-lightGray) ;
     justify-items: center;
-    margin-block: 40px;
-    padding-inline: 40px;
+    margin-block: 40px; 
 }
 .groupNameCASTEDOUYT{
     left: 0 !important;

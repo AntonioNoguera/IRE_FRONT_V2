@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import CenteredDisplay from "../../components/Layouts/CenteredDisplay";
-import HorizontalDisplay from "../../components/Layouts/HorizontalDisplay";
 import Title from "../../components/Layouts/Title";
 import SubTitle from "../../components/Layouts/SubTitle"; 
 
@@ -11,16 +9,14 @@ import  MotionImplementation  from './../../components/Layouts/MotionImplementat
 
 import './../../mainStyles.css';  
 import './recipe.modules/recipeHolder.css';  
-
-import { motion } from 'framer-motion';
-
+  
 import DeleteRecipeModal from "./recipe.modules/DeleteRecipeModal";
 import UpdateRecipeModal from "./recipe.modules/UpdateRecipeModal"; 
-
-
+ 
 import SvgButton from "../../components/UIcomponents/SvgButton";
 
 import { Link } from 'react-router-dom';
+import CenteredDisplay from '../../components/Layouts/CenteredDisplay';
 
 const colorOption = [
     ['#009FE3', '#1D7093'], 
@@ -48,38 +44,76 @@ const IngredientItemHolder = ({fullProps, itemCount, backgroundColor,passedHook}
         return formattedDate;
     };
 
-    return( 
-        <div className = 'mainHolderStyle mainRecipeHolder' style={{  display: 'flex', backgroundColor : backgroundColor}}>
-        <HorizontalDisplay> 
-            <CenteredDisplay width="100%">
-                <p className = 'groupName'> {fullProps.name} </p>
-            </CenteredDisplay>
-
-            <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
-                <p className='itemCountTitle'>Número de Ingredientes:</p>
-                <p className='itemCountHolder'>{itemCount}</p >
-            </div> 
-
-            <div style={{flexDirection:'column', display:'flex', justifyContent : 'center' , marginInline : '30px'}}>
-                <p className='itemCountTitle'> Fecha de Creación:</p>
-                <p className='itemCountHolder'>{FormattedDate(fullProps.additionDate)}</p >
-            </div> 
-             
-            <SvgButton 
-                type = 'editCookie'
-                fullProps = { fullProps }
-                hook = {passedHook}
-                RenderedComponent = { UpdateRecipeModal } />
-            
-            <WhiteDummySpacer/>
-            <SvgButton type = 'trashCan'
-                fullProps = { fullProps } 
-                hook = {passedHook}
-                RenderedComponent = { DeleteRecipeModal } />
-            
-        </HorizontalDisplay>
+    return (
+        <div
+            className="mainHolderStyle mainRecipeHolder"
+            style={{ 
+                backgroundColor: backgroundColor,
+                alignItems: 'center',  
+            }}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',  
+                    width: '100%',
+                }}
+            > 
+                <p
+                    className="groupName"
+                    style={{
+                        flex: 1,
+                        margin: 0, // Elimina márgenes externos
+                        textAlign : 'left',
+                        lineHeight: 'normal', // Asegura altura de línea normal
+                    }}
+                >
+                    {fullProps.name}
+                </p>
+    
+                {/* Los demás elementos */}
+                <div
+                    style={{
+                        flexDirection: 'column',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginInline: '30px',
+                    }}
+                >
+                    <p className="itemCountTitle">Número de Ingredientes:</p>
+                    <p className="itemCountHolder">{itemCount}</p>
+                </div>
+    
+                <div
+                    style={{
+                        flexDirection: 'column',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginInline: '30px',
+                    }}
+                >
+                    <p className="itemCountTitle">Fecha de Creación:</p>
+                    <p className="itemCountHolder">{FormattedDate(fullProps.additionDate)}</p>
+                </div>
+    
+                <SvgButton
+                    type="editCookie"
+                    fullProps={fullProps}
+                    hook={passedHook}
+                    RenderedComponent={UpdateRecipeModal}
+                />
+    
+                <WhiteDummySpacer />
+    
+                <SvgButton
+                    type="trashCan"
+                    fullProps={fullProps}
+                    hook={passedHook}
+                    RenderedComponent={DeleteRecipeModal}
+                />
+            </div>
         </div>
-    )
+    );
 }
 
 const RecipeGroups = ({ typeName, dishes, index, backgrounColors, fatherHook }) => {

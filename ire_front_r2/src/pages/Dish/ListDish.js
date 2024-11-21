@@ -82,6 +82,24 @@ const IngredientItemHolder = ({ backgroundColor, fullProps, fatherHook }) => {
                         <p className='itemCountHolder'>{proteinName.name}</p>
                     </div>
                 </div>
+
+                <div className='buttonHolder'>
+                    <SvgButton
+                        type='editCookie'
+                        fullProps={fullProps}
+                        RenderedComponent={UpdateDishModal}
+                        hook={fatherHook}
+                    />
+
+                    <WhiteDummySpacer />
+
+                    <SvgButton
+                        type='trashCan'
+                        fullProps={fullProps}
+                        RenderedComponent={DeleteDishModal}
+                        hook={fatherHook}
+                    />
+                </div>
             </HorizontalDisplay>
         </div>
     );
