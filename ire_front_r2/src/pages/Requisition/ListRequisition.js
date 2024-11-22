@@ -121,6 +121,8 @@ const RequisitionItem = ({fullProps, passHook}) => {
     const dishType = storedExtras?.Tipos?.find(type => type.id === fullProps.fullDishProps.typeId) || { name: 'Tipo desconocido' };
     const dishName = fullProps.fullDishProps.name || 'Platillo desconocido';
  
+    console.log("--------------------------------")
+    console.log(fullProps)
 
     return (
         <div  className="dishHolder">
@@ -180,6 +182,8 @@ const RequisitionItem = ({fullProps, passHook}) => {
             ) : (
                 <div className='noIngredientsDish'>No hay ingredientes</div>
             )}
+
+            
             
             <hr className ="reqHr"/> 
             <HorizontalDisplay justifyDirection="space-between" > 
